@@ -46,44 +46,44 @@ def load_and_process_data(basin, crop):
     
     # Apply HA > 2500 filter
     ha_mask_filtered = np.where(ha_mask > 2500, ha_mask, np.nan)
-    
-    # Load critical N and P files
-    n_crit_leach_file = f"{mask_base}/{basin}/Hydro/{basin}_N_critical_leaching_annual.nc"
-    n_crit_runoff_file = f"{mask_base}/{basin}/Hydro/{basin}_N_critical_runoff_annual.nc"
-    p_crit_leach_file = f"{mask_base}/{basin}/Hydro/{basin}_P_critical_leaching_annual.nc"
-    p_crit_runoff_file = f"{mask_base}/{basin}/Hydro/{basin}_P_critical_runoff_annual.nc"
-    
-    n_crit_leach_ds = xr.open_dataset(n_crit_leach_file)
-    n_crit_runoff_ds = xr.open_dataset(n_crit_runoff_file)
-    p_crit_leach_ds = xr.open_dataset(p_crit_leach_file)
-    p_crit_runoff_ds = xr.open_dataset(p_crit_runoff_file)
-    
-    # Select critical data to match model spatial extent
-    n_crit_leach = n_crit_leach_ds['OUT_BASEFLOW'].sel(lat=model_lats, lon=model_lons, method='nearest')
-    n_crit_runoff = n_crit_runoff_ds['OUT_RUNOFF'].sel(lat=model_lats, lon=model_lons, method='nearest')
-    p_crit_leach = p_crit_leach_ds['OUT_BASEFLOW'].sel(lat=model_lats, lon=model_lons, method='nearest')
-    p_crit_runoff = p_crit_runoff_ds['OUT_RUNOFF'].sel(lat=model_lats, lon=model_lons, method='nearest')
-    
     # Select time period 1986-2015
-    ds_period = ds.sel(time=slice('1986', '2015'))
-    n_crit_leach_period = n_crit_leach.sel(time=slice('1986', '2015'))
-    n_crit_runoff_period = n_crit_runoff.sel(time=slice('1986', '2015'))
-    p_crit_leach_period = p_crit_leach.sel(time=slice('1986', '2015'))
-    p_crit_runoff_period = p_crit_runoff.sel(time=slice('1986', '2015'))
+    ds_period = ds.sel(time=slice('1986', '2015'))  
+
+    # # Load critical N and P files
+    # n_crit_leach_file = f"{mask_base}/{basin}/Hydro/{basin}_N_critical_leaching_annual_scaled.nc"
+    # n_crit_runoff_file = f"{mask_base}/{basin}/Hydro/{basin}_N_critical_runoff_annual_scaled.nc"
+    # p_crit_leach_file = f"{mask_base}/{basin}/Hydro/{basin}_P_critical_leaching_annual.nc"
+    # p_crit_runoff_file = f"{mask_base}/{basin}/Hydro/{basin}_P_critical_runoff_annual.nc"
+    
+    # n_crit_leach_ds = xr.open_dataset(n_crit_leach_file)
+    # n_crit_runoff_ds = xr.open_dataset(n_crit_runoff_file)
+    # p_crit_leach_ds = xr.open_dataset(p_crit_leach_file)
+    # p_crit_runoff_ds = xr.open_dataset(p_crit_runoff_file)
+    
+    # # Select critical data to match model spatial extent
+    # n_crit_leach = n_crit_leach_ds['OUT_BASEFLOW'].sel(lat=model_lats, lon=model_lons, method='nearest')
+    # n_crit_runoff = n_crit_runoff_ds['OUT_RUNOFF'].sel(lat=model_lats, lon=model_lons, method='nearest')
+    # p_crit_leach = p_crit_leach_ds['OUT_BASEFLOW'].sel(lat=model_lats, lon=model_lons, method='nearest')
+    # p_crit_runoff = p_crit_runoff_ds['OUT_RUNOFF'].sel(lat=model_lats, lon=model_lons, method='nearest')
+    
+    # n_crit_leach_period = n_crit_leach.sel(time=slice('1986', '2015'))
+    # n_crit_runoff_period = n_crit_runoff.sel(time=slice('1986', '2015'))
+    # p_crit_leach_period = p_crit_leach.sel(time=slice('1986', '2015'))
+    # p_crit_runoff_period = p_crit_runoff.sel(time=slice('1986', '2015'))
     
     # Ensure time coordinates match by using isel instead of time-based operations
     # This avoids dtype issues between different time coordinate types
     n_runoff = (ds_period['N_surf'] + ds_period['N_sub']).values
-    n_crit_runoff_vals = n_crit_runoff_period.values
+    # n_crit_runoff_vals = n_crit_runoff_period.values
     
     p_runoff = (ds_period['P_surf'] + ds_period['P_sub']).values
-    p_crit_runoff_vals = p_crit_runoff_period.values
+    # p_crit_runoff_vals = p_crit_runoff_period.values
     
     n_leach_vals = ds_period['N_leach'].values
-    n_crit_leach_vals = n_crit_leach_period.values
+    # n_crit_leach_vals = n_crit_leach_period.values
     
     p_leach_vals = ds_period['P_leach'].values
-    p_crit_leach_vals = p_crit_leach_period.values
+    # p_crit_leach_vals = p_crit_leach_period.values
     
     # Calculate metrics using numpy arrays to avoid xarray alignment issues
     # 1. Average Yield (kg/ha/yr)
@@ -94,23 +94,27 @@ def load_and_process_data(basin, crop):
     avg_production = avg_yield * ha_mask_filtered / 1000  # Convert kg to ton
     
     # 3. N runoff exceedance
-    n_runoff_exc = 100 * (n_runoff - n_crit_runoff_vals) / n_crit_runoff_vals
-    avg_n_runoff_exc = np.nanmean(n_runoff_exc, axis=0)
+    # n_runoff_exc = n_runoff - n_crit_runoff_vals
+    # avg_n_runoff_exc = np.nanmean(n_runoff_exc, axis=0)
+    avg_n_runoff_exc = np.nanmean(n_runoff, axis=0)
     avg_n_runoff_exc = np.where(np.isnan(ha_mask_filtered), np.nan, avg_n_runoff_exc)
     
     # 4. N leaching exceedance
-    n_leach_exc = 100 * (n_leach_vals - n_crit_leach_vals) / n_crit_leach_vals
-    avg_n_leach_exc = np.nanmean(n_leach_exc, axis=0)
+    # n_leach_exc = n_leach_vals - n_crit_leach_vals
+    # avg_n_leach_exc = np.nanmean(n_leach_exc, axis=0)
+    avg_n_leach_exc = np.nanmean(n_leach_vals, axis=0)
     avg_n_leach_exc = np.where(np.isnan(ha_mask_filtered), np.nan, avg_n_leach_exc)
     
     # 5. P runoff exceedance
-    p_runoff_exc = 100 * (p_runoff - p_crit_runoff_vals) / p_crit_runoff_vals
-    avg_p_runoff_exc = np.nanmean(p_runoff_exc, axis=0)
+    # p_runoff_exc = p_runoff - p_crit_runoff_vals
+    # avg_p_runoff_exc = np.nanmean(p_runoff_exc, axis=0)
+    avg_p_runoff_exc = np.nanmean(p_runoff, axis=0)
     avg_p_runoff_exc = np.where(np.isnan(ha_mask_filtered), np.nan, avg_p_runoff_exc)
     
     # 6. P leaching exceedance
-    p_leach_exc = 100 * (p_leach_vals - p_crit_leach_vals) / p_crit_leach_vals
-    avg_p_leach_exc = np.nanmean(p_leach_exc, axis=0)
+    # p_leach_exc = p_leach_vals - p_crit_leach_vals
+    # avg_p_leach_exc = np.nanmean(p_leach_exc, axis=0)
+    avg_p_leach_exc = np.nanmean(p_leach_vals, axis=0)
     avg_p_leach_exc = np.where(np.isnan(ha_mask_filtered), np.nan, avg_p_leach_exc)
     
     # Get coordinates
@@ -162,10 +166,14 @@ def plot_basin_crops(basin):
     titles = [
         'Avg. Yield [kg/ha/yr]',
         'Crop Production [ton/yr]',
-        'Exceedance of N Runoff [%]',
-        'Exceedance of N Leaching [%]',
-        'Exceedance of P Runoff [%]',
-        'Exceedance of P Leaching [%]'
+        'N Runoff [kg/ha/yr]',
+        'N Leaching [kg/ha/yr]',
+        'P Runoff [kg/ha/yr]',
+        'P Leaching [kg/ha/yr]'
+        # 'Exceedance of N Runoff [kg/ha/yr]',
+        # 'Exceedance of N Leaching [kg/ha/yr]',
+        # 'Exceedance of P Runoff [kg/ha/yr]',
+        # 'Exceedance of P Leaching [kg/ha/yr]'
     ]
     
     for i, crop in enumerate(available_crops):

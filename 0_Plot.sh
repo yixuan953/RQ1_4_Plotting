@@ -14,7 +14,14 @@ source /home/WUR/zhou111/miniconda3/etc/profile.d/conda.sh
 
 conda activate myenv
 
-# Part 1: Get the yield and exceedance of N, P losses
-python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/1_Part1_Yield_Losses.py 
+# --------------- Plot for Part 1 -----------------
+
+# Part 1 - Fig.1 
+python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/2_Part1_MainPlot_1_Unsus_Irri.py
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/2_Part1_MainPlot_2_ExceedNP.py
+
+# Part 1 - Appendix Fig.1
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/2_Exceed.py
+# -------------------------------------------------
 
 conda deactivate
