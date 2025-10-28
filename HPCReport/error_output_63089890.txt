@@ -1,4 +1,0 @@
-  File "/lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/2_Part1_MainPlot_1_Unsus_Irri.py", line 13
-    CropTypes = ["mainrice","secondrice"， "maize", "winterwheat", "soybean"]
-                                        ^
-SyntaxError: invalid character '，' (U+FF0C)

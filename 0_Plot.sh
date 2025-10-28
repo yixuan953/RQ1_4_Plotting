@@ -17,11 +17,14 @@ conda activate myenv
 # --------------- Plot for Part 1 -----------------
 
 # Part 1 - Fig.1 
-python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/2_Part1_MainPlot_1_Unsus_Irri.py
+#python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/2_Part1_MainPlot_1_Unsus_Irri.py
 # python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/2_Part1_MainPlot_2_ExceedNP.py
 
 # Part 1 - Appendix Fig.1
 # python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/2_Exceed.py
 # -------------------------------------------------
+
+# Part 2 - Fig.2
+python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/3_Part2_MainPlot1_UptakeLossChange.py
 
 conda deactivate
