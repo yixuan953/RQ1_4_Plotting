@@ -140,6 +140,14 @@ for basin in Basins:
     width = 0.6  # bar width
 
     plt.figure(figsize=(8, 5))
+    plt.rcParams.update({
+    'font.size': 15,          # base font size for everything
+    'axes.titlesize': 15,     # title font size
+    'axes.labelsize': 12,     # x/y label font size
+    'xtick.labelsize': 12,    # x-tick font size
+    'ytick.labelsize': 12,    # y-tick font size
+    'legend.fontsize': 12     # legend font size
+    })
     # Light bars: total production
     plt.bar(x, avg_total_list, width, color=[crop_colors[c] for c in crop_labels], alpha=0.5, label="Total Production")
     # Dark bars: exceedance production on top (overlay)
@@ -154,6 +162,6 @@ for basin in Basins:
     fig_path_bar = os.path.join(PlotDir, f"{basin}_Irri_Sum_barchart.png")
     plt.savefig(fig_path_bar, dpi=300)
     plt.close()
-    print(f"    ✅ Saved overlayed summary bar chart: {fig_path_bar}")
+    print(f"Saved overlayed summary bar chart: {fig_path_bar}")
 
 print("=== All processing complete ===")

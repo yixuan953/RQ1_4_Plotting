@@ -13,8 +13,8 @@ import matplotlib.patches as mpatches
 DataDir = "/lustre/nobackup/WUR/ESG/zhou111/2_RQ1_Data/2_StudyArea"
 OutputDir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs"
 
-Basins = ["LaPlata"]  # ["Indus", "Rhine", "LaPlata", "Yangtze"] 
-CropTypes = ["mainrice", "maize", "winterwheat", "soybean"] # ["mainrice", "maize", "winterwheat", "soybean", "secondrice"]
+Basins = ["Indus"]  # ["Indus", "Rhine", "LaPlata", "Yangtze"] 
+CropTypes = ["winterwheat"] # ["mainrice", "maize", "winterwheat", "soybean", "secondrice"]
 
 PlotDir = "/lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/Part2"
 
@@ -324,7 +324,7 @@ for basin in Basins:
         # --- Axis & labels ---
         ax.set_xticks(x)
         ax.set_xticklabels(systems)
-        ax.set_ylim(0, 200)
+        ax.set_ylim(0, 150)
         ax.set_ylabel("kg N ha⁻¹ yr⁻¹")
         ax.set_title("N")
         
