@@ -21,7 +21,7 @@ Basins = ["Rhine", "Indus", "Yangtze", "LaPlata"]
 crops = ["winterwheat", "maize", "mainrice", "secondrice", "soybean"]
 
 # Years for statistics
-start_year = 2005
+start_year = 2014
 end_year = 2015
 
 # Scale bars for plotting

@@ -1,5 +1,0 @@
-=== Processing basin: Rhine ===
-=== Processing basin: Indus ===
-=== Processing basin: Yangtze ===
-=== Processing basin: LaPlata ===
-✅ Figure saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/Boundary_Test/Method1/Critical_NP_Runoff_maincrop.png
