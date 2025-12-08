@@ -1,3 +1,5 @@
+# This code is used to plot the map of annual average yield and nutrient losses
+
 import numpy as np
 import xarray as xr
 import matplotlib.pyplot as plt
