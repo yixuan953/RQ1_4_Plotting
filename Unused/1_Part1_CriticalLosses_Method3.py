@@ -1,4 +1,4 @@
-# Plot N and P critical losses [kg] through runoff: Method 1
+# Plot N and P critical losses [kg/ha] through runoff: Method 1
 
 import os
 import xarray as xr
@@ -12,35 +12,44 @@ from matplotlib.gridspec import GridSpec
 # === Paths ===
 DataDir = "/lustre/nobackup/WUR/ESG/zhou111/2_RQ1_Data/2_StudyArea"
 shp_base = "/lustre/nobackup/WUR/ESG/zhou111/2_RQ1_Data/2_shp_StudyArea"
-PlotDir = "/lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/Boundary_Test/Method1"
+PlotDir = "/lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/0_Test/Boundary_Test/Method3"
 
-Basins = ["Rhine", "Indus", "Yangtze", "LaPlata"]
+Basins = ["Rhine", "Indus", "Yangtze", "LaPlata"]  # ["Rhine", "Indus", "Yangtze", "LaPlata"]
 
 # === Loss types and plotting scale ===
 loss_types = ["N_runoff", "P_runoff"]
 vmins = [0, 0]
-vmaxs = [1.0, 0.05]
-cmaps = ["YlGnBu", "YlGnBu"]
-crop = "wheat"
+vmaxs = [50, 3]
+cmaps = ["BuPu", "BuPu"] # kg/ha
+# cmaps = ["YlGnBu", "YlGnBu"] # ktons
 
 data_dict = {}
+# crop = "Wheat"
 
 # === Load data ===
 for basin in Basins:
     print(f"=== Processing basin: {basin} ===")
 
-    nc_path_N_runoff = f"/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/Test_CriticalNP/Method1/{basin}_crit_N_runoff_kg.nc"
-    nc_path_P_runoff = f"/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/Test_CriticalNP/Method1/{basin}_crit_P_runoff_kg.nc"
+    # nc_path_N_runoff = f"/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/2_Critical_NP_losses/Method3/{crop}/{basin}_crit_N_runoff_kgperha.nc"
+    # nc_path_P_runoff = f"/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/2_Critical_NP_losses/Method3/{crop}/{basin}_crit_P_runoff_kgperha.nc"
+
+    # nc_path_N_runoff = f"/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/2_Critical_NP_losses/Method3/{crop}/{basin}_crit_N_runoff_kg.nc"
+    # nc_path_P_runoff = f"/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/2_Critical_NP_losses/Method3/{crop}/{basin}_crit_P_runoff_kg.nc"
+
+    nc_path_N_runoff = f"/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/2_Critical_NP_losses/Method3/{basin}_crit_N_runoff_kgperha.nc"
+    nc_path_P_runoff = f"/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/2_Critical_NP_losses/Method3/{basin}_crit_P_runoff_kgperha.nc"
 
     if not (os.path.exists(nc_path_N_runoff) and os.path.exists(nc_path_P_runoff)):
         print(f"Missing data for {basin}, skipping.")
         continue
 
     # Annual input 
-    ds_N = xr.open_dataset(nc_path_N_runoff)["critical_total_maincrop_N_runoff"]
-    ds_P = xr.open_dataset(nc_path_P_runoff)["critical_total_maincrop_P_runoff"]  
-    N_runoff = ds_N
-    P_runoff = ds_P  
+    ds_N = xr.open_dataset(nc_path_N_runoff)
+    ds_P = xr.open_dataset(nc_path_P_runoff)
+    N_runoff = ds_N ["critical_maincrop_N_runoff"]
+    P_runoff = ds_P ["critical_maincrop_P_runoff"]  
+    # N_runoff = ds_N["critical_total_maincrop_N_runoff"]
+    # P_runoff = ds_P["critical_total_maincrop_P_runoff"]
 
     # Mask
     HA_path = os.path.join(DataDir, basin, "Mask", f"{basin}_maize_mask.nc")
@@ -51,11 +60,14 @@ for basin in Basins:
     HA_mask = xr.open_dataset(HA_path)["HA"]
     mask = xr.where(HA_mask > 0, 1, np.nan)
 
-    avg_N_runoff = mask * N_runoff
+    avg_N_runoff = mask * N_runoff 
     avg_P_runoff = mask * P_runoff
 
-    data_dict[("N_runoff", basin)] = avg_N_runoff * 0.000001
-    data_dict[("P_runoff", basin)] = avg_P_runoff * 0.000001
+    # avg_N_runoff = mask * N_runoff * 0.000001
+    # avg_P_runoff = mask * P_runoff * 0.000001
+
+    data_dict[("N_runoff", basin)] = avg_N_runoff 
+    data_dict[("P_runoff", basin)] = avg_P_runoff
 
 # === Compute basin extents ===
 basin_bounds = {}
@@ -135,25 +147,20 @@ for i, loss in enumerate(loss_types):
 cbar_height = 0.02
 row_positions = [0.08, 0.52]  # bottom-to-top position for N and P runoff
 
-label_map = {
-    "N_runoff": "Critical N runoff",
-    "P_runoff": "Critical P runoff"}
-
 for i, loss in enumerate(loss_types):
     cbar_ax = fig.add_axes([0.12, row_positions[1 - i], 0.78, cbar_height])
     sm = plt.cm.ScalarMappable(cmap=cmaps[i])
     sm.set_clim(vmins[i], vmaxs[i])
     cb = fig.colorbar(sm, cax=cbar_ax, orientation="horizontal")
-
-    display_label = label_map.get(loss, loss)  # default to original if not mapped
-    cb.set_label(f"{display_label} (ktons)", fontsize=15)
-    cb.ax.tick_params(labelsize=15)
+    # cb.set_label(f"{loss} (kg/ha)", fontsize=14)
+    cb.set_label(f"{loss} (ktons)", fontsize=14)
+    cb.ax.tick_params(labelsize=12)
 
 fig.subplots_adjust(left=0.06, right=0.96, bottom=0.08, top=0.94,
                     wspace=0.03, hspace=0.35)
 
 # === Save ===
-out_path = os.path.join(PlotDir, "Critical_NP_Runoff_maincrop_kg.png")
+out_path = os.path.join(PlotDir, f"Critical_NP_Runoff_kgperha.png")
 plt.savefig(out_path, dpi=300)
 plt.close()
 

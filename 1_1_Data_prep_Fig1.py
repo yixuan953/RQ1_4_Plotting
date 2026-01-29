@@ -10,14 +10,18 @@ Croptypes =  ["winterwheat", "maize", "mainrice", "secondrice", "soybean"]
 output_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary"
 
 # Input directory 1 - Simulated yield and losses
-Raifed_baseline_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_1_Baseline_rainfed"
-Irrigated_baseline_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_1_Baseline"
+# Raifed_baseline_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_1_Baseline_rainfed"
+Irrigated_baseline_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_2_Sus_Irrigation"  # Sustainable irrigation
+# Irrigated_baseline_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_1_Baseline"
+
+# Raifed_baseline_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_3_Rainfed/Red_org"
+# Irrigated_baseline_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_3_Sus_Irri_Red_Fert/Red_org"
 
 # Input directory 2 - Model input data, including, Harvested area from SPAM2010, Irrigation from VIC-WUR
 data_dir = "/lustre/nobackup/WUR/ESG/zhou111/2_RQ1_Data/2_StudyArea"
 
 # Input directory 3 - Calculated critical N, P runoff
-crit_loss_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/2_Critical_NP_losses"
+crit_loss_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/2_Critical_NP_losses/Method3"
 
 for basin in Studyarea:
     
@@ -26,15 +30,6 @@ for basin in Studyarea:
     ds_basin_mask = xr.open_dataset(basin_mask_file)
     mask = ds_basin_mask["mask"]
     mask = mask.where(mask == 1.0, np.nan)
-    
-    # Load critical N, P losses
-    crit_N_loss_file = os.path.join(crit_loss_dir, f"{basin}_crit_N_runoff_kgperha.nc")
-    ds_crit_N_loss = xr.open_dataset(crit_N_loss_file)
-    Crit_N_Runoff = ds_crit_N_loss["critical_maincrop_N_runoff"]
-
-    crit_P_loss_file = os.path.join(crit_loss_dir, f"{basin}_crit_P_runoff_kgperha.nc")
-    ds_crit_P_loss = xr.open_dataset(crit_P_loss_file)
-    Crit_P_Runoff = ds_crit_P_loss["critical_maincrop_P_runoff"]
 
     for crop in Croptypes:
 
@@ -60,6 +55,26 @@ for basin in Studyarea:
         N_Runoff_Irrigated =  N_Runoff_Irrigated_all.mean(dim = "year", skipna=True)
         P_Runoff_Irrigated =  P_Runoff_Irrigated_all.mean(dim = "year", skipna=True)
         Avg_Yield_Irrigated = Yield_Irrigated.mean(dim = "year", skipna=True)
+
+        # Load critical N, P losses
+        if crop == "winterwheat":
+            crop_crit_name = "Wheat"
+        elif crop == "maize":
+            crop_crit_name = "Maize"
+        elif crop == "soybean":
+            crop_crit_name = "Soybean"
+        elif crop == "mainrice":
+            crop_crit_name = "Rice"
+        elif crop == "secondrice":
+            crop_crit_name = "Rice" 
+            
+        crit_N_loss_file = os.path.join(crit_loss_dir, f"{crop_crit_name}/{basin}_crit_N_runoff_kg.nc")
+        ds_crit_N_loss = xr.open_dataset(crit_N_loss_file)
+        Crit_N_Runoff = ds_crit_N_loss["Critical_N_runoff"]
+
+        crit_P_loss_file = os.path.join(crit_loss_dir, f"{crop_crit_name}/{basin}_crit_P_runoff_kg.nc")
+        ds_crit_P_loss = xr.open_dataset(crit_P_loss_file)
+        Crit_P_Runoff = ds_crit_P_loss["Critical_P_runoff"]
 
         # Load harvested area
         if crop == "winterwheat":
@@ -100,10 +115,10 @@ for basin in Studyarea:
 
         # Calculate the total losses [kg] and water use
         N_Runoff_total = N_Runoff_Irrigated.fillna(0) * Irrigated_HA.fillna(0) + N_Runoff_Rainfed.fillna(0) * Rainfed_HA.fillna(0)
-        Crit_N_total = Crit_N_Runoff.fillna(0) * Total_HA.fillna(0)
+        Crit_N_total = Crit_N_Runoff.fillna(0)
 
         P_Runoff_total = P_Runoff_Irrigated.fillna(0) * Irrigated_HA.fillna(0) + P_Runoff_Rainfed.fillna(0) * Rainfed_HA.fillna(0)
-        Crit_P_total = Crit_P_Runoff.fillna(0) * Total_HA.fillna(0)
+        Crit_P_total = Crit_P_Runoff.fillna(0)
 
         Irri_total = Annual_Irri_rate.fillna(0) * Irrigated_HA.fillna(0) * 10 # Transform to m3 
         sus_Irri_total = Annual_sus_Irri_rate.fillna(0) * Irrigated_HA.fillna(0)  * 10 # Transform to m3 
@@ -113,7 +128,7 @@ for basin in Studyarea:
         P_exceedance = mask.copy()
         Irri_exceedance = mask.copy()
 
-        Irri_exceedance = xr.where(Irri_total > sus_Irri_total, 11, Irri_exceedance)
+        # Irri_exceedance = xr.where(Irri_total > sus_Irri_total, 11, Irri_exceedance) # Commnet this one if it is sustainable irrigated
         N_exceedance = xr.where(N_Runoff_total > Crit_N_total, 11, N_exceedance)
         P_exceedance = xr.where(P_Runoff_total > Crit_P_total, 11, P_exceedance)
 
@@ -142,6 +157,6 @@ for basin in Studyarea:
         )
 
         ds.attrs["description"] = f"Baseline scenario analysis for {crop} in {basin}"
-        output_file = os.path.join(output_dir, f"{basin}_{crop}_baseline_summary.nc")
+        output_file = os.path.join(output_dir, f"{basin}_{crop}_summary_baseline.nc")
         ds.to_netcdf(output_file)
         print(f"----> Successfully summarized baseline scenario and saved {output_file}")

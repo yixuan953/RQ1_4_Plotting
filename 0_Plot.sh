@@ -14,10 +14,26 @@ source /home/WUR/zhou111/miniconda3/etc/profile.d/conda.sh
 conda activate myenv
 
 
+# 1-0 Transfer the data from .csv to .nc
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/1_0_Export2nc.py
+
 # 1-1 Prepare the data for Fig. 1
 # python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/1_1_Data_prep_Fig1.py
 
-# 1-2 Plot the summary plot for Fig.1
-python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/1_2_Summary_Fig1.py
+# # 1-2 Plot the summary plot for Fig.1
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/1_2_Summary_Fig1_Indus.py
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/1_2_Summary_Fig1_LaPlata.py
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/1_2_Summary_Fig1_Rhine.py
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/1_2_Summary_Fig1_Yangtze.py
+
+# Demo Plots
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_Main_Fig1.py
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_SM_Fig1_Indus.py
+
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_SM_Fig1_Yangtze.py
+
+python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_SM_Fig1_Rhine.py
+
+python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_SM_Fig1_LaPlata.py
 
 conda deactivate
