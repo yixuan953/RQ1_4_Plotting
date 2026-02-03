@@ -19,21 +19,25 @@ conda activate myenv
 
 # 1-1 Prepare the data for Fig. 1
 # python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/1_1_Data_prep_Fig1.py
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_Main_Fig1.py
+
 
 # # 1-2 Plot the summary plot for Fig.1
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/1_2_Summary_Fig1_Indus.py
 # python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/1_2_Summary_Fig1_LaPlata.py
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/1_2_Summary_Fig1_Indus.py
 # python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/1_2_Summary_Fig1_Rhine.py
 # python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/1_2_Summary_Fig1_Yangtze.py
 
 # Demo Plots
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_Main_Fig1.py
 # python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_SM_Fig1_Indus.py
-
 # python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_SM_Fig1_Yangtze.py
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_SM_Fig1_Rhine.py
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_SM_Fig1_LaPlata.py
 
-python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_SM_Fig1_Rhine.py
 
-python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_SM_Fig1_LaPlata.py
+# 2-1 Prepare the data for plotting regional boundaries of N and P runoff (sum up of all crops)
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/2_1_Data_prep_Reg_bound.py
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_Main_Fig3_1.py
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_Main_Fig3_2.py
 
 conda deactivate

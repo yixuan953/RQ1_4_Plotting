@@ -7,15 +7,22 @@ end_year = 2019
 
 Studyarea =  ["Indus", "LaPlata", "Yangtze", "Rhine"]
 Croptypes =  ["winterwheat", "maize", "mainrice", "secondrice", "soybean"]
-output_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary"
 
 # Input directory 1 - Simulated yield and losses
+# Baseline scenario directories
 # Raifed_baseline_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_1_Baseline_rainfed"
-Irrigated_baseline_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_2_Sus_Irrigation"  # Sustainable irrigation
 # Irrigated_baseline_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_1_Baseline"
+# output_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/1_Baseline"
 
-# Raifed_baseline_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_3_Rainfed/Red_org"
-# Irrigated_baseline_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_3_Sus_Irri_Red_Fert/Red_org"
+# Sustainable irrigation scenario directories 
+# Irrigated_baseline_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_2_Sus_Irrigation"  # Sustainable irrigation
+# Raifed_baseline_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_1_Baseline_rainfed"
+# output_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/2_Sus_irrigation"
+
+# Reduced fertilizer scenario directories
+# Raifed_baseline_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_3_Rainfed/Red_prop"
+# Irrigated_baseline_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_3_Sus_Irri_Red_Fert/Red_prop"
+# output_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/3_Red_fert"
 
 # Input directory 2 - Model input data, including, Harvested area from SPAM2010, Irrigation from VIC-WUR
 data_dir = "/lustre/nobackup/WUR/ESG/zhou111/2_RQ1_Data/2_StudyArea"
@@ -157,6 +164,6 @@ for basin in Studyarea:
         )
 
         ds.attrs["description"] = f"Baseline scenario analysis for {crop} in {basin}"
-        output_file = os.path.join(output_dir, f"{basin}_{crop}_summary_baseline.nc")
+        output_file = os.path.join(output_dir, f"{basin}_{crop}_summary.nc")
         ds.to_netcdf(output_file)
         print(f"----> Successfully summarized baseline scenario and saved {output_file}")

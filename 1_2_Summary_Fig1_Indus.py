@@ -11,7 +11,7 @@ import numpy as np
 Studyarea =  ["Indus"] # ["Indus", "LaPlata", "Yangtze", "Rhine"]
 Croptypes =  ["winterwheat", "maize", "mainrice"] # ["winterwheat", "maize", "mainrice", "secondrice", "soybean"]
 data_dir = "/lustre/nobackup/WUR/ESG/zhou111/2_RQ1_Data"
-input_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary"
+input_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/3_Red_fert"
 output_dir = "/lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/1_Summary"
 
 for basin in Studyarea:
@@ -22,7 +22,7 @@ for basin in Studyarea:
 
     for crop in Croptypes:
 
-        input_file = os.path.join(input_dir, f"{basin}_{crop}_summary_baseline.nc") # Basline scenario
+        input_file = os.path.join(input_dir, f"{basin}_{crop}_summary.nc") 
         if not os.path.exists(input_file):
             print(f"{basin} basin does not have {crop}")
             continue

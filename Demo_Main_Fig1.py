@@ -10,7 +10,7 @@ Studyareas = ["LaPlata", "Indus", "Yangtze", "Rhine"]
 InputCrops = ["winterwheat", "maize", "mainrice", "secondrice", "soybean"]
 FinalCategories = ["Wheat", "Maize", "Rice", "Soybean"]
 
-input_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary"
+input_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/3_Red_fert"
 output_dir = "/lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/Demo_Plots/MainFigs"
 
 units = ["Irrigation water amount ($m^3$)", "ktons N", "ktons P"]
@@ -26,7 +26,7 @@ for b_idx, basin in enumerate(Studyareas):
                   ["Irri", "Sus_Irri", "N_Runoff", "Crit_N", "P_Runoff", "Crit_P"]}
 
     for crop in InputCrops:
-        file_path = os.path.join(input_dir, f"{basin}_{crop}_summary_baseline.nc")
+        file_path = os.path.join(input_dir, f"{basin}_{crop}_summary.nc")
         if not os.path.exists(file_path): continue
         target_cat = crop_mapper[crop]
         with xr.open_dataset(file_path) as ds:
@@ -119,5 +119,5 @@ fig.legend(
     fontsize=16
 )
 
-plt.savefig(os.path.join(output_dir, "Basin_Slim_Integral_Final.png"), bbox_inches='tight', dpi=300)
+plt.savefig(os.path.join(output_dir, "Red_Fer.png"), bbox_inches='tight', dpi=300)
 
