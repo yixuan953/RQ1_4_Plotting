@@ -37,7 +37,24 @@ conda activate myenv
 
 # 2-1 Prepare the data for plotting regional boundaries of N and P runoff (sum up of all crops)
 # python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/2_1_Data_prep_Reg_bound.py
+# 2-2 Prepare the data for plotting fertilizer reducton of N and P runoff (sum up of all crops)
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/2_2_Data_prep_Fert_red.py
+
+# Demo Plots: Crop production
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_Main_Fig2_1.py
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_Main_Fig2_2.py
+
+# Demo Plots: N, P exceedance
 # python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_Main_Fig3_1.py
 # python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_Main_Fig3_2.py
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_SM_Fig3.py
+
+# Demo Plots: annual N, P losses changes
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_Main_Fig4_1.py
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_Main_Fig4_2.py
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_Main_Fig4_3.py
+
+# Demo Plots: NP interactions
+python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_Main_Fig5.py
 
 conda deactivate

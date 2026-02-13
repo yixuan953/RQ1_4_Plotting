@@ -5,10 +5,10 @@ import numpy as np
 start_year = 2010
 end_year = 2019
 
-Studyarea =  ["Indus", "LaPlata", "Yangtze", "Rhine"]
-Croptypes =  ["winterwheat", "maize", "mainrice", "secondrice", "soybean"]
+Studyarea = ["Rhine"] # ["Indus", "Rhine", "LaPlata", "Yangtze"]
+Croptypes = ["maize"] # ["mainrice", "secondrice", "maize", "soybean", "winterwheat"]
 
-# Input directory 1 - Simulated yield and losses
+# Input directory 1 - Simulated yield and losses (choose between the following 4)
 # Baseline scenario directories
 # Raifed_baseline_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_1_Baseline_rainfed"
 # Irrigated_baseline_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_1_Baseline"
@@ -23,6 +23,12 @@ Croptypes =  ["winterwheat", "maize", "mainrice", "secondrice", "soybean"]
 # Raifed_baseline_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_3_Rainfed/Red_prop"
 # Irrigated_baseline_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_3_Sus_Irri_Red_Fert/Red_prop"
 # output_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/3_Red_fert"
+
+# Reduced fertilizer scenario directories + local increase
+Raifed_baseline_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_3_Rainfed/Inc_prop"
+Irrigated_baseline_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_3_Sus_Irri_Red_Fert/Inc_prop"
+output_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/4_Inc_fert"
+
 
 # Input directory 2 - Model input data, including, Harvested area from SPAM2010, Irrigation from VIC-WUR
 data_dir = "/lustre/nobackup/WUR/ESG/zhou111/2_RQ1_Data/2_StudyArea"
@@ -49,18 +55,20 @@ for basin in Studyarea:
 
         ds_rainfed_sim = xr.open_dataset(Rainfed_baseline_file)
         N_Runoff_Rainfed_all = ds_rainfed_sim["N_Runoff"].sel(year=slice(start_year, end_year))
-        P_Runoff_Rainfed_all = ds_rainfed_sim["P_Runoff"].sel(year=slice(start_year, end_year))
+        P_Runoff_Rainfed_all = ds_rainfed_sim["P_Runoff"].sel(year=2019)
         Yield_Rainfed = ds_rainfed_sim["Yield"].sel(year=slice(start_year, end_year))
         N_Runoff_Rainfed =  N_Runoff_Rainfed_all.mean(dim = "year", skipna=True)
-        P_Runoff_Rainfed =  P_Runoff_Rainfed_all.mean(dim = "year", skipna=True)
+        # P_Runoff_Rainfed =  P_Runoff_Rainfed_all.mean(dim = "year", skipna=True)
+        P_Runoff_Rainfed = P_Runoff_Rainfed_all
         Avg_Yield_Rainfed = Yield_Rainfed.mean(dim = "year", skipna=True)
         
         ds_Irrigated_sim = xr.open_dataset(Irrigated_baseline_file)
         N_Runoff_Irrigated_all = ds_Irrigated_sim["N_Runoff"].sel(year=slice(start_year, end_year))
-        P_Runoff_Irrigated_all = ds_Irrigated_sim["P_Runoff"].sel(year=slice(start_year, end_year))
+        P_Runoff_Irrigated_all = ds_Irrigated_sim["P_Runoff"].sel(year=2019)
         Yield_Irrigated = ds_Irrigated_sim["Yield"].sel(year=slice(start_year, end_year))
         N_Runoff_Irrigated =  N_Runoff_Irrigated_all.mean(dim = "year", skipna=True)
-        P_Runoff_Irrigated =  P_Runoff_Irrigated_all.mean(dim = "year", skipna=True)
+        # P_Runoff_Irrigated =  P_Runoff_Irrigated_all.mean(dim = "year", skipna=True)
+        P_Runoff_Irrigated = P_Runoff_Irrigated_all
         Avg_Yield_Irrigated = Yield_Irrigated.mean(dim = "year", skipna=True)
 
         # Load critical N, P losses

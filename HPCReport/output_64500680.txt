@@ -1,0 +1,95 @@
+Skipping LaPlata - secondrice: Files missing.
+
+============================================================
+ BASIN: LaPlata
+Crop       | Scenario                       |    Rainfed |     Irrig.
+------------------------------------------------------------
+Wheat      | Baseline                       | 6976.25171991 | 80.73154936
+Wheat      | Sustainable Irrigation         | 6976.25171991 | 80.73757079
+Wheat      | Sustainable Irrigation + Reduc | 5714.02517917 | 65.14405071
+Wheat      | Sustainable Irrigation + Reduc | 5714.02517917 | 65.14405071
+Maize      | Baseline                       | 5889.75444483 | 97.40094532
+Maize      | Sustainable Irrigation         | 5889.75444483 | 97.45914406
+Maize      | Sustainable Irrigation + Reduc | 4622.41876520 | 88.20097665
+Maize      | Sustainable Irrigation + Reduc | 4622.41876520 | 88.20097665
+Rice       | Baseline                       | 126.12573077 | 152.60997784
+Rice       | Sustainable Irrigation         | 126.12573077 | 152.68030094
+Rice       | Sustainable Irrigation + Reduc | 93.36611271 | 135.56581771
+Rice       | Sustainable Irrigation + Reduc | 93.36611271 | 135.56581771
+Soybean    | Baseline                       | 36658.91645417 | 93.54998576
+Soybean    | Sustainable Irrigation         | 36658.91645417 | 93.57218183
+Soybean    | Sustainable Irrigation + Reduc | 28885.44546201 | 77.98740586
+Soybean    | Sustainable Irrigation + Reduc | 28885.44546201 | 77.98740586
+============================================================
+Skipping Indus - secondrice: Files missing.
+Skipping Indus - soybean: Files missing.
+
+============================================================
+ BASIN: Indus
+Crop       | Scenario                       |    Rainfed |     Irrig.
+------------------------------------------------------------
+Wheat      | Baseline                       | 13512.93853903 | 13607.39378683
+Wheat      | Sustainable Irrigation         | 13512.93853903 | 13433.44476932
+Wheat      | Sustainable Irrigation + Reduc | 6890.57709891 | 6340.08055302
+Wheat      | Sustainable Irrigation + Reduc | 6890.57709891 | 6340.08055302
+Maize      | Baseline                       | 525.10606293 | 452.20167036
+Maize      | Sustainable Irrigation         | 525.10606293 | 436.87715623
+Maize      | Sustainable Irrigation + Reduc | 319.04746716 | 249.66015998
+Maize      | Sustainable Irrigation + Reduc | 319.04746716 | 249.66015998
+Rice       | Baseline                       | 2334.04770348 | 5582.20716948
+Rice       | Sustainable Irrigation         | 2334.04770348 | 5065.95807574
+Rice       | Sustainable Irrigation + Reduc | 934.50225652 | 2314.95881975
+Rice       | Sustainable Irrigation + Reduc | 934.50225652 | 2314.95881975
+Soybean    | Baseline                       | 0.00000000 | 0.00000000
+Soybean    | Sustainable Irrigation         | 0.00000000 | 0.00000000
+Soybean    | Sustainable Irrigation + Reduc | 0.00000000 | 0.00000000
+Soybean    | Sustainable Irrigation + Reduc | 0.00000000 | 0.00000000
+============================================================
+
+============================================================
+ BASIN: Yangtze
+Crop       | Scenario                       |    Rainfed |     Irrig.
+------------------------------------------------------------
+Wheat      | Baseline                       | 23758.91610968 | 28376.27572898
+Wheat      | Sustainable Irrigation         | 23758.91610968 | 28040.48495121
+Wheat      | Sustainable Irrigation + Reduc | 10711.90475462 | 11567.99399618
+Wheat      | Sustainable Irrigation + Reduc | 10711.90475462 | 11567.99399618
+Maize      | Baseline                       | 15236.31663075 | 7100.17979598
+Maize      | Sustainable Irrigation         | 15236.31663075 | 7099.73246526
+Maize      | Sustainable Irrigation + Reduc | 7643.84506859 | 2426.59102031
+Maize      | Sustainable Irrigation + Reduc | 7643.84506859 | 2426.59102031
+Rice       | Baseline                       | 261.90563713 | 91219.37431142
+Rice       | Sustainable Irrigation         | 261.90563713 | 91179.75262375
+Rice       | Sustainable Irrigation + Reduc | 114.84956043 | 40156.44552167
+Rice       | Sustainable Irrigation + Reduc | 114.84956043 | 40156.44552167
+Soybean    | Baseline                       | 2106.54675560 | 1528.30944567
+Soybean    | Sustainable Irrigation         | 2106.54675560 | 1523.41794258
+Soybean    | Sustainable Irrigation + Reduc | 2009.92143384 | 1490.41402060
+Soybean    | Sustainable Irrigation + Reduc | 2009.92143384 | 1490.41402060
+============================================================
+Skipping Rhine - mainrice: Files missing.
+Skipping Rhine - secondrice: Files missing.
+Skipping Rhine - soybean: Files missing.
+
+============================================================
+ BASIN: Rhine
+Crop       | Scenario                       |    Rainfed |     Irrig.
+------------------------------------------------------------
+Wheat      | Baseline                       | 9342.54851924 | 5.95638955
+Wheat      | Sustainable Irrigation         | 9342.54851924 | 5.95638955
+Wheat      | Sustainable Irrigation + Reduc | 4545.67677314 | 5.95353769
+Wheat      | Sustainable Irrigation + Reduc | 4545.67677314 | 5.95353769
+Maize      | Baseline                       | 1818.89276104 | 677.21632261
+Maize      | Sustainable Irrigation         | 1818.89276104 | 678.22838363
+Maize      | Sustainable Irrigation + Reduc | 843.86283279 | 353.42808707
+Maize      | Sustainable Irrigation + Reduc | 848.52521858 | 357.22533625
+Rice       | Baseline                       | 0.00000000 | 0.00000000
+Rice       | Sustainable Irrigation         | 0.00000000 | 0.00000000
+Rice       | Sustainable Irrigation + Reduc | 0.00000000 | 0.00000000
+Rice       | Sustainable Irrigation + Reduc | 0.00000000 | 0.00000000
+Soybean    | Baseline                       | 0.00000000 | 0.00000000
+Soybean    | Sustainable Irrigation         | 0.00000000 | 0.00000000
+Soybean    | Sustainable Irrigation + Reduc | 0.00000000 | 0.00000000
+Soybean    | Sustainable Irrigation + Reduc | 0.00000000 | 0.00000000
+============================================================
+Processing complete. Plots saved to output directory.

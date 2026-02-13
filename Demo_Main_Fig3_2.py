@@ -12,7 +12,8 @@ import numpy as np
 Studyarea =  ["Indus", "LaPlata", "Yangtze", "Rhine"]
 
 data_dir = "/lustre/nobackup/WUR/ESG/zhou111/2_RQ1_Data"
-input_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/3_Red_fert"
+# input_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/3_Red_fert"
+input_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/1_Baseline"
 output_dir = "/lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/Demo_Plots/MainFigs"
 
 for basin in Studyarea:
@@ -21,7 +22,13 @@ for basin in Studyarea:
     river_shp_file = os.path.join(data_dir, f"2_shp_StudyArea/{basin}/{basin}_River.shp")
     river_gdf = gpd.read_file(river_shp_file)
 
-    input_file = os.path.join(input_dir, f"{basin}_all_crop_summary.nc") 
+    # Mask the low flow 
+    low_runoff_path = os.path.join(data_dir, "2_StudyArea", basin, f"low_runoff_mask.nc")
+    with xr.open_dataset(low_runoff_path) as ds_low_runoff:
+        low_runoff = ds_low_runoff["Low_Runoff"]
+    mask_not_low_runoff = xr.where(low_runoff.isnull(), 1, np.nan)
+
+    input_file = os.path.join(input_dir, f"{basin}_all_crop_summary_baseline.nc") 
     if not os.path.exists(input_file):
         print(f"{basin} basin does not have summary.nc")
         continue
@@ -31,12 +38,12 @@ for basin in Studyarea:
     lat = ds_input["lat"].values
 
     # Variables for N runoff plot   
-    N_Runoff = ds_input["N_Runoff"]            
-    Crit_N_Runoff = ds_input["Crit_N_Runoff"]               
+    N_Runoff = ds_input["N_Runoff"] * mask_not_low_runoff             
+    Crit_N_Runoff = ds_input["Crit_N_Runoff"]  * mask_not_low_runoff              
     N_exceedance = (N_Runoff - Crit_N_Runoff)/N_Runoff
     # Variables for P runoff plot        
-    P_Runoff = ds_input["P_Runoff"]           
-    Crit_P_Runoff = ds_input["Crit_P_Runoff"]             
+    P_Runoff = ds_input["P_Runoff"] * mask_not_low_runoff           
+    Crit_P_Runoff = ds_input["Crit_P_Runoff"] * mask_not_low_runoff              
     P_exceedance = (P_Runoff - Crit_P_Runoff)/P_Runoff
 
     # ========== Start plotting ============
@@ -50,6 +57,7 @@ for basin in Studyarea:
     ax1 = fig1.add_subplot(gs[0, 0], projection=proj)
     N_exceedance = N_exceedance*100
     im1 = N_exceedance.plot(ax=ax1,cmap="PRGn_r",transform=ccrs.PlateCarree(),add_colorbar=False, vmin = vmin, vmax=vmax)
+    ax1.contourf(low_runoff.lon, low_runoff.lat, low_runoff, colors="#f6efd0da", hatches=['///'], transform=ccrs.PlateCarree())
     basin_gdf.to_crs("EPSG:4326").plot(ax=ax1,edgecolor="black",linewidth=1.5,facecolor="none",zorder=10)
     river_gdf.to_crs("EPSG:4326").plot(ax=ax1,edgecolor="blue",linewidth=0.8,facecolor="none",zorder=11)
     ax1.set_title(f"N exceedance/N critical")
@@ -58,6 +66,7 @@ for basin in Studyarea:
     ax2 = fig1.add_subplot(gs[0, 1], projection=proj)
     P_exceedance = P_exceedance*100
     im2 = P_exceedance.plot(ax=ax2,cmap="PRGn_r",transform=ccrs.PlateCarree(),add_colorbar=False,vmin = vmin, vmax=vmax)
+    ax2.contourf(low_runoff.lon, low_runoff.lat, low_runoff, colors="#f6efd0da", hatches=['///'], transform=ccrs.PlateCarree())
     basin_gdf.to_crs("EPSG:4326").plot(ax=ax2,edgecolor="black",linewidth=1.5,facecolor="none",zorder=10)
     river_gdf.to_crs("EPSG:4326").plot(ax=ax2,edgecolor="blue",linewidth=0.8,facecolor="none",zorder=11)
     ax2.set_title(f"P exceedance/P critical")
@@ -71,5 +80,5 @@ for basin in Studyarea:
     cbar.ax.xaxis.set_major_formatter(formatter)
     cbar.set_label("%")    
 
-    fig1.savefig(os.path.join(output_dir,f"{basin}_NP_exceedance.png"))
-    print(f"Successfully plotted {basin}_NP_exceedance.png")    
+    fig1.savefig(os.path.join(output_dir,f"{basin}_NP_exceedance_baseline.png"))
+    print(f"Successfully plotted {basin}_NP_exceedance_baseline.png")    

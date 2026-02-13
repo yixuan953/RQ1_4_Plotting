@@ -1,0 +1,3 @@
+Successfully plotted Indus_total_N_runoff.png
+Successfully plotted Indus_total_P_runoff.png
+Successfully plotted Indus_total_irri.png

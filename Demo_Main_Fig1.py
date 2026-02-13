@@ -10,8 +10,9 @@ Studyareas = ["LaPlata", "Indus", "Yangtze", "Rhine"]
 InputCrops = ["winterwheat", "maize", "mainrice", "secondrice", "soybean"]
 FinalCategories = ["Wheat", "Maize", "Rice", "Soybean"]
 
-input_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/3_Red_fert"
+input_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/1_Baseline"
 output_dir = "/lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/Demo_Plots/MainFigs"
+data_dir = "/lustre/nobackup/WUR/ESG/zhou111/2_RQ1_Data/2_StudyArea"
 
 units = ["Irrigation water amount ($m^3$)", "ktons N", "ktons P"]
 cat_colors = {"Wheat": "#E3B448", "Rice": "#4793AF", "Maize": "#D85C27",  "Soybean": "#6B8E23"}
@@ -24,19 +25,23 @@ plt.subplots_adjust(hspace=0.35, wspace=0.45, top=0.92)
 for b_idx, basin in enumerate(Studyareas):
     basin_data = {m: {cat: 0.0 for cat in FinalCategories} for m in 
                   ["Irri", "Sus_Irri", "N_Runoff", "Crit_N", "P_Runoff", "Crit_P"]}
+    low_runoff_path = os.path.join(data_dir, basin, f"low_runoff_mask.nc")
+    with xr.open_dataset(low_runoff_path) as ds_low_runoff:
+        low_runoff = ds_low_runoff["Low_Runoff"]
 
     for crop in InputCrops:
-        file_path = os.path.join(input_dir, f"{basin}_{crop}_summary.nc")
+        file_path = os.path.join(input_dir, f"{basin}_{crop}_summary_baseline.nc")
         if not os.path.exists(file_path): continue
         target_cat = crop_mapper[crop]
         with xr.open_dataset(file_path) as ds:
             mask, i_m, t_m = ds['Basin_mask'], ds['Irrigated_HA'] > 2500, ds['Total_HA'] > 2500
+            mask_not_low_runoff = xr.where(low_runoff.isnull() & (mask == 1), 1, np.nan)
             basin_data["Irri"][target_cat] += (ds['Total_irrigation_amount'].where(i_m) * mask).sum().item()
             basin_data["Sus_Irri"][target_cat] += (ds['Sus_irrigation_amount'].where(i_m) * mask).sum().item()
-            basin_data["N_Runoff"][target_cat] += (0.000001 * ds['N_Runoff'].where(t_m) * mask).sum().item()
-            basin_data["Crit_N"][target_cat] += (0.000001 *ds['Crit_N_Runoff'].where(t_m) * mask).sum().item()
-            basin_data["P_Runoff"][target_cat] += (0.000001 *ds['P_Runoff'].where(t_m) * mask).sum().item()
-            basin_data["Crit_P"][target_cat] += (0.000001 *ds['Crit_P_Runoff'].where(t_m) * mask).sum().item()
+            basin_data["N_Runoff"][target_cat] += (0.000001 * ds['N_Runoff'].where(t_m) * mask_not_low_runoff * mask).sum().item()
+            basin_data["Crit_N"][target_cat] += (0.000001 *ds['Crit_N_Runoff'].where(t_m) * mask_not_low_runoff * mask).sum().item()
+            basin_data["P_Runoff"][target_cat] += (0.000001 *ds['P_Runoff'].where(t_m) * mask_not_low_runoff * mask).sum().item()
+            basin_data["Crit_P"][target_cat] += (0.000001 *ds['Crit_P_Runoff'].where(t_m) * mask_not_low_runoff * mask).sum().item()
 
     metric_cols = [(basin_data["Irri"], basin_data["Sus_Irri"]),
                    (basin_data["N_Runoff"], basin_data["Crit_N"]),
@@ -119,5 +124,4 @@ fig.legend(
     fontsize=16
 )
 
-plt.savefig(os.path.join(output_dir, "Red_Fer.png"), bbox_inches='tight', dpi=300)
-
+plt.savefig(os.path.join(output_dir, "Fig1.png"), bbox_inches='tight', dpi=300)

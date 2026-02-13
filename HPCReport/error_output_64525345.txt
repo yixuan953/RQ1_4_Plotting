@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_Main_Fig5.py", line 146, in <module>
+    Irri_n_input_tot_baseline, Irri_n_uptake_tot_baseline, Irri_p_uptake_tot_baseline, Irri_p_acc_baseline, Irri_p_pool_baseline = get_metrics(sc1_irri,sc1_nc,bd_df)
+  File "/lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_Main_Fig5.py", line 20, in get_metrics
+    m1 = df.merge(area_df, left_on=["Lat","Lon"], right_on=["lat","lon"])
+  File "/home/WUR/zhou111/miniconda3/envs/myenv/lib/python3.10/site-packages/pandas/core/frame.py", line 10832, in merge
+    return merge(
+  File "/home/WUR/zhou111/miniconda3/envs/myenv/lib/python3.10/site-packages/pandas/core/reshape/merge.py", line 153, in merge
+    right_df = _validate_operand(right)
+  File "/home/WUR/zhou111/miniconda3/envs/myenv/lib/python3.10/site-packages/pandas/core/reshape/merge.py", line 2692, in _validate_operand
+    raise TypeError(
+TypeError: Can only merge Series or DataFrame objects, a <class 'str'> was passed
