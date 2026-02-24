@@ -7,15 +7,16 @@ import os
 studyareas = ["Indus", "Rhine", "LaPlata", "Yangtze"]
 croptypes = ["mainrice", "secondrice", "maize", "soybean", "winterwheat"]
 
+
 # Irrigated paths
-# csv_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_3_Sus_Irri_Red_Fert/Inc_prop"
-# range_dir = "/lustre/nobackup/WUR/ESG/zhou111/2_RQ1_Data/2_StudyArea"
-# out_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_3_Sus_Irri_Red_Fert/Inc_prop"
+csv_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_3_Sus_Irri_Red_Fert/Inc_prop"
+range_dir = "/lustre/nobackup/WUR/ESG/zhou111/2_RQ1_Data/2_StudyArea"
+out_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_3_Sus_Irri_Red_Fert/Inc_prop"
 
 # Rainfed paths
-csv_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_3_Rainfed/Inc_prop"
-range_dir = "/lustre/nobackup/WUR/ESG/zhou111/2_RQ1_Data/2_StudyArea"
-out_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_3_Rainfed/Inc_prop"
+# csv_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_3_Rainfed/Inc_prop"
+# range_dir = "/lustre/nobackup/WUR/ESG/zhou111/2_RQ1_Data/2_StudyArea"
+# out_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_3_Rainfed/Inc_prop"
 
 
 for studyarea in studyareas:
@@ -58,6 +59,8 @@ for studyarea in studyareas:
         pup_arr = np.full(shape, np.nan)
         nloss_arr = np.full(shape, np.nan)
         ploss_arr = np.full(shape, np.nan)
+        ngrain_arr = np.full(shape, np.nan)
+        pgrain_arr = np.full(shape, np.nan)
 
         # fill arrays
         for _, row in df.iterrows():
@@ -72,6 +75,8 @@ for studyarea in studyareas:
                 pup_arr[t, i, j] = row["P_uptake"]
                 nloss_arr[t, i, j] = row["N_surf"] + row["N_sub"] 
                 ploss_arr[t, i, j] = row["P_surf"] + row["P_sub"] 
+                ngrain_arr[t, i, j] = row["N_grain"]
+                pgrain_arr[t, i, j] = row["P_grain"]
 
         # make Dataset
         ds = xr.Dataset(
@@ -83,6 +88,9 @@ for studyarea in studyareas:
                 "P_Uptake": (("year", "lat", "lon"), pup_arr),
                 "N_Runoff": (("year", "lat", "lon"), nloss_arr),
                 "P_Runoff": (("year", "lat", "lon"), ploss_arr),
+                "N_grain": (("year", "lat", "lon"), ngrain_arr),
+                "P_grain": (("year", "lat", "lon"), pgrain_arr),
+
             },
             coords={"year": years, "lat": lat, "lon": lon}
         )

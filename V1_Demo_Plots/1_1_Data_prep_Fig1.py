@@ -5,8 +5,8 @@ import numpy as np
 start_year = 2010
 end_year = 2019
 
-Studyarea = ["Rhine"] # ["Indus", "Rhine", "LaPlata", "Yangtze"]
-Croptypes = ["maize"] # ["mainrice", "secondrice", "maize", "soybean", "winterwheat"]
+Studyarea = ["Indus", "Rhine", "LaPlata", "Yangtze"]
+Croptypes = ["mainrice", "secondrice", "maize", "soybean", "winterwheat"]
 
 # Input directory 1 - Simulated yield and losses (choose between the following 4)
 # Baseline scenario directories
@@ -19,7 +19,7 @@ Croptypes = ["maize"] # ["mainrice", "secondrice", "maize", "soybean", "winterwh
 # Raifed_baseline_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_1_Baseline_rainfed"
 # output_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/2_Sus_irrigation"
 
-# Reduced fertilizer scenario directories
+# # Reduced fertilizer scenario directories
 # Raifed_baseline_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_3_Rainfed/Red_prop"
 # Irrigated_baseline_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_3_Sus_Irri_Red_Fert/Red_prop"
 # output_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/3_Red_fert"

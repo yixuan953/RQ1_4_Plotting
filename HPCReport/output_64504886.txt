@@ -1,4 +1,0 @@
-Successfully plotted Indus_NP_exceedance_baseline.png
-Successfully plotted LaPlata_NP_exceedance_baseline.png
-Successfully plotted Yangtze_NP_exceedance_baseline.png
-Successfully plotted Rhine_NP_exceedance_baseline.png

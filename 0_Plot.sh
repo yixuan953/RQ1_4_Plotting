@@ -13,48 +13,26 @@
 source /home/WUR/zhou111/miniconda3/etc/profile.d/conda.sh
 conda activate myenv
 
-
-# 1-0 Transfer the data from .csv to .nc
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/1_0_Export2nc.py
-
-# 1-1 Prepare the data for Fig. 1
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/1_1_Data_prep_Fig1.py
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_Main_Fig1.py
-
-
-# # 1-2 Plot the summary plot for Fig.1
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/1_2_Summary_Fig1_LaPlata.py
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/1_2_Summary_Fig1_Indus.py
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/1_2_Summary_Fig1_Rhine.py
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/1_2_Summary_Fig1_Yangtze.py
-
-# Demo Plots
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_SM_Fig1_Indus.py
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_SM_Fig1_Yangtze.py
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_SM_Fig1_Rhine.py
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_SM_Fig1_LaPlata.py
+# ========================= Demo Fig.1 
+# Fig. 1a Exceeedance of irrigation water use, N and P runoff of the 4 major crops (wheat, rice, maize, soybean)
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_Fig1a.py
+# Fig. 1b Map of exceedance
+# ython /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_Fig1b.py
+# Fig. 1c Bars of exceedance by crop
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_Fig1c.py
 
 
-# 2-1 Prepare the data for plotting regional boundaries of N and P runoff (sum up of all crops)
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/2_1_Data_prep_Reg_bound.py
-# 2-2 Prepare the data for plotting fertilizer reducton of N and P runoff (sum up of all crops)
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/2_2_Data_prep_Fert_red.py
+# ========================= Demo Fig.3
+# Fig. 3a Maps of N, P runoff reduction: (Scenario 4 - Scenario 1)/Scenario 1
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_Fig3a.py
+# Fig. 3b Bar plot of changes in N, P runoff 
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_Fig3b.py
 
-# Demo Plots: Crop production
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_Main_Fig2_1.py
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_Main_Fig2_2.py
 
-# Demo Plots: N, P exceedance
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_Main_Fig3_1.py
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_Main_Fig3_2.py
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_SM_Fig3.py
-
-# Demo Plots: annual N, P losses changes
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_Main_Fig4_1.py
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_Main_Fig4_2.py
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_Main_Fig4_3.py
-
-# Demo Plots: NP interactions
-python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_Main_Fig5.py
+# ========================= Demo Fig.4
+# Fig. 4a Maps of crop production reduction: (Scenario 4 - Scenario 1)/Scenario 1
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_Fig4a.py
+# Fig. 4b Bar plot of changes in crop production
+python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_Fig4b.py
 
 conda deactivate

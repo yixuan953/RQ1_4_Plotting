@@ -1,0 +1,20 @@
+----> Successfully summarized baseline scenario and saved /lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/3_Red_fert/Indus_mainrice_summary.nc
+Missing secondrice for basin Indus
+----> Successfully summarized baseline scenario and saved /lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/3_Red_fert/Indus_maize_summary.nc
+Missing soybean for basin Indus
+----> Successfully summarized baseline scenario and saved /lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/3_Red_fert/Indus_winterwheat_summary.nc
+Missing mainrice for basin Rhine
+Missing secondrice for basin Rhine
+----> Successfully summarized baseline scenario and saved /lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/3_Red_fert/Rhine_maize_summary.nc
+Missing soybean for basin Rhine
+----> Successfully summarized baseline scenario and saved /lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/3_Red_fert/Rhine_winterwheat_summary.nc
+----> Successfully summarized baseline scenario and saved /lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/3_Red_fert/LaPlata_mainrice_summary.nc
+Missing secondrice for basin LaPlata
+----> Successfully summarized baseline scenario and saved /lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/3_Red_fert/LaPlata_maize_summary.nc
+----> Successfully summarized baseline scenario and saved /lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/3_Red_fert/LaPlata_soybean_summary.nc
+----> Successfully summarized baseline scenario and saved /lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/3_Red_fert/LaPlata_winterwheat_summary.nc
+----> Successfully summarized baseline scenario and saved /lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/3_Red_fert/Yangtze_mainrice_summary.nc
+----> Successfully summarized baseline scenario and saved /lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/3_Red_fert/Yangtze_secondrice_summary.nc
+----> Successfully summarized baseline scenario and saved /lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/3_Red_fert/Yangtze_maize_summary.nc
+----> Successfully summarized baseline scenario and saved /lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/3_Red_fert/Yangtze_soybean_summary.nc
+----> Successfully summarized baseline scenario and saved /lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/3_Red_fert/Yangtze_winterwheat_summary.nc
