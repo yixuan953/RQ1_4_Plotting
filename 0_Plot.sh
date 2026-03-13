@@ -13,26 +13,22 @@
 source /home/WUR/zhou111/miniconda3/etc/profile.d/conda.sh
 conda activate myenv
 
-# ========================= Demo Fig.1 
-# Fig. 1a Exceeedance of irrigation water use, N and P runoff of the 4 major crops (wheat, rice, maize, soybean)
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_Fig1a.py
-# Fig. 1b Map of exceedance
-# ython /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_Fig1b.py
-# Fig. 1c Bars of exceedance by crop
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_Fig1c.py
+
+# ========================= Demo Fig.1: Boundaries for cropland N and P runoff to surface water in ktons & kg/ha
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig1_Stat1.py
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig1_Stat2.py
+python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig1a_BoundariesBar.py
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig1b_BoundariesMaps.py
+
+# ========================= Demo Fig.2: Simulated yield and losses
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig2_Yield_Losses.py
+
+# ========================= Demo Fig.3: Exceedance of boundaries
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig3_Exceedance.py
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig3_BarPlots.py
 
 
-# ========================= Demo Fig.3
-# Fig. 3a Maps of N, P runoff reduction: (Scenario 4 - Scenario 1)/Scenario 1
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_Fig3a.py
-# Fig. 3b Bar plot of changes in N, P runoff 
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_Fig3b.py
+# ========================= Statistical analyiss
 
-
-# ========================= Demo Fig.4
-# Fig. 4a Maps of crop production reduction: (Scenario 4 - Scenario 1)/Scenario 1
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_Fig4a.py
-# Fig. 4b Bar plot of changes in crop production
-python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_Fig4b.py
 
 conda deactivate

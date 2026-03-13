@@ -7,18 +7,19 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Configuration
-Studyareas = ["LaPlata", "Indus", "Yangtze", "Rhine"]
-CropTypes = ["winterwheat", "maize", "mainrice", "secondrice", "soybean"]
+Studyareas = ["Indus"] # ["LaPlata", "Indus", "Yangtze", "Rhine"]
+CropTypes = ["winterwheat"] # ["winterwheat", "mainrice", "secondrice", "maize", "soybean"]
 # Define scenarios: "Red_prop" is the main comparison, others are light sensitivity lines
-Sens_Scenarios = ["Red_prop", "Red_02", "Red_04", "Red_06", "Red_08", "Red_10", "Red_12", "Red_14"]
+Sens_Scenarios = ["Red_prop", "Red_02", "Red_04", "Red_06", "Red_08", "Red_10", "Red_12", "Red_14"] 
 
 input_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios"
-output_dir = "/lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V1_Demo_Plots/MainFigs/Fig4"
+output_dir = "/lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V2_Demo_Plots/Fig5/5b"
 os.makedirs(output_dir, exist_ok=True)
 
 p_mol = 30.97 # 1 mol P = 30.97 g
-crit_P_olsen = 15 # [mg/kg]
-Trans_fact = 8 # P Pxalate = P Olsen * 8 = Labile + Stable P pool
+
+# crit_P_olsen = 15 # [mg/kg]
+# Trans_fact = 8 # P Pxalate = P Olsen * 8 = Labile + Stable P pool
 
 def get_metrics(csv_path, area_df, bd_df):
     df = pd.read_csv(csv_path, skipinitialspace=True)
@@ -44,15 +45,15 @@ def get_metrics(csv_path, area_df, bd_df):
 def plot_data(base_p, red_dict, crop_name, basin_name, irrigation):
     plt.figure(figsize=(10, 6))
 
-    # 1. Plot the Grey Range (shading)
-    # We calculate the lower and upper bounds using the +/- 3 margin
-    lower_bound = (crit_P_olsen - 3) * Trans_fact
-    upper_bound = (crit_P_olsen + 3) * Trans_fact
+    # # 1. Plot the Grey Range (shading)
+    # # We calculate the lower and upper bounds using the +/- 3 margin
+    # lower_bound = (crit_P_olsen - 3) * Trans_fact
+    # upper_bound = (crit_P_olsen + 3) * Trans_fact
 
-    plt.axhspan(lower_bound, upper_bound, color='grey', alpha=0.3, 
-                label='P pool size for crop growth without P limitation\n[P Olsen = 15 ± 3 mg/kg]', zorder=0)
-    plt.axhline(y=Trans_fact * crit_P_olsen, color='red', linestyle='--', 
-                label='Critical P pool', linewidth=1.2, zorder=1)
+    # plt.axhspan(lower_bound, upper_bound, color='grey', alpha=0.3, 
+    #             label='P pool size for crop growth without P limitation\n[P Olsen = 15 ± 3 mg/kg]', zorder=0)
+    # plt.axhline(y=Trans_fact * crit_P_olsen, color='red', linestyle='--', 
+    #             label='Critical P pool size', linewidth=1.2, zorder=1)
 
     # 2. Plot Sensitivity Lines (Light and Thin)
     # We only add one label for "Sensitivity" to keep the legend clean
@@ -79,7 +80,7 @@ def plot_data(base_p, red_dict, crop_name, basin_name, irrigation):
     plt.ylabel("Labile + Stable P pool [mg/kg]", fontsize=12)
     
     # Adjust legend: loc='best' or outside if too crowded
-    plt.ylim(0, 400)
+    plt.ylim(0, 100)
     # Ensure all years are visible on x-axis
     plt.xticks(range(2010, 2020), fontsize=12)
     plt.yticks(fontsize=12)
@@ -92,7 +93,6 @@ def plot_data(base_p, red_dict, crop_name, basin_name, irrigation):
 
 for basin in Studyareas:
     range_nc = os.path.join("/lustre/nobackup/WUR/ESG/zhou111/2_RQ1_Data/2_StudyArea", basin, "range.nc")
-
 
     with xr.open_dataset(range_nc) as ds_range:
         template = ds_range["mask"]
@@ -147,4 +147,3 @@ for basin in Studyareas:
         
         plot_data(Irri_base_P_pool, Irrigated_crop_red_dict, crop, basin, irrigation = "Irri")
         plot_data(Rainfed_base_P_pool, Rainfed_crop_red_dict, crop, basin, irrigation = "Rain")
-

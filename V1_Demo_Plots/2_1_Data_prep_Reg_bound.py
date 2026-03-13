@@ -9,13 +9,15 @@ Croptypes =  ["winterwheat", "maize", "mainrice", "secondrice", "soybean"]
 
 for basin in Studyarea:
     # output_file = f"/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/3_Red_fert/{basin}_all_crop_summary.nc"
-    output_file = f"/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/1_Baseline/{basin}_all_crop_summary_baseline.nc"
+    output_file = f"/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/1_Baseline/{basin}_all_crop_summary.nc"
     range_nc = os.path.join("/lustre/nobackup/WUR/ESG/zhou111/2_RQ1_Data/2_StudyArea", basin, "range.nc")
     
     with xr.open_dataset(range_nc) as ds_range:
         template = ds_range["mask"]
         
     # Initialize totals as zeros with the EXACT same coordinates as the template
+    total_HA = xr.full_like(template, 0.0, dtype=np.float32)
+    total_Irri_HA = xr.full_like(template, 0.0, dtype=np.float32)
     total_n = xr.full_like(template, 0.0, dtype=np.float32)
     total_p = xr.full_like(template, 0.0, dtype=np.float32)
     total_irri = xr.full_like(template, 0.0, dtype=np.float32)
@@ -25,7 +27,7 @@ for basin in Studyarea:
 
     for crop in Croptypes:
         # input_file = f"/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/3_Red_fert/{basin}_{crop}_summary.nc"
-        input_file = f"/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/1_Baseline/{basin}_{crop}_summary_baseline.nc"
+        input_file = f"/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/1_Baseline/{basin}_{crop}_summary.nc"
 
         if not os.path.exists(input_file):
             print(f"Skipping: {crop} in {basin} (File not found)")
@@ -39,6 +41,8 @@ for basin in Studyarea:
             mask = ds_aligned['Basin_mask'].where(ds_aligned['Total_HA'] > 2500)
 
             # Use += with fillna to accumulate values
+            total_Irri_HA += (ds_aligned['Irrigated_HA'] * mask).fillna(0)
+            total_HA += (ds_aligned['Total_HA'] * mask).fillna(0)
             total_n += (ds_aligned['N_Runoff'] * mask).fillna(0)
             total_p += (ds_aligned['P_Runoff'] * mask).fillna(0)
             total_irri += (ds_aligned['Total_irrigation_amount'] * mask).fillna(0)
@@ -52,12 +56,14 @@ for basin in Studyarea:
     final_mask = template != 0 
     
     ds_out = xr.Dataset({
+        "Total_HA": total_HA.where(final_mask, np.nan),
+        "Irrigated_HA": total_Irri_HA.where(final_mask, np.nan),
         "N_Runoff": total_n.where(final_mask, np.nan),
         "P_Runoff": total_p.where(final_mask, np.nan),
-        "Irrigation": total_irri.where(final_mask, np.nan),
+        "Total_irrigation_amount": total_irri.where(final_mask, np.nan),
         "Crit_N_Runoff": total_crit_n.where(final_mask, np.nan),
         "Crit_P_Runoff": total_crit_p.where(final_mask, np.nan),
-        "Crit_Irrigation": total_crit_irri.where(final_mask, np.nan),
+        "Sus_irrigation_amount": total_crit_irri.where(final_mask, np.nan),
     })
 
     ds_out.to_netcdf(output_file)
