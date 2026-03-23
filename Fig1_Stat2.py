@@ -20,7 +20,7 @@ Croptypes = ["winterwheat", "maize", "mainrice", "secondrice", "soybean"]
 def GetCropWNP(file_name, low_runoff_path):
     with xr.open_dataset(file_name) as ds:
         # Use .values to ensure we get a clean sum without coord issues
-        mask = xr.where(ds["Total_HA"] > 2500, 1, np.nan)
+        mask = ds["Basin_mask"].where(ds["Total_HA"] > 2500, np.nan)
         
         with xr.open_dataset(low_runoff_path) as ds_lr:
             low_runoff = ds_lr["Low_Runoff"]

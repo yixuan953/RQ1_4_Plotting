@@ -90,7 +90,7 @@ def Yield_Reduction_Map(var_key, data_dict, basins, output_path):
             with xr.open_dataset(low_runoff_path) as ds_lr:
                 lr_mask = ds_lr["Low_Runoff"] 
             lr_mask.plot.imshow(ax=ax, transform=ccrs.PlateCarree(), 
-                                cmap=mcolors.ListedColormap(["#D3D3D3FF"]), 
+                                cmap=mcolors.ListedColormap(["#E4E3E3FF"]), 
                                 add_colorbar=False, zorder=2)
 
         # 6. Plot Main Data

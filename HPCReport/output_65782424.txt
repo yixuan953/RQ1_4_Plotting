@@ -1,0 +1,1 @@
+Figures generated: Subplot heights adjusted dynamically to crop counts.

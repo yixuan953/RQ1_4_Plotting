@@ -2,21 +2,21 @@
 
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.font_manager as fm
 import numpy as np
 import os
+
 
 csv_dir = "/lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V3_Statistics/1_Boundary_load"
 output_dir = "/lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V3_Demo_Plots/Fig1_Boundary/1a_Bars"
 basins = ["Indus", "LaPlata", "Yangtze", "Rhine"]
 
-# Global font settings
-plt.rcParams.update({'font.size': 12, 'font.family': 'sans-serif'}) 
 
 crop_colors = {
-    'Wheat': "#DBC97F",
-    'Maize': '#DD7C64',
-    'Rice': "#F1C6CD",
-    'Soybean': '#63AD96'
+    'Wheat': "#FADFA1",
+    'Maize': '#C96868',
+    'Rice': "#BB8ED0",
+    'Soybean': '#3A8B95'
 }
 
 def create_boundary_plot(basin, element):
@@ -27,8 +27,9 @@ def create_boundary_plot(basin, element):
     col_name = f"{element} [ktons]"
     
     # 1. Values
-    total_val = df.loc['Total', col_name]
-    agri_val = df.loc['Agri', col_name]
+    total_val = df.loc['All sources', col_name]
+    agri_val = df.loc['Agriculture', col_name]
+    cropland_val = df.loc['Cropland', col_name]
     
     # 2. Crop Values
     wheat = df.loc['winterwheat', col_name] if 'winterwheat' in df.index else 0
@@ -37,20 +38,25 @@ def create_boundary_plot(basin, element):
            (df.loc['secondrice', col_name] if 'secondrice' in df.index else 0)
     soybean = df.loc['soybean', col_name] if 'soybean' in df.index else 0
     
-    all_crop_sum = wheat + maize + rice + soybean
+    major_crop_sum = wheat + maize + rice + soybean
     crops = {'Wheat': wheat, 'Maize': maize, 'Rice': rice, 'Soybean': soybean}
     
     # 3. Proportions
     prop_agri_total = (agri_val / total_val) * 100
-    prop_allcrop_agri = (all_crop_sum / agri_val) * 100
+    prop_allcrop = (cropland_val / agri_val) * 100
+    prop_majorcrops = (major_crop_sum / cropland_val) * 100
 
     # 4. Plotting
-    fig, ax = plt.subplots(figsize=(11, 3))
-    y_labels = ['Major crops', 'Agriculture', 'Total']
+    fig, ax = plt.subplots(figsize=(10, 3))
+    plt.rcParams['font.family'] = 'sans-serif'
+    plt.rcParams['font.sans-serif'] = ['Liberation Sans', 'DejaVu Sans']
+    plt.tick_params(axis='x', labelsize=16)
+    y_labels = ['Major crops', 'Cropland', 'Agriculture', 'All sources']
     
     # Bars
-    ax.barh(2, total_val, color="#e4e1e1e3", edgecolor= "#c6c1c1f8", height=0.6, linewidth=2)
-    ax.barh(1, agri_val, color="#fff6ee", edgecolor="#d4bdaa", height=0.6, linewidth=2)
+    ax.barh(3, total_val, color="#547792", edgecolor= "white", height=0.6, linewidth=2) # All sources
+    ax.barh(2, agri_val, color="#AACDDC", edgecolor= "white", height=0.6, linewidth=2) # Agriculture
+    ax.barh(1, cropland_val, color="#D6DAC8", edgecolor="white", height=0.6, linewidth=2) # Cropland
     
     left_start = 0
     for name, val in crops.items():
@@ -81,10 +87,14 @@ def create_boundary_plot(basin, element):
         step = 100
     elif total_val > 150:
         step = 50
-    elif total_val > 80:
+    elif total_val > 60:
         step = 20
+    elif total_val > 20:
+        step = 10
+    elif total_val > 15:
+        step = 5
     else: 
-        step = 10    
+        step = 2    
     upper_bound = int(np.ceil(total_val / step)) * step
     
     # 2. Apply the limit
@@ -96,17 +106,19 @@ def create_boundary_plot(basin, element):
     ax.set_xticks(ticks)
 
     # Adjust labels and font sizes
-    ax.set_yticks([0, 1, 2])
-    ax.set_yticklabels(y_labels, fontsize=16)
+    ax.set_yticks([0, 1, 2, 3])
+    ax.set_yticklabels(y_labels, fontsize=18)
     ax.set_xlabel(f'Boundaries for {element} delivery to surface water [ktons]', 
-                  fontsize=16, labelpad=20)
+                  fontsize=18, labelpad=20)
     
     # Text Annotations
-    ax.text(agri_val, 1, f'  {prop_agri_total:.0f}% of total', 
-            va='center', fontsize=15)
-    ax.text(all_crop_sum, 0, f'  {prop_allcrop_agri:.0f}% of agricultural land {element} runoff to surface water', 
-            va='center', fontsize=15)
-    
+    ax.text(agri_val, 2, f'  {prop_agri_total:.0f}% of all sources', 
+            va='center', fontsize=18)
+    ax.text(cropland_val, 1, f'  {prop_allcrop:.0f}% of agriculture', 
+            va='center', fontsize=18)
+    ax.text(major_crop_sum, 0, f'  {prop_majorcrops:.0f}% of all crops', 
+            va='center', fontsize=18)
+        
     # Optional: ensure the axes lines match the tick color
     ax.spines['top'].set_color('#333333')
     ax.spines['left'].set_color('#333333')

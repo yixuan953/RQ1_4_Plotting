@@ -15,7 +15,12 @@ output_dir = "/lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V3_Demo_Pl
 data_dir = "/lustre/nobackup/WUR/ESG/zhou111/2_RQ1_Data/2_StudyArea"
 
 units = ["Irrigation water amount ($m^3$)", "ktons N", "ktons P"]
-cat_colors = {"Wheat": "#EBD5C6", "Maize": "#F4E99E",  "Rice": "#C1D5E8", "Soybean": "#C8DABC"}
+cat_colors = {
+    'Wheat': "#DBC97F",
+    'Maize': '#DD7C64',
+    'Rice': "#F1C6CD",
+    'Soybean': '#63AD96'
+}
 crop_mapper = {"winterwheat": "Wheat", "maize": "Maize", "mainrice": "Rice", "secondrice": "Rice", "soybean": "Soybean"}
 
 # Adjust figsize: width reduced to 12 for skinnier subplots
@@ -56,8 +61,8 @@ for b_idx, basin in enumerate(Studyareas):
         for cat in FinalCategories:
             v_base = base_dict[cat]
             v_crit = crit_dict[cat]
-            ax.bar(0, v_base, bottom=b_base, width=bar_width, color=cat_colors[cat], edgecolor='white', linewidth=0.5)
-            ax.bar(1, v_crit, bottom=b_crit, width=bar_width, color=cat_colors[cat], alpha=1.0, edgecolor='white', linewidth=0.5)
+            ax.bar(0, v_base, bottom=b_base, width=bar_width, color=cat_colors[cat], alpha=0.7, edgecolor='white', linewidth=0.5)
+            ax.bar(1, v_crit, bottom=b_crit, width=bar_width, color=cat_colors[cat], alpha=0.7, edgecolor='white', linewidth=0.5)
             b_base += v_base
             b_crit += v_crit
 
@@ -109,7 +114,7 @@ for b_idx, basin in enumerate(Studyareas):
         n = basin_data["N_Runoff"][cat]
         p = basin_data["P_Runoff"][cat]
         # :,.0f adds commas and removes decimals for a "normal" look
-        print(f"{cat:<12} | {w:18,.2f} | {n:15,.2f} | {p:15,.2f}")
+        print(f"{cat:<12} | {w:18,.0f} | {n:15,.1f} | {p:15,.1f}")
     print(f"{'-'*75}\n")
 
 # Global legend
@@ -121,7 +126,7 @@ fig.legend(
     bbox_to_anchor=(0.5, 0.05), # x=0.5 (middle), y=0.05 (just above the bottom edge)
     ncol=4,                   # Keep them in one row
     frameon=False, 
-    fontsize=18
+    fontsize=16
 )
 
 plt.savefig(os.path.join(output_dir, "Fig3_BarPlots.png"), bbox_inches='tight', dpi=300)

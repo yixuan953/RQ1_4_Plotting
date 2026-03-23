@@ -14,8 +14,8 @@ source /home/WUR/zhou111/miniconda3/etc/profile.d/conda.sh
 conda activate myenv
 
 # Data preparation for plotting
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/1_0_Export2nc.py
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/V2_Demo_Plots/1_1_Data_prep.py
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/V2_Demo_Plots/1_0_Export2nc.py
+python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/V2_Demo_Plots/1_1_Data_prep.py
 
 # ========================= Demo Fig.0
 # python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Demo_Fig0a.py
@@ -58,7 +58,7 @@ conda activate myenv
 
 # ========================= Statistical analyiss
 # Stat1: Exceedance of irrigation water use, N and P runoff by crop and by basin
-python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/V2_Demo_Plots/Stat_1_Exceedance_HA.py
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/V2_Demo_Plots/Stat_1_Exceedance_HA.py
 
 # Stat2: Basin avg crit N, P runoff [kg/ha] by crops
 # python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Stat_2_basin_avg_CritNP.py

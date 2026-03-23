@@ -1,9 +1,3 @@
-# This code is used to plot: 
-# 1 - Boundary for cropland N runoff to surface water by crop [ktons]
-# 2 - Boundary for cropland N runoff to surface water by crop [kg/ha]
-# 3 - Boundary for cropland P runoff to surface water by crop [ktons]
-# 4 - Boundary for cropland P runoff to surface water by crop [kg/ha]
-
 import os
 import numpy as np
 import pandas as pd
@@ -11,212 +5,164 @@ import xarray as xr
 import matplotlib.pyplot as plt
 import geopandas as gpd
 import cartopy.crs as ccrs
-from matplotlib.colors import LinearSegmentedColormap
 import cartopy.geodesic as cgeo
-from matplotlib.colors import ListedColormap
-from mpl_toolkits.axes_grid1 import make_axes_locatable
+from matplotlib.colors import ListedColormap, BoundaryNorm
 
+# --- Configuration & Nature Style ---
+# Using Liberation Sans as the reliable Linux cluster alternative to Arial
+plt.rcParams['font.family'] = 'sans-serif'
+plt.rcParams['font.sans-serif'] = ['Liberation Sans', 'Arial', 'DejaVu Sans']
+plt.rcParams['pdf.fonttype'] = 42  # For editable vector text
 
-# --- Configuration ---
 Studyareas = ["LaPlata", "Indus", "Yangtze", "Rhine"]
-InputCrops =  ["winterwheat", "mainrice", "secondrice", "soybean", "maize"]
+InputCrops = ["winterwheat", "mainrice", "secondrice", "soybean", "maize"]
 
 input_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/1_Baseline"
 data_dir = "/lustre/nobackup/WUR/ESG/zhou111/2_RQ1_Data"
 fig_base_dir = "/lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V3_Demo_Plots/Fig1_Boundary/1b_Maps"
 
-# Custom Phosphorus Colormap
-p_colors = ["#fffaf3ff", "#ef9b00ff"]
-custom_phosphorus_cmap = LinearSegmentedColormap.from_list("custom_p", p_colors, N=256)
+# --- Define Custom Discrete Colormaps & Norms ---
 
-# Grey Colormap for areas with low runoff
+# Grey Colormap for areas with zero/low runoff
 grey_cmap = ListedColormap(["#EBE9E9"])
 
-VAR_RANGES = {
-    "N_Runoff_kg_ha":   (0, 20),
-    "N_Runoff_ktons":   (0, 2),
-    "P_Runoff_kg_ha":   (0, 0.2),  
-    "P_Runoff_ktons":   (0, 0.02)
+# 1. Custom Nitrogen (N) Colormap Configuration
 
+n_colors_hex_final = ["#CD2C58", "#E06B80", "#F1998F", "#FFC69D", "#FFE6D4"]
+
+n_boundaries = [0, 5, 15, 20, 25, 50] # 50 is an arbitrary large max value
+n_cmap = ListedColormap(n_colors_hex_final[::-1]) # [::-1] Reverse list to go low->high
+n_norm = BoundaryNorm(n_boundaries, n_cmap.N)
+
+# 2. Custom Phosphorus (P) Colormap Configuration
+p_colors_hex_final = ["#FA812F", "#FFB22C", "#F3C623", "#F9DC85", "#FEF3E2"]
+
+p_boundaries = [0, 0.25, 0.5, 0.75, 1.0, 5.0] # 5.0 is an arbitrary large max value
+p_cmap = ListedColormap(p_colors_hex_final[::-1]) # [::-1] Reverse list to go low->high
+p_norm = BoundaryNorm(p_boundaries, p_cmap.N)
+
+# Combine configurations (We still create individual plots per unit, but share cmap/norm)
+VAR_CONFIG = {
+    "N_Runoff_kg_ha": {"cmap": n_cmap, "norm": n_norm, "label": "N Boundary ($kg\ N\ ha^{-1}$)", "ticks": [0, 5, 15, 20, 25, 50], "tick_labels": ['0', '5', '15', '20', '25', '']},
+    "N_Runoff_ktons": {"cmap": n_cmap, "norm": n_norm, "label": "N Boundary (ktons)", "ticks": [0, 0.5, 1.0, 1.5, 2.0, 5.0], "tick_labels": ['0', '0.5', '1.0', '1.5', '2.0', '']},
+    "P_Runoff_kg_ha": {"cmap": p_cmap, "norm": p_norm, "label": "P Boundary ($kg\ P\ ha^{-1}$)", "ticks": [0, 0.25, 0.5, 0.75, 1.0, 5.0], "tick_labels": ['0', '0.25', '0.5', '0.75', '1.0', '']},
+    "P_Runoff_ktons": {"cmap": p_cmap, "norm": p_norm, "label": "P Boundary (ktons)", "ticks": [0, 0.005, 0.01, 0.015, 0.02, 0.50], "tick_labels": ['0', '0.005', '0.01', '0.015', '0.02', '']}
 }
 
-
+# --- Standard Utility Functions (Unchanged from previous update) ---
 def GetSimSummary(file_name):
     ds = xr.open_dataset(file_name)
-    # Threshold masking
     mask = ds["Basin_mask"].where(ds["Total_HA"] > 2500, np.nan)
     
-    # N Runoff logic (Note: Fix indices/names if they differ in your .nc)
-    Crit_N_kgperha     = (ds["Crit_N_Runoff"] / ds["Total_HA"]) * mask
-    Crit_N   = 1e-6 * ds["Crit_N_Runoff"] * mask
+    data_dict = {
+        "N_Runoff_kg_ha": (ds["Crit_N_Runoff"] / ds["Total_HA"]) * mask,
+        "N_Runoff_ktons": 1e-6 * ds["Crit_N_Runoff"] * mask,
+        "P_Runoff_kg_ha": (ds["Crit_P_Runoff"] / ds["Total_HA"]) * mask,
+        "P_Runoff_ktons": 1e-6 * ds["Crit_P_Runoff"] * mask
+    }
+    return mask, data_dict
 
-    # P Runoff logic
-    Crit_P_kgperha     = (ds["Crit_P_Runoff"] / ds["Total_HA"]) * mask
-    Crit_P   = 1e-6 * ds["Crit_P_Runoff"] * mask
-    
-    return (mask, Crit_N_kgperha, Crit_N, Crit_P_kgperha, Crit_P)
-
-def calculate_stats(data_array):
-    """Calculates median and percentiles for an xarray DataArray, 
-    excluding NaNs AND zeros."""
-    
-    # Flatten the 2D spatial data into a 1D array
-    vals = data_array.values.flatten()
-    
-    # Filter: Keep only values that are NOT NaN and NOT 0
-    # Using np.isclose or > 0 is safer for floating point data
-    vals = vals[~np.isnan(vals) & (vals > 0)]
-    
-    # Handle cases where the entire map might be zero or NaN
-    if len(vals) == 0:
-        return np.nan, np.nan, np.nan
-    
-    # Calculate statistics on the remaining non-zero data
-    q1 = np.percentile(vals, 25)
-    median = np.percentile(vals, 50)
-    q3 = np.percentile(vals, 75)
-    
-    return q1, median, q3
-
-def add_scale_bar(ax, length_km, basin, location_y=-0.15):
-
+def add_scale_bar(ax, length_km, basin):
+    """Adds a scale bar that scales correctly with dynamic widths."""
     lon0, lon1, lat0, lat1 = ax.get_extent()
     center_lat = (lat0 + lat1) / 2
     geod = cgeo.Geodesic()
     dist_1deg = geod.inverse((lon0, center_lat), (lon0 + 1, center_lat))[0, 0]
     bar_width_deg = (length_km * 1000) / dist_1deg
     
-    if basin in ["Yangtze"]:
-        x_start = lon0 + (lon1 - lon0) * 0.05
-        x_end = x_start + bar_width_deg
-        ha_text = 'left'
-        text_x = x_start
-    else: 
-        x_end = lon1 - (lon1 - lon0) * 0.05
-        x_start = x_end - bar_width_deg
-        ha_text = 'right'
-        text_x = x_end
-
-    y_pos = lat0 + (lat1 - lat0) * location_y
+    # Position logic
+    x_start = lon0 + (lon1 - lon0) * 0.05 if basin == "Yangtze" else lon1 - (lon1 - lon0) * 0.05 - bar_width_deg
+    y_pos = lat0 + (lat1 - lat0) * 0.05
     
-    ax.plot([x_start, x_end], [y_pos, y_pos], transform=ccrs.PlateCarree(),
-            color='black', linewidth=5, zorder=10, clip_on=False)
-    
-    ax.text(text_x, y_pos - (lat1 - lat0) * 0.05, f'{length_km} km', 
-            transform=ccrs.PlateCarree(), ha=ha_text, va='top', 
-            fontsize=70, clip_on=False)
+    ax.plot([x_start, x_start + bar_width_deg], [y_pos, y_pos], 
+            transform=ccrs.PlateCarree(), color='black', linewidth=1.5, zorder=10)
+    ax.text(x_start + bar_width_deg/2, y_pos + (lat1-lat0)*0.015, f'{length_km} km', 
+            transform=ccrs.PlateCarree(), ha='center', va='bottom', fontsize=20)
 
-
-def plot_boundaries(file_name, data_dir, fig_path, basin):
-    outputs = GetSimSummary(file_name)
-    mask = outputs[0]
-    data_list = outputs[1:] 
-    
-    # Load Low Runoff Mask
-    low_runoff_path = os.path.join(data_dir, "2_StudyArea", basin, "low_runoff_mask.nc")
-    with xr.open_dataset(low_runoff_path) as ds_lr:
-        lr_area = ds_lr["Low_Runoff"].where(mask.notnull())
-
-    range_keys = ["N_Runoff_kg_ha", "N_Runoff_ktons",  "P_Runoff_kg_ha", "P_Runoff_ktons"]
-    
-    cmaps = ['RdPu']*2 + [custom_phosphorus_cmap]*2
-    shp_path = os.path.join(data_dir, "2_shp_StudyArea", basin, f"{basin}.shp")
-    gdf_boundary = gpd.read_file(shp_path)
+# --- Updated Plotting Function ---
+def plot_single_map(data_array, lr_mask, gdf_boundary, var_key, basin, crop, save_path):
     lon_min, lat_min, lon_max, lat_max = gdf_boundary.total_bounds
+    aspect = (lon_max - lon_min) / (lat_max - lat_min)
     
-    # Calculate aspect ratio of the basin to force all subplots to be identical
-    basin_aspect = (lat_max - lat_min) / (lon_max - lon_min)
-
-    fig, axes = plt.subplots(nrows=4, ncols=1, figsize=(30, 50),
-                             subplot_kw={'projection': ccrs.PlateCarree()})
+    # Adjust height to give room for the bottom colorbar
+    fixed_height = 4.0 
+    dynamic_width = fixed_height * aspect
     
-    for i, ax in enumerate(axes):
-        vmin, vmax = VAR_RANGES[range_keys[i]]
-        ax.set_box_aspect(basin_aspect)
-        
-        # 1. Plot the main data
-        im = data_list[i].plot(ax=ax, transform=ccrs.PlateCarree(), 
-                               cmap=cmaps[i], vmin=vmin, vmax=vmax, add_colorbar=False)
-        
-        # 2. Add masks and boundaries
-        lr_area.plot(ax=ax, transform=ccrs.PlateCarree(), cmap=grey_cmap, add_colorbar=False, zorder=2)
-        gdf_boundary.boundary.plot(ax=ax, color='black', linewidth=2.0, zorder=3)
-        ax.set_extent([lon_min, lon_max, lat_min, lat_max], crs=ccrs.PlateCarree())
-        ax.axis('off')
+    fig = plt.figure(figsize=(dynamic_width, fixed_height))
+    ax = plt.axes(projection=ccrs.PlateCarree())
+    
+    cfg = VAR_CONFIG[var_key]
+    
+    # 1. Main Data Plot
+    im = data_array.plot(ax=ax, cmap=cfg["cmap"], norm=cfg["norm"], add_colorbar=False, zorder=1)
+    
+    # 2. Low Runoff Mask
+    lr_mask.plot(ax=ax, cmap=grey_cmap, add_colorbar=False, zorder=2)
+    
+    # 3. Basin Boundary
+    gdf_boundary.boundary.plot(ax=ax, color='black', linewidth=0.8, zorder=3)
+    
+    # 4. Scale Bar
+    bar_len = 500 if (lon_max - lon_min) > 10 else 100
+    add_scale_bar(ax, bar_len, basin)
+    
+    # 5. Colorbar at the Bottom
+    # 'pad' controls distance from map; 'fraction' and 'aspect' control bar size
+    cbar = plt.colorbar(im, ax=ax, orientation='horizontal', pad=0.08, fraction=0.046, aspect=30)
+    
+    # Set custom ticks and labels
+    cbar.set_ticks(cfg["ticks"])
+    cbar.ax.set_xticklabels(cfg["tick_labels"], fontsize=16)
+    cbar.set_label(cfg["label"], fontsize=18, labelpad=10)
+    
+    # Nature style: remove outer box
+    cbar.outline.set_visible(False) 
 
-        # Get position of the current axis to place the colorbar exactly next to it
-        pos = ax.get_position()
-        
-        # [left, bottom, width, height]
-        # We place it to the right (pos.x1 + offset), same bottom/height as the map
-        cbar_width = 0.04  # Significantly wider
-        cbar_offset = 0.02 # Gap between map and bar
-        cax = fig.add_axes([pos.x1 + cbar_offset, pos.y0, cbar_width, pos.height])
-        
-        cbar = fig.colorbar(im, cax=cax, orientation='vertical', extend='both')
-        
-        # Use the specific label for this index from your range_keys or a mapping
-        cbar.ax.tick_params(labelsize=85, length=25, width=6)
-        cbar.outline.set_visible(True) # Usually looks better for individual bars
-
-        if i == 0:  
-            bar_len = 500 if (lon_max - lon_min) > 10 else 100
-            add_scale_bar(ax, bar_len, basin)
-
-    # hspace controls the vertical gap between the maps
-    plt.subplots_adjust(hspace=0.3) 
-    plt.savefig(fig_path, dpi=300, bbox_inches='tight', facecolor='white')
+    ax.set_extent([lon_min, lon_max, lat_min, lat_max])
+    ax.axis('off')
+    
+    plt.savefig(save_path, dpi=300, bbox_inches='tight')
     plt.close()
 
-
-stats_results = []
 # --- Execution ---
+# Assumes input_dir, data_dir, fig_base_dir defined above are valid
+stats_results = []
+
 for basin in Studyareas:
+    shp_path = os.path.join(data_dir, "2_shp_StudyArea", basin, f"{basin}.shp")
+    if not os.path.exists(shp_path): continue
+    gdf_boundary = gpd.read_file(shp_path)
+    
+    low_runoff_path = os.path.join(data_dir, "2_StudyArea", basin, "low_runoff_mask.nc")
+    if not os.path.exists(low_runoff_path): continue
+    ds_lr = xr.open_dataset(low_runoff_path)
+
     for crop in InputCrops:
-        file_name = os.path.join(input_dir, f"{basin}_{crop}_summary.nc")
-        if not os.path.exists(file_name):
-            print(f"Skipping: {file_name} (Not found)")
-            continue
-            
-        print(f"Processing: {crop} in {basin}...")
-        output_file = os.path.join(fig_base_dir, f"{basin}_{crop}_boundaries.png")
+        file_path = os.path.join(input_dir, f"{basin}_{crop}_summary.nc")
+        if not os.path.exists(file_path): continue
         
-        # Ensure output directory exists
-        os.makedirs(os.path.dirname(output_file), exist_ok=True)
-        
-        # Plotting function 
-        plot_boundaries(file_name, data_dir, output_file, basin)
+        print(f"Processing {basin} - {crop}...")
+        mask, data_vars = GetSimSummary(file_path)
+        lr_mask = ds_lr["Low_Runoff"].where(mask.notnull())
 
-        # Output summary statistics
-        outputs = GetSimSummary(file_name)
-        # indices based on your return (mask, N_kg_ha, N_ktons, P_kg_ha, P_ktons)
-        data_vars = {
-            "N_Runoff_kg_ha": outputs[1],
-            "N_Runoff_ktons": outputs[2],
-            "P_Runoff_kg_ha": outputs[3],
-            "P_Runoff_ktons": outputs[4]
-        }
         for var_name, data_array in data_vars.items():
-            q1, median, q3 = calculate_stats(data_array)
+            # Generate Individual Plot (Organized by Basin/Crop)
+            out_name = f"{basin}_{crop}_{var_name}.png"
+            out_path = os.path.join(fig_base_dir, basin, crop, out_name)
+            os.makedirs(os.path.dirname(out_path), exist_ok=True)
             
-            stats_results.append({
-                "Basin": basin,
-                "Crop": crop,
-                "Variable": var_name,
-                "25th_Percentile": q1,
-                "Median": median,
-                "75th_Percentile": q3
-            })
+            plot_single_map(data_array, lr_mask, gdf_boundary, var_name, basin, crop, out_path)
 
+            # Statistics (Ignoring 0 and NaN)
+            vals = data_array.values.flatten()
+            vals = vals[~np.isnan(vals) & (vals > 0)]
+            if len(vals) > 0:
+                stats_results.append({
+                    "Basin": basin, "Crop": crop, "Variable": var_name,
+                    "25th": np.percentile(vals, 25), "Median": np.median(vals), "75th": np.percentile(vals, 75)
+                })
 
-# --- 3. Create DataFrame and Save ---
-df_stats = pd.DataFrame(stats_results)
-
-# Display the first few rows
-print(df_stats.head())
-
-# Save to CSV for Nature Food Supplementary Table
+# Save stats
 stats_csv_path = os.path.join(fig_base_dir, "Summary_Statistics.csv")
-df_stats.to_csv(stats_csv_path, index=False)
-print(f"Statistics saved to {stats_csv_path}")
-print("Done!")
+pd.DataFrame(stats_results).to_csv(stats_csv_path, index=False)
+print(f"Done! Maps and statistics have been generated. Stats saved to: {stats_csv_path}")
