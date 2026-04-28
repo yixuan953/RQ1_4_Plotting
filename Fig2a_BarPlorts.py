@@ -1,4 +1,4 @@
-# This code is used to plot hte barplots for boudanries for total N and P load, agri N and P load, and cropland N and P load in [ktons]
+# This code is used to plot hte barplots for boudanries for total N and P delivery, agri N and P load, and cropland N and P load in [ktons]
 
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -6,21 +6,21 @@ import matplotlib.font_manager as fm
 import numpy as np
 import os
 
-
-csv_dir = "/lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V3_Statistics/1_Boundary_load"
-output_dir = "/lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V3_Demo_Plots/Fig1_Boundary/1a_Bars"
-basins = ["Indus", "LaPlata", "Yangtze", "Rhine"]
+csv_dir = "/lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V4_Statistics/1_Boundary"
+output_dir = "/lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V4_Plots/Fig2"
+basins = ["LaPlata"] # ["Indus", "LaPlata", "Yangtze", "Rhine"]
 
 
 crop_colors = {
-    'Wheat': "#FADFA1",
-    'Maize': '#C96868',
-    'Rice': "#BB8ED0",
-    'Soybean': '#3A8B95'
+    'Wheat': "#EBBB7C",
+    'Maize': "#B36767",
+    'Rice': "#C89CDC",
+    'Soybean': "#42949F"
 }
 
+
 def create_boundary_plot(basin, element):
-    file_path = os.path.join(csv_dir, f"{basin}_crit_load_sum_updated.csv")
+    file_path = os.path.join(csv_dir, f"{basin}_crop-specific_boundaries.csv")
     if not os.path.exists(file_path): return
     
     df = pd.read_csv(file_path, index_col=0)
@@ -40,32 +40,26 @@ def create_boundary_plot(basin, element):
     
     major_crop_sum = wheat + maize + rice + soybean
     crops = {'Wheat': wheat, 'Maize': maize, 'Rice': rice, 'Soybean': soybean}
-    
-    # 3. Proportions
-    prop_agri_total = (agri_val / total_val) * 100
-    prop_allcrop = (cropland_val / agri_val) * 100
-    prop_majorcrops = (major_crop_sum / cropland_val) * 100
 
     # 4. Plotting
     fig, ax = plt.subplots(figsize=(10, 3))
     plt.rcParams['font.family'] = 'sans-serif'
     plt.rcParams['font.sans-serif'] = ['Liberation Sans', 'DejaVu Sans']
     plt.tick_params(axis='x', labelsize=16)
-    y_labels = ['Major crops', 'Cropland', 'Agriculture', 'All sources']
+    y_labels = ['Runoff from major crops', 'Cropland runoff', 'Agricultural runoff', 'All sources']
     
     # Bars
-    ax.barh(3, total_val, color="#547792", edgecolor= "white", height=0.6, linewidth=2) # All sources
-    ax.barh(2, agri_val, color="#AACDDC", edgecolor= "white", height=0.6, linewidth=2) # Agriculture
-    ax.barh(1, cropland_val, color="#D6DAC8", edgecolor="white", height=0.6, linewidth=2) # Cropland
+    ax.barh(3, total_val, color="#D7EBF3", edgecolor= "#333333", height=0.6, linewidth=0.8) # All sources
+    ax.barh(2, agri_val, color="#D7EBF3", edgecolor= "#333333", height=0.6, linewidth=0.8) # Agriculture
+    ax.barh(1, cropland_val, color="#D7EBF3", edgecolor= "#333333", height=0.6, linewidth=0.8) # Cropland
     
     left_start = 0
     for name, val in crops.items():
         ax.barh(0, val, left=left_start, color=crop_colors[name], 
-                edgecolor="#f8f8f8f9", height=0.6)
+                edgecolor="#333333", height=0.6)
         left_start += val
         
     # --- Axes and Frame Styling ---
-    
     # Move X-axis to the top
     ax.xaxis.set_ticks_position('top')
     ax.xaxis.set_label_position('top')
@@ -107,17 +101,9 @@ def create_boundary_plot(basin, element):
 
     # Adjust labels and font sizes
     ax.set_yticks([0, 1, 2, 3])
-    ax.set_yticklabels(y_labels, fontsize=18)
-    ax.set_xlabel(f'Boundaries for {element} delivery to surface water [ktons]', 
-                  fontsize=18, labelpad=20)
-    
-    # Text Annotations
-    ax.text(agri_val, 2, f'  {prop_agri_total:.0f}% of all sources', 
-            va='center', fontsize=18)
-    ax.text(cropland_val, 1, f'  {prop_allcrop:.0f}% of agriculture', 
-            va='center', fontsize=18)
-    ax.text(major_crop_sum, 0, f'  {prop_majorcrops:.0f}% of all crops', 
-            va='center', fontsize=18)
+    ax.set_yticklabels(y_labels, fontsize=20)
+    ax.set_xlabel(f'Boundaries for {element} delivery to surface water [kton/yr]', 
+                  fontsize=20, labelpad=20, fontweight='bold')
         
     # Optional: ensure the axes lines match the tick color
     ax.spines['top'].set_color('#333333')
@@ -127,7 +113,7 @@ def create_boundary_plot(basin, element):
     
     # Save
     if not os.path.exists(output_dir): os.makedirs(output_dir)
-    save_path = os.path.join(output_dir, f"{basin}_{element}_boundary_load.png")
+    save_path = os.path.join(output_dir, f"{basin}_{element}_boundary.png")
     plt.savefig(save_path, dpi=300, bbox_inches='tight')
     plt.close()
     print(f"{basin} -- Done!")

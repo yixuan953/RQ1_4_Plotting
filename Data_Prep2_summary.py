@@ -1,3 +1,5 @@
+# This script is used to summarize the simulated yield, losses, and boundaries 
+
 import os
 import xarray as xr
 import numpy as np
@@ -9,12 +11,12 @@ Studyarea = ["Indus", "Rhine", "LaPlata", "Yangtze"]
 Croptypes = ["mainrice", "secondrice", "maize", "soybean", "winterwheat"]
 
 # Input directory 1 - Simulated yield and losses (choose between the following 4)
-# Baseline scenario directories
+# # # Baseline scenario directories
 # Raifed_baseline_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_1_Baseline_rainfed"
 # Irrigated_baseline_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_1_Baseline"
 # output_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/1_Baseline"
 
-# # Sustainable irrigation scenario directories 
+# Sustainable irrigation scenario directories 
 Irrigated_baseline_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_2_Sus_Irrigation"  # Sustainable irrigation
 Raifed_baseline_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_1_Baseline_rainfed"
 output_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/2_Sus_irrigation"
@@ -34,7 +36,7 @@ output_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Pl
 data_dir = "/lustre/nobackup/WUR/ESG/zhou111/2_RQ1_Data/2_StudyArea"
 
 # Input directory 3 - Calculated critical N, P runoff
-crit_loss_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/2_Critical_NP_losses/Method4"
+crit_loss_dir = "/lustre/nobackup/WUR/ESG/zhou111/2_RQ1_Data/1_Global/Boundaries"
 
 for basin in Studyarea:
     
@@ -85,11 +87,11 @@ for basin in Studyarea:
             
         crit_N_loss_file = os.path.join(crit_loss_dir, f"{crop_crit_name}/{basin}_crit_N_runoff_kg.nc")
         ds_crit_N_loss = xr.open_dataset(crit_N_loss_file)
-        Crit_N_Runoff = ds_crit_N_loss["Critical_N_runoff"]
+        Crit_N_Runoff = ds_crit_N_loss["Boundary_N_runoff"]
 
         crit_P_loss_file = os.path.join(crit_loss_dir, f"{crop_crit_name}/{basin}_crit_P_runoff_kg.nc")
         ds_crit_P_loss = xr.open_dataset(crit_P_loss_file)
-        Crit_P_Runoff = ds_crit_P_loss["Critical_P_runoff"]
+        Crit_P_Runoff = ds_crit_P_loss["Boundary_P_runoff"]
 
         # Load harvested area
         if crop == "winterwheat":

@@ -23,8 +23,8 @@ FIG_OUT  = "/lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V3_Demo_Plot
 os.makedirs(FIG_OUT, exist_ok=True)
 
 # --- 2. Custom Color Setup ---
-colors = ["#8b0000", "#fb4343", "#ff8c00", "#f9cb14", "#fae22d", "#f4ff5e", "#66b535"]
-bounds = [-100, -80, -50, -30, -20, -10, 0, 100]
+colors = ["#8b0000", "#fb4343", "#ff8c00", "#f9cb14", "#f4ff5e", "#66b535"]
+bounds = [-100, -40, -30, -20, -10, 0, 100]
 custom_cmap = mcolors.ListedColormap(colors)
 custom_norm = mcolors.BoundaryNorm(bounds, custom_cmap.N)
 
@@ -129,7 +129,7 @@ def plot_production_grid():
     cbar_ax = fig.add_axes([0.3, 0.06, 0.4, 0.02])
     cb = fig.colorbar(im, cax=cbar_ax, orientation='horizontal', ticks=bounds[1:-1])
     cb.set_label("Crop Production Change [%]", fontsize=20, labelpad=15)
-    cb.ax.set_xticklabels([f"{b}" for b in bounds[1:-1]], fontsize=20)
+    cb.ax.set_xticklabels([f"{b}" for b in bounds[1:-1]], fontsize=30)
 
     plt.subplots_adjust(wspace=0.08, hspace=0.08, bottom=0.12)
     plt.savefig(os.path.join(FIG_OUT, "Crop_Grid_NoScaleBar.png"), dpi=300, bbox_inches='tight')

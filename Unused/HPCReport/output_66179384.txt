@@ -1,0 +1,8 @@
+✅ Generated Plot for Rice (kgperha)
+✅ Generated Plot for Rice (ktons)
+✅ Generated Plot for Wheat (kgperha)
+✅ Generated Plot for Wheat (ktons)
+✅ Generated Plot for Maize (kgperha)
+✅ Generated Plot for Maize (ktons)
+✅ Generated Plot for Soybean (kgperha)
+✅ Generated Plot for Soybean (ktons)

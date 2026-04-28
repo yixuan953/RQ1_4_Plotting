@@ -15,11 +15,11 @@ output_dir = "/lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V3_Demo_Pl
 data_dir = "/lustre/nobackup/WUR/ESG/zhou111/2_RQ1_Data/2_StudyArea"
 
 units = ["Irrigation water amount ($m^3$)", "ktons N", "ktons P"]
-cat_colors = {
-    'Wheat': "#DBC97F",
-    'Maize': '#DD7C64',
-    'Rice': "#F1C6CD",
-    'Soybean': '#63AD96'
+crop_colors = {
+    'Wheat': "#FFD87D",
+    'Maize': '#C96868',
+    'Rice': "#BB8ED0",
+    'Soybean': '#3A8B95'
 }
 crop_mapper = {"winterwheat": "Wheat", "maize": "Maize", "mainrice": "Rice", "secondrice": "Rice", "soybean": "Soybean"}
 
@@ -61,8 +61,8 @@ for b_idx, basin in enumerate(Studyareas):
         for cat in FinalCategories:
             v_base = base_dict[cat]
             v_crit = crit_dict[cat]
-            ax.bar(0, v_base, bottom=b_base, width=bar_width, color=cat_colors[cat], alpha=0.7, edgecolor='white', linewidth=0.5)
-            ax.bar(1, v_crit, bottom=b_crit, width=bar_width, color=cat_colors[cat], alpha=0.7, edgecolor='white', linewidth=0.5)
+            ax.bar(0, v_base, bottom=b_base, width=bar_width, color=crop_colors[cat], edgecolor='white', linewidth=0.5)
+            ax.bar(1, v_crit, bottom=b_crit, width=bar_width, color=crop_colors[cat], edgecolor='white', linewidth=0.5)
             b_base += v_base
             b_crit += v_crit
 
@@ -70,7 +70,7 @@ for b_idx, basin in enumerate(Studyareas):
         ax.set_title("")
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
-        ax.set_ylabel(f"{units[m_idx]}", fontsize=16)
+        #ax.set_ylabel(f"{units[m_idx]}", fontsize=20)
         
         # --- "Nice Number" Limit Logic ---
         max_h = max(b_base, b_crit)
@@ -92,14 +92,14 @@ for b_idx, basin in enumerate(Studyareas):
                 # MaxNLocator(integer=True) prevents 0.5, 1.5, etc.
                 ax.yaxis.set_major_locator(ticker.MaxNLocator(nbins=5, integer=True))
             else:           # N & P (Normal Values)
-                ax.yaxis.set_major_formatter(ticker.StrMethodFormatter('{x:,.1f}'))
+                ax.yaxis.set_major_formatter(ticker.StrMethodFormatter('{x:,.0f}'))
                 ax.yaxis.set_major_locator(ticker.MaxNLocator(nbins=5, integer=True))
             
-            ax.tick_params(axis='y', labelsize=13)
+            ax.tick_params(axis='y', labelsize=20)
 
 
         ax.set_xticks([0, 1])
-        ax.set_xticklabels(["Current", "Boundary"], fontsize=16)
+        ax.set_xticklabels(["", ""], fontsize=17)
         ax.set_xlim(-0.6, 1.6)
 
     # --- Print Detailed Breakdown for each Crop ---
@@ -118,7 +118,7 @@ for b_idx, basin in enumerate(Studyareas):
     print(f"{'-'*75}\n")
 
 # Global legend
-legend_elements = [Line2D([0], [0], color=cat_colors[cat], lw=8, label=cat) for cat in FinalCategories]
+legend_elements = [Line2D([0], [0], color=crop_colors[cat], lw=8, label=cat) for cat in FinalCategories]
 # Create the legend at the bottom
 fig.legend(
     handles=legend_elements, 

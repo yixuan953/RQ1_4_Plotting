@@ -37,7 +37,9 @@ conda activate myenv
 # python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/1_Part1_CriticalLosses_Method2.py
 # Unit [kg]
 # python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/1_Part1_CriticalLosses_Method2_Total.py
-python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Unused/1_Part1_CriticalLosses_Method3.py
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Unused/1_Part1_CriticalLosses_Method3.py
+
+python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Unused/1_Part1_CriticalLosses_Method4.py
 # -------------------------------------------------
 
 # --------------- Plot for Part 2 -----------------

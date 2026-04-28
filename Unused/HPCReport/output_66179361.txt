@@ -1,0 +1,5 @@
+Computed and saved /lustre/nobackup/WUR/ESG/zhou111/2_RQ1_Data/1_Global/Boundaries/Global_Boundary_Cropland_N_Runoff.nc
+Computed and saved /lustre/nobackup/WUR/ESG/zhou111/2_RQ1_Data/1_Global/Boundaries/Global_Boundary_Cropland_P_Runoff.nc
+
+Successfully generated and saved map to: /lustre/nobackup/WUR/ESG/zhou111/2_RQ1_Data/1_Global/Boundaries/Global_Cropland_NP_runoff_boundaries_Maps.png
+Good luck for the next step!

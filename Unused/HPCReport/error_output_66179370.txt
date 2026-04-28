@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Unused/1_Part1_CriticalLosses_Method4.py", line 108, in <module>
+    im.set_clip_path(path)
+  File "/home/WUR/zhou111/miniconda3/envs/myenv/lib/python3.10/site-packages/matplotlib/artist.py", line 819, in set_clip_path
+    self._clippath = TransformedPatchPath(path)
+  File "/home/WUR/zhou111/miniconda3/envs/myenv/lib/python3.10/site-packages/matplotlib/transforms.py", line 2824, in __init__
+    super().__init__(patch.get_path(), patch.get_transform())
+  File "/home/WUR/zhou111/miniconda3/envs/myenv/lib/python3.10/site-packages/matplotlib/patches.py", line 309, in get_transform
+    return self.get_patch_transform() + artist.Artist.get_transform(self)
+  File "/home/WUR/zhou111/miniconda3/envs/myenv/lib/python3.10/site-packages/matplotlib/artist.py", line 454, in get_transform
+    self._transform = self._transform._as_mpl_transform(self.axes)
+  File "/home/WUR/zhou111/miniconda3/envs/myenv/lib/python3.10/site-packages/cartopy/crs.py", line 268, in _as_mpl_transform
+    raise ValueError(
+ValueError: Axes should be an instance of GeoAxes, got <class 'NoneType'>

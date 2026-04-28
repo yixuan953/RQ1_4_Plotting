@@ -32,13 +32,14 @@ row_labels = [
 
 def GetCropWNP(file_name, low_runoff_path):
     with xr.open_dataset(file_name) as ds:
-        mask = xr.where(ds["Total_HA"] > 2500, 1, np.nan)
+        mask = ds["Basin_mask"].where(ds["Total_HA"] > 2500, np.nan)
 
     with xr.open_dataset(low_runoff_path) as ds_lr:
         low_runoff = ds_lr["Low_Runoff"]
-        
-    mask = mask.where(low_runoff != 1, np.nan)
-        
+        low_runoff = low_runoff.reindex_like(mask, method='nearest')
+    
+    mask = mask.where(low_runoff!=1, np.nan)
+
     # 1. Hectares (Basin Totals)
     t_ha = float((ds["Total_HA"] * mask).sum())
     t_ha_r = float((ds["Rainfed_HA"] * mask).sum())
