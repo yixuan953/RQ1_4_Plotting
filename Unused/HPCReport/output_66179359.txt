@@ -1,8 +1,0 @@
-✅ Generated: Boundary_Loss_Rice_kgperha.png
-✅ Generated: Boundary_Loss_Rice_ktons.png
-✅ Generated: Boundary_Loss_Wheat_kgperha.png
-✅ Generated: Boundary_Loss_Wheat_ktons.png
-✅ Generated: Boundary_Loss_Maize_kgperha.png
-✅ Generated: Boundary_Loss_Maize_ktons.png
-✅ Generated: Boundary_Loss_Soybean_kgperha.png
-✅ Generated: Boundary_Loss_Soybean_ktons.png

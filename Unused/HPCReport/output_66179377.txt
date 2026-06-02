@@ -1,8 +1,0 @@
-✅ Generated: MapOnly_Clipping_Rice_kgperha.png
-✅ Generated: MapOnly_Clipping_Rice_ktons.png
-✅ Generated: MapOnly_Clipping_Wheat_kgperha.png
-✅ Generated: MapOnly_Clipping_Wheat_ktons.png
-✅ Generated: MapOnly_Clipping_Maize_kgperha.png
-✅ Generated: MapOnly_Clipping_Maize_ktons.png
-✅ Generated: MapOnly_Clipping_Soybean_kgperha.png
-✅ Generated: MapOnly_Clipping_Soybean_ktons.png

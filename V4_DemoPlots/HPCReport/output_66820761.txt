@@ -1,0 +1,16 @@
+Processing Basin: LaPlata
+   Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V4_Plots/Fig5/LaPlata_Production_Stacked_Maps.png
+   Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V4_Plots/Fig5/LaPlata_N_Runoff_Stacked_Maps.png
+   Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V4_Plots/Fig5/LaPlata_P_Runoff_Stacked_Maps.png
+Processing Basin: Indus
+   Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V4_Plots/Fig5/Indus_Production_Stacked_Maps.png
+   Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V4_Plots/Fig5/Indus_N_Runoff_Stacked_Maps.png
+   Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V4_Plots/Fig5/Indus_P_Runoff_Stacked_Maps.png
+Processing Basin: Yangtze
+   Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V4_Plots/Fig5/Yangtze_Production_Stacked_Maps.png
+   Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V4_Plots/Fig5/Yangtze_N_Runoff_Stacked_Maps.png
+   Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V4_Plots/Fig5/Yangtze_P_Runoff_Stacked_Maps.png
+Processing Basin: Rhine
+   Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V4_Plots/Fig5/Rhine_Production_Stacked_Maps.png
+   Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V4_Plots/Fig5/Rhine_N_Runoff_Stacked_Maps.png
+   Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V4_Plots/Fig5/Rhine_P_Runoff_Stacked_Maps.png

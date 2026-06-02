@@ -1,5 +1,0 @@
---- Processing Rice in kg/ha ---
---- Processing Rice in ktons ---
---- Processing Wheat in kg/ha ---
---- Processing Wheat in ktons ---
---- Processing Maize in kg/ha ---

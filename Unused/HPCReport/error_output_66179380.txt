@@ -1,4 +1,0 @@
-Traceback (most recent call last):
-  File "/lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Unused/1_Part1_CriticalLosses_Method4.py", line 85, in <module>
-    combined_path = mpath.Path.make_compound_path(*paths)
-TypeError: matplotlib.path.Path.make_compound_path() argument after * must be an iterable, not Path

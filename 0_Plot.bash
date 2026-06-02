@@ -13,56 +13,63 @@
 source /home/WUR/zhou111/miniconda3/etc/profile.d/conda.sh
 conda activate myenv
 
-# ================== Data preparation
+# ================== Data preparation =====================
 # 1. Trasnform the .csv format to .nc
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Data_Prep1_csv2nc.py
 
 # 2. Summarize the simulated output 
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Data_Prep1_csv2nc.py
 # python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Data_Prep2_summary.py
-# ----> Results were saved in "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary"
 
-# # 3. Check where the boundaries have been exceeded: To plot Fig 3b
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig3b_BoundaryCheck.py
+# ===================== Main figure statsitics and plotting =====================
+# --------->  Main Figure 2: Boundary exceedance under the current irrigation and fertilization practices
 
-# # ================== Statistical analysis
-# # 1-1. Calculate the boundaries for total N and P delivery, agricultural runoff, cropland runoff, and each crop types [ktons]
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Stat_Fig2a_1.py
+# Fig 2a & 2b - Bar plot of actual vs critical runoff for each crop type and basin
 # python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Stat_Fig2a_2.py
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig2ab_BarPlots_v2.py
 
-# # 1-2. Calculate the average crop-specific N and P runoff to surface water [kg/ha]
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Stat_Table1_Basin_avg_CritNP.py
-# # ---> Results were saved in "/lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V4_Statistics/1_Boundary"
 
-# # 2. Calculate the simulated crop production and runoff
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Stat_Fig3a_1.py
+# Fig 2c - Areas with boundaries' exceedances & Share of harvested area exceeding sustainable irrigation amount or N (P) runoff boundaries
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig2c_BoundaryCheck.py
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Stat_Fig2c_2.py
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig2c_Exceedance_bars.py
 
-# # 3. Calculate the share of harvested area where the boundaries have been exceeded
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Stat_Fig4c_Exceedance_HA.py
+# Fig 2d & 2e - Maps of boundaries' exceedance [kg N/ha/yr or kg P/ha/yr] for each crop type and basin
+python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig2d_ExceedanceMaps.py
 
-# # 4. Calculate how much fertilizers should be reduced
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Stat_Fig5a_Fert_Red.py
+# --------->  Main Figure 3: Impacts on crop production when reducing irrigation and fertilization
+# Fig 3a - Crop production under different scenarios
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Stat_Fig3a.py
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig3a_CropProd_bars.py
 
-# # 5. Calculate the crop yield and N, P runoff reduction after fertilizer and (or) irrigation reduction
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Stat_Fig5_Implications.py
+# Fig 3b - Crop production reduction [%] with sustainable irrigation and feritlization
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig3b_CropProd_red_Maps.py
 
-# ================== Plotting
-# 1. Plot the barplots and maps for the quantified regional safe boundaries
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig2a_BarPlorts.py
-python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig2b_Maps.py
+# --------->  Main Figure 4: Nutrient losses under different scenarios
+# Fig 4a - Nutrient losses under different scenarios 
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig4a_NP_runoff_bars.py
 
-# 2. Plot the simulated crop production and runoff
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig3a_SimRunoffProd_bars.py
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig3b_SimRunoffProd_maps.py
+# Fig 4b - Maps of N and P runoff exceedance with sustainable irrigation and reduced fertilization
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig4b_NP_exceedance_Maps.py
 
-# 3. Compare the simulated runoff with the boundaries
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig4a_BarPlots.py
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig4b_BoundaryCheck.py
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig4c_ExceedanceMaps.py
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig4c_Exceedance_bars.py
+# ---------> Main Figure 5: Trade-offs between crop production and nutrient losses under different scenarios
+# Fig 5a ---> Basin-scale crop production vs. N, P runoff when allowing different percentage of yield reduction
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Stat_Fig5a_1.py # Basin-scale crop production vs. N, P runoff when allowing different percentage of yield reduction
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Stat_Fig5a_2.py # Boundaries without contribution from sewage
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Stat_Fig5a_3.py # Boundaries without contribution from sewage
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig5a_Prod_Losses_tradeoffs.py
 
-# 5. Plot the crop yield and N, P runoff reduction after fertilizer reduction
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig5a_Fert_Rate_Red.py
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig5b_ExceedanceMaps.py
-# python  /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig5c_Yield_Red_Map.py
+
+# ---------> Extended Figures:
+# Extended Fig. 1 Crop-specific regional safe boundaries for N runoff, simulated current crop-specific N runoff, and the boundaries’ exceedance.
+# Extended Fig. 2 Crop-specific regional safe boundaries for P runoff, simulated current crop-specific P runoff, and the boundaries’ exceedance.
+# Extended Fig. 3 Simulated major crops’ production with current (2015) irrigation and fertilization
+# Extended Fig. 4 Simulated crop-specific N runoff after reducing irrigation and fertilization and the boundaries’ exceedance.
+# Extended Fig. 5 Simulated crop-specific P runoff after reducing irrigation and fertilization and the boundaries’ exceedance.
+# Extended Fig. 6 Simulated major crops’ production with reduced irrigation and fertilization
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Extended_Fig5.py
+
+
+# ---------> Sensitivity analysis:
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Sens_Fig1.py
 
 conda deactivate

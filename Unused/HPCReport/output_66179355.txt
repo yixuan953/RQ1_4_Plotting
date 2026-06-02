@@ -1,6 +1,0 @@
-Skipping Rice in Rhine: No HA file found.
-Skipping Rice in Rhine: No HA file found.
-Skipping Soybean in Rhine: No HA file found.
-Skipping Soybean in Indus: No HA file found.
-Skipping Soybean in Rhine: No HA file found.
-Skipping Soybean in Indus: No HA file found.
