@@ -12,7 +12,7 @@ model_summary_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Anal
 data_dir = "/lustre/nobackup/WUR/ESG/zhou111/2_RQ1_Data"
 
 input_dir = "/lustre/nobackup/WUR/ESG/zhou111/2_RQ1_Data/1_Global/Boundaries/Scenarios_NoSewage"
-output_dir = "/lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Statistics/5_TradeOffs"
+output_dir = "/lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Statistics/3_TradeOffs"
 Studyareas = ["LaPlata", "Indus", "Yangtze", "Rhine"]
 
 # Ensure output directory exists

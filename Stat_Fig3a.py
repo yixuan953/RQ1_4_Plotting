@@ -22,15 +22,15 @@ CROP_MAP = {
 }
 
 SCENARIOS = {
-    "Baseline": "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/1_Baseline",
-    "Sus_Irri": "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/2_Sus_irrigation",
-    "Sus_Irri+Red_NFert": "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/3_Red_Nfert",
-    "Sus_Irri+Red_PFert": "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/3_Red_Pfert",
-    "Sus_Irri+Red_Fert": "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/3_Red_fert"
+    "Current": "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/1_Baseline",
+    "Water": "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/2_Sus_irrigation",
+    "Water+N": "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/3_Respect_N_50",
+    "Water+P": "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/3_Respect_P_50",
+    "Water+NP": "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/3_Respect_NP_50"
 }
 
 DATA_DIR = "/lustre/nobackup/WUR/ESG/zhou111/2_RQ1_Data"
-OUT_DIR  = "/lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Statistics/4_Impacts_NPCrop"
+OUT_DIR  = "/lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Statistics/2_NPYield_Change"
 os.makedirs(OUT_DIR, exist_ok=True)
 
 # --- 2. Calculation Function ---
@@ -97,7 +97,7 @@ for basin in STUDY_AREAS:
 df = pd.DataFrame(all_data)
 
 # Save to CSV
-csv_path = os.path.join(OUT_DIR, "Scenarios_Production_Runoff_Summary.csv")
+csv_path = os.path.join(OUT_DIR, "RespectBoundaries_Yield_Runoff_Summary.csv")
 df.to_csv(csv_path, index=False)
 
 print(f"Summary successfully saved to: {csv_path}")

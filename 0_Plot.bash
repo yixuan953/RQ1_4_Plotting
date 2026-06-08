@@ -27,26 +27,26 @@ conda activate myenv
 # python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Stat_Fig2a_2.py
 # python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig2ab_BarPlots_v2.py
 
-
 # Fig 2c - Areas with boundaries' exceedances & Share of harvested area exceeding sustainable irrigation amount or N (P) runoff boundaries
 # python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig2c_BoundaryCheck.py
 # python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Stat_Fig2c_2.py
 # python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig2c_Exceedance_bars.py
 
 # Fig 2d & 2e - Maps of boundaries' exceedance [kg N/ha/yr or kg P/ha/yr] for each crop type and basin
-python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig2d_ExceedanceMaps.py
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig2d_ExceedanceMaps.py
+
 
 # --------->  Main Figure 3: Impacts on crop production when reducing irrigation and fertilization
 # Fig 3a - Crop production under different scenarios
 # python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Stat_Fig3a.py
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig3a_CropProd_bars.py
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig3a_CropProd_bars_v2.py
 
 # Fig 3b - Crop production reduction [%] with sustainable irrigation and feritlization
 # python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig3b_CropProd_red_Maps.py
 
 # --------->  Main Figure 4: Nutrient losses under different scenarios
 # Fig 4a - Nutrient losses under different scenarios 
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig4a_NP_runoff_bars.py
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig4a_NP_runoff_bars_v2.py
 
 # Fig 4b - Maps of N and P runoff exceedance with sustainable irrigation and reduced fertilization
 # python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig4b_NP_exceedance_Maps.py
@@ -54,10 +54,9 @@ python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig2d_ExceedanceMa
 # ---------> Main Figure 5: Trade-offs between crop production and nutrient losses under different scenarios
 # Fig 5a ---> Basin-scale crop production vs. N, P runoff when allowing different percentage of yield reduction
 # python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Stat_Fig5a_1.py # Basin-scale crop production vs. N, P runoff when allowing different percentage of yield reduction
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Stat_Fig5a_2.py # Boundaries without contribution from sewage
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Stat_Fig5a_3.py # Boundaries without contribution from sewage
-# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig5a_Prod_Losses_tradeoffs.py
-
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Stat_Fig5a_2.py # Boundaries without contribution from sewage or aquaculture
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Stat_Fig5a_3.py # Boundaries without contribution from sewage or aquaculture
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig5_Prod_Losses_tradeoffs_v2.py
 
 # ---------> Extended Figures:
 # Extended Fig. 1 Crop-specific regional safe boundaries for N runoff, simulated current crop-specific N runoff, and the boundaries’ exceedance.
@@ -71,5 +70,10 @@ python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig2d_ExceedanceMa
 
 # ---------> Sensitivity analysis:
 # python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Sens_Fig1.py
+
+
+
+# ---------> Supplementary statistics and figures:
+python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/SM_Val_CropYield.py
 
 conda deactivate

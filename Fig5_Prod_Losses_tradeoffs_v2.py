@@ -1,5 +1,5 @@
 # This code is used to plot
-# 1. Total prouduction (sum of all crop types) (yaxis) and N (xaxis - left), P runoff (xaxis - right) changes when accepting different percentage of yield reduction 
+# 1. Total prouduction and N, P runoff changes when accepting different percentage of yield reduction 
 # 2. Current boundaries and boundaries when excluding the contribution of sewage (dashed lines)
 
 import os
@@ -31,11 +31,13 @@ CROP_MAP = {
 
 SCENARIO_ORDER = {
     "Baseline": 0,
-    "10% Reduction": 1,
-    "20% Reduction": 2,
-    "30% Reduction": 3,
-    "40% Reduction": 4,
-    "50% Reduction": 5
+    "Sus_Irrigation": 1,
+    "5% Reduction": 2,
+    "10% Reduction": 3,
+    "20% Reduction": 4,
+    "30% Reduction": 5,
+    "40% Reduction": 6,
+    "50% Reduction": 7
 }
 
 # --- Helper Function for Dynamic Nice Numbers ---
@@ -69,7 +71,6 @@ def get_nice_axis_params(min_val, max_val):
     
     return nice_min, nice_max, step
 
-
 # --- 2. Load Scenario Data ---
 if not os.path.exists(tradeoff_csv):
     raise FileNotFoundError(f"Missing scenario summary dataset at: {tradeoff_csv}")
@@ -88,25 +89,29 @@ for basin in Studyareas:
     available_summary_crops = df_basin['Crop'].unique()
     df_basin_filtered = df_basin[df_basin['Crop'].isin(available_summary_crops)]
     
-    df_agg = df_basin_filtered.groupby('Scenario')[['Production_ktons', 'N_Runoff_ktons', 'P_Runoff_ktons']].sum().reset_index()
+    df_agg_raw = df_basin_filtered.groupby('Scenario')[['Production_ktons', 'N_Runoff_ktons', 'P_Runoff_ktons']].sum().reset_index()
+  
+    Yp_series = df_agg_raw.loc[df_agg_raw['Scenario'] == 'Yp', 'Production_ktons']
+    if not Yp_series.empty:
+        baseline_prod = Yp_series.iloc[0]
+    else:
+        baseline_series = df_agg_raw.loc[df_agg_raw['Scenario'] == 'Baseline', 'Production_ktons']
+        if not baseline_series.empty:
+            baseline_prod = baseline_series.iloc[0]
+            print(f"  [Warning] 'Yp' scenario missing for basin {basin}. Using 'Baseline' as fallback.")
+        else:
+            baseline_prod = 1.0
+            print(f"  [Warning] Neither 'Yp' nor 'Baseline' found for basin {basin}. Scaling factor set to 1.0.")
+    
+    df_agg = df_agg_raw.copy()
     df_agg['sort_idx'] = df_agg['Scenario'].map(SCENARIO_ORDER)
     df_agg = df_agg.dropna(subset=['sort_idx']).sort_values('sort_idx')
 
-    # Baseline scenario
-    # baseline_series = df_agg.loc[df_agg['Scenario'] == 'Baseline', 'Production_ktons']
-    # if not baseline_series.empty:
-    #     baseline_prod = baseline_series.iloc[0]
-    #     # Avoid division by zero if baseline production happens to be 0
-    #     if baseline_prod != 0:
-    #         prod_mt = 100 * df_agg['Production_ktons'] / baseline_prod
-    #     else:
-    #         prod_mt = df_agg['Production_ktons'] * 0.0
-    # else:
-    #     print(f"  [Warning] 'Baseline' scenario missing for basin {basin}. Falling back to default scaling.")
-    #     prod_mt = 0.0
+    if baseline_prod != 0:
+        prod_pct = 100.0 * df_agg['Production_ktons'] / baseline_prod
+    else:
+        prod_pct = df_agg['Production_ktons'] * 0.0
     
-    # Unit Conversions: Only transform Crop Production (ktons -> Mt)
-    prod_mt = df_agg['Production_ktons'] / 1000.0
     n_rf = df_agg['N_Runoff_ktons'] 
     p_rf = df_agg['P_Runoff_ktons'] 
 
@@ -146,60 +151,102 @@ for basin in Studyareas:
     fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(6, 10), sharex=True)
     color_n, color_p = '#CD2C58', '#F17727'
     
+    # Dynamic Buffer calculation for centering target elements nicely
+    y_buffer_ratio = 0.25 
+    x_buffer_ratio = 0.08  # Increased slightly to prevent large marker clipping
+    
+    # Define custom colors for the first two specific scenario points
+    pt_colors_n = ['grey' if i == 0 else '#0E75A9' if i == 1 else color_n for i in range(len(prod_pct))]
+    pt_colors_p = ['grey' if i == 0 else '#0E75A9' if i == 1 else color_p for i in range(len(prod_pct))]
+
     # --- SUBPLOT 1 (Top): Nitrogen Runoff ---
-    ax1.plot(prod_mt, n_rf, color=color_n, marker='o', markersize=15, linewidth=3)
-    ax1.grid(True, linestyle=':', alpha=0.4)
+    ax1.plot(prod_pct, n_rf, color="grey", linestyle='--',linewidth=3, zorder=4)
+    ax1.scatter(prod_pct, n_rf, color=pt_colors_n, s=240, zorder=5)
+    ax1.grid(True, linestyle=':', alpha=0.3, zorder=1)
     
-    if current_n_bound and current_n_bound > 0:
-        ax1.axhline(y=current_n_bound, color="black", linestyle='-', linewidth=2)
-    if nosewage_n_bound and nosewage_n_bound > 0:
-        ax1.axhline(y=nosewage_n_bound, color="black", linestyle='--', linewidth=2)
-        
-    # Calculate Nice Axis Bounds for Nitrogen
+    # Calculate Dynamic Limits for Y-axis
     n_all = list(n_rf) + [v for v in [current_n_bound, nosewage_n_bound] if v]
-    n_min_nice, n_max_nice, n_step = get_nice_axis_params(min(n_all), max(n_all))
+    n_min_raw, n_max_raw = min(n_all), max(n_all)
+    n_span = n_max_raw - n_min_raw if n_max_raw != n_min_raw else 1.0
     
+    n_min_nice, n_max_nice, n_step = get_nice_axis_params(
+        n_min_raw - (n_span * y_buffer_ratio), 
+        n_max_raw + (n_span * y_buffer_ratio)
+    )
     ax1.set_ylim(n_min_nice, n_max_nice)
+    
+    # Shadows & Threshold Lines (Using a lighter, cleaner alpha and subtle hatch)
+    if nosewage_n_bound and nosewage_n_bound > 0:
+        ax1.axhspan(ymin=nosewage_n_bound, ymax=n_max_nice, color='#FF4D4D', alpha=0.08, hatch='//', zorder=2)
+        ax1.axhline(y=nosewage_n_bound, color="red", linestyle='--', linewidth=2, zorder=3)
+        
+    if current_n_bound and current_n_bound > 0:
+        ax1.axhline(y=current_n_bound, color="red", linestyle='-', linewidth=2, zorder=3)
+        
     ax1.yaxis.set_major_locator(MultipleLocator(n_step))
     ax1.tick_params(axis='x', which='both', bottom=True, top=False, labelbottom=False)
     ax1.tick_params(axis='y', labelsize=25)
     
-
     # --- SUBPLOT 2 (Bottom): Phosphorus Runoff ---
-    ax2.plot(prod_mt, p_rf, color=color_p, marker='o', markersize=15, linewidth=3)
-    ax2.grid(True, linestyle=':', alpha=0.4)
+    ax2.plot(prod_pct, p_rf, color="grey", linestyle='--', linewidth=3, zorder=4)
+    ax2.scatter(prod_pct, p_rf, color=pt_colors_p, s=240, zorder=5) 
+    ax2.grid(True, linestyle=':', alpha=0.3, zorder=1)
     
-    if current_p_bound and current_p_bound > 0:
-        ax2.axhline(y=current_p_bound, color="black", linestyle='-', linewidth=2)
-    if nosewage_p_bound and nosewage_p_bound > 0:
-        ax2.axhline(y=nosewage_p_bound, color="black", linestyle='--', linewidth=2)
-        
-    # Calculate Nice Axis Bounds for Phosphorus
+    # Calculate Dynamic Limits for Y-axis
     p_all = list(p_rf) + [v for v in [current_p_bound, nosewage_p_bound] if v]
-    p_min_nice, p_max_nice, p_step = get_nice_axis_params(min(p_all), max(p_all))
+    p_min_raw, p_max_raw = min(p_all), max(p_all)
+    p_span = p_max_raw - p_min_raw if p_max_raw != p_min_raw else 1.0
     
+    p_min_nice, p_max_nice, p_step = get_nice_axis_params(
+        p_min_raw - (p_span * y_buffer_ratio), 
+        p_max_raw + (p_span * y_buffer_ratio)
+    )
     ax2.set_ylim(p_min_nice, p_max_nice)
+    
+    # Shadows & Threshold Lines
+    if nosewage_p_bound and nosewage_p_bound > 0:
+        ax2.axhspan(ymin=nosewage_p_bound, ymax=p_max_nice, color='#FF4D4D', alpha=0.08, hatch='//', zorder=2)
+        ax2.axhline(y=nosewage_p_bound, color="red", linestyle='--', linewidth=2, zorder=3)
+        
+    if current_p_bound and current_p_bound > 0:
+        ax2.axhline(y=current_p_bound, color="red", linestyle='-', linewidth=2, zorder=3)
+        
     ax2.yaxis.set_major_locator(MultipleLocator(p_step))
     
-    # Calculate Nice Axis Bounds for Shared X-Axis (Production)
-    x_min_nice, x_max_nice, x_step = get_nice_axis_params(min(prod_mt), max(prod_mt))
-    # x_min_nice, x_max_nice, x_step = 50, 100, 10
+    # --- Global X-axis adjustments ---
+    x_min, x_max = min(prod_pct), max(prod_pct)
+    x_span = x_max - x_min if x_max != x_min else 1.0
+    x_min_nice, x_max_nice, x_step = get_nice_axis_params(
+        x_min - (x_span * x_buffer_ratio),
+        x_max + (x_span * x_buffer_ratio)
+    )
     ax2.set_xlim(x_min_nice, x_max_nice)
     ax2.xaxis.set_major_locator(MultipleLocator(x_step))
     
-    ax2.tick_params(axis='x', which='both', bottom=True, labelbottom=True, labelsize=25)
-    ax2.tick_params(axis='y', labelsize=25)
+    # Invert x-axis so Baseline (high production) is on the right
+    ax2.invert_xaxis()
+    
+    # ADDED 'pad' HERE: This pushes the numbers slightly away from the axis line 
+    # to stop the corner values from colliding into each other.
+    ax2.tick_params(axis='x', which='both', bottom=True, labelbottom=True, labelsize=25, pad=10)
+    ax1.tick_params(axis='y', labelsize=25, pad=8)
+    ax2.tick_params(axis='y', labelsize=25, pad=8)
 
-    # --- 6. Complete Removal of Titles, Text labels, and Legends ---
-    ax1.set_title("")
-    ax1.set_xlabel("")
-    ax1.set_ylabel("")
-    ax2.set_title("")
-    ax2.set_xlabel("")
-    ax2.set_ylabel("")
+    # --- 6. Clean Frame Cleanup ---
+    for ax in [ax1, ax2]:
+        ax.set_title("")
+        ax.set_xlabel("")
+        ax.set_ylabel("")
+        for spine in ax.spines.values():
+            spine.set_color('#333333')
+            spine.set_linewidth(1.2)
 
-    # --- 7. Tight Clean Export ---
-    plt.tight_layout()
+    # Automatically realign the subplot labels dynamically before exporting
+    fig.align_labels()
+
+    # --- 7. Export ---
+    # Change tight_layout padding slightly if needed, or stick with your setup:
+    plt.tight_layout(pad=1.5)
     fig_name = f"TradeOff_Runoff_Boundaries_Stacked_{basin}.png"
     plt.savefig(os.path.join(output_dir, fig_name), dpi=300, bbox_inches='tight')
     plt.close()

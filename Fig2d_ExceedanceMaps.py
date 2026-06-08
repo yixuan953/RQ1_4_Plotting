@@ -146,7 +146,11 @@ def plot_total_basin(basin, var_type):
         crit_total = running_crit_runoff / running_total_ha
         
         # Apply HA threshold filter (> 2500 ha combined across all crops)
-        final_mask = base_mask.where(running_total_ha > 2500)
+        if var_type == "Water":
+            final_mask = base_mask.where(running_total_ha > 25000)
+        else:
+            final_mask = base_mask.where(running_total_ha > 2500)
+            
         data_to_plot = (actual_total - crit_total) * final_mask
 
         # --- PLOTTING ---

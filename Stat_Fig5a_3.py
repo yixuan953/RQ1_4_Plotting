@@ -12,7 +12,7 @@ input_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plo
 data_dir = "/lustre/nobackup/WUR/ESG/zhou111/2_RQ1_Data"
 
 # Paths for CSV processing
-csv_dir = "/lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Statistics/5_TradeOffs"
+csv_dir = "/lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Statistics/3_TradeOffs"
 
 Studyarea = ["Indus", "LaPlata", "Yangtze", "Rhine"]
 Croptypes = ["winterwheat", "maize", "mainrice", "secondrice", "soybean"]

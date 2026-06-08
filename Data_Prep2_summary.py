@@ -7,10 +7,16 @@ import numpy as np
 start_year = 2010
 end_year = 2019
 
-Studyarea = ["Rhine"] # ["Indus", "Rhine", "LaPlata", "Yangtze"]
-Croptypes = ["maize"] # ["mainrice", "secondrice", "maize", "soybean", "winterwheat"]
+Studyarea = ["Indus", "Rhine", "LaPlata", "Yangtze"]
+Croptypes = ["mainrice", "secondrice", "maize", "soybean", "winterwheat"]
 
 # # Input directory 1 - Simulated yield and losses (choose between the following 4)
+
+# # # Potential yield
+Raifed_baseline_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/1_Yp"
+Irrigated_baseline_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/1_Yp"
+output_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/0_Yp"
+
 # # # Baseline scenario directories
 # Raifed_baseline_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_1_Baseline_rainfed"
 # Irrigated_baseline_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_1_Baseline"
@@ -27,24 +33,23 @@ Croptypes = ["maize"] # ["mainrice", "secondrice", "maize", "soybean", "winterwh
 # output_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/3_Red_Pfert"
 
 # Reduced fertilizer scenario directories
-Raifed_baseline_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_3_Rainfed/Red_prop_40"
-Irrigated_baseline_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_3_Sus_Irri_Red_Fert/Red_prop_40"
-output_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/3_Red_fert_40"
+Raifed_baseline_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_3_Rainfed/Respect_P_50"
+Irrigated_baseline_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_3_Sus_Irri_Red_Fert/Respect_P_50"
+output_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/3_Respect_P_50"
 
 # # Boundaries with 0 sewage
 # Raifed_baseline_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_3_Rainfed/Red_prop"
 # Irrigated_baseline_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_3_Sus_Irri_Red_Fert/Red_prop"
 # output_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/4_NoSewage"
 
-
 # Input directory 2 - Calculated critical N, P runoff
 crit_loss_dir = "/lustre/nobackup/WUR/ESG/zhou111/2_RQ1_Data/1_Global/Boundaries"
 # crit_loss_dir = "/lustre/nobackup/WUR/ESG/zhou111/2_RQ1_Data/1_Global/Boundaries/Scenarios_NoSewage"
 
-
 # Input directory 3 - Model input data, including, Harvested area from SPAM2010, Irrigation from VIC-WUR
 data_dir = "/lustre/nobackup/WUR/ESG/zhou111/2_RQ1_Data/2_StudyArea"
 
+os.makedirs(output_dir, exist_ok=True)
 
 for basin in Studyarea:
     
