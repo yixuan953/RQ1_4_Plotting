@@ -1,0 +1,39 @@
+
+Processing Rhine - winterwheat
+Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Soilpool/IrriRainfed_Combined/Rhine_winterwheat_Ppool_runoff_combined.png
+
+Processing Rhine - maize
+Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Soilpool/IrriRainfed_Combined/Rhine_maize_Ppool_runoff_combined.png
+
+Processing LaPlata - winterwheat
+Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Soilpool/IrriRainfed_Combined/LaPlata_winterwheat_Ppool_runoff_combined.png
+
+Processing LaPlata - mainrice
+Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Soilpool/IrriRainfed_Combined/LaPlata_mainrice_Ppool_runoff_combined.png
+
+Processing LaPlata - maize
+Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Soilpool/IrriRainfed_Combined/LaPlata_maize_Ppool_runoff_combined.png
+
+Processing LaPlata - soybean
+Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Soilpool/IrriRainfed_Combined/LaPlata_soybean_Ppool_runoff_combined.png
+
+Processing Indus - winterwheat
+Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Soilpool/IrriRainfed_Combined/Indus_winterwheat_Ppool_runoff_combined.png
+
+Processing Indus - mainrice
+Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Soilpool/IrriRainfed_Combined/Indus_mainrice_Ppool_runoff_combined.png
+
+Processing Indus - maize
+Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Soilpool/IrriRainfed_Combined/Indus_maize_Ppool_runoff_combined.png
+
+Processing Yangtze - winterwheat
+Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Soilpool/IrriRainfed_Combined/Yangtze_winterwheat_Ppool_runoff_combined.png
+
+Processing Yangtze - mainrice
+Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Soilpool/IrriRainfed_Combined/Yangtze_mainrice_Ppool_runoff_combined.png
+
+Processing Yangtze - maize
+Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Soilpool/IrriRainfed_Combined/Yangtze_maize_Ppool_runoff_combined.png
+
+Processing Yangtze - soybean
+Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Soilpool/IrriRainfed_Combined/Yangtze_soybean_Ppool_runoff_combined.png

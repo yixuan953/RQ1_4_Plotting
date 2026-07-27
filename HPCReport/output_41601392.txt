@@ -1,0 +1,20 @@
+
+Processing Basin: LaPlata
+-> Generating combined total yield map...
+Saved total yield map to: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/Fig3/Respect_NP/Total_Yield_Map_LaPlata.png
+Saved potential yield map to: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/Fig3/Respect_NP/Total_Yield_Map_Potential_LaPlata.png
+
+Processing Basin: Indus
+-> Generating combined total yield map...
+Saved total yield map to: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/Fig3/Respect_NP/Total_Yield_Map_Indus.png
+Saved potential yield map to: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/Fig3/Respect_NP/Total_Yield_Map_Potential_Indus.png
+
+Processing Basin: Yangtze
+-> Generating combined total yield map...
+Saved total yield map to: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/Fig3/Respect_NP/Total_Yield_Map_Yangtze.png
+Saved potential yield map to: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/Fig3/Respect_NP/Total_Yield_Map_Potential_Yangtze.png
+
+Processing Basin: Rhine
+-> Generating combined total yield map...
+Saved total yield map to: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/Fig3/Respect_NP/Total_Yield_Map_Rhine.png
+Saved potential yield map to: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/Fig3/Respect_NP/Total_Yield_Map_Potential_Rhine.png

@@ -24,6 +24,7 @@ conda activate myenv
 # --------->  Main Figure 2: Boundary exceedance under the current irrigation and fertilization practices
 
 # Fig 2a & 2b - Bar plot of actual vs critical runoff for each crop type and basin
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Stat_Fig2a_1.py
 # python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Stat_Fig2a_2.py
 # python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig2ab_BarPlots_v2.py
 
@@ -57,6 +58,12 @@ conda activate myenv
 # python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Stat_Fig5a_2.py # Boundaries without contribution from sewage or aquaculture
 # python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Stat_Fig5a_3.py # Boundaries without contribution from sewage or aquaculture
 # python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig5_Prod_Losses_tradeoffs_v2.py
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig5b_ImplementationRate_NPfootprint_v2.py
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig5b_ImplementationRate_NPfootprint_v3.py
+
+# Fig 5b ---> End-of-pipe removal ratios required to meet the boundaries under different yield reduction and footprint reduction scenarios
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Stat_Fig5b.py
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Fig5b_Removal_Ratio_NPfootprint.py
 
 # ---------> Extended Figures:
 # Extended Fig. 1 Crop-specific regional safe boundaries for N runoff, simulated current crop-specific N runoff, and the boundaries’ exceedance.
@@ -66,14 +73,22 @@ conda activate myenv
 # Extended Fig. 5 Simulated crop-specific P runoff after reducing irrigation and fertilization and the boundaries’ exceedance.
 # Extended Fig. 6 Simulated major crops’ production with reduced irrigation and fertilization
 # python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Extended_Fig5.py
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Extended_Fig7.py
+
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Stat_Extended_Fert_Red.py
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Stat_Extended_Exceedance_HA_PA.py
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Stat_Extended_Exceedance_population.py
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Stat_Extended_Exceedance_yield.py
 
 
 # ---------> Sensitivity analysis:
 # python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/Sens_Fig1.py
 
-
-
 # ---------> Supplementary statistics and figures:
-python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/SM_Val_CropYield.py
-
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/SM_Val_CropYield.py
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/SM_Val_CropProd.py
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/SM_Fig_Yield.py
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/SM_SoilPpool_Variation.py
+# python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/SM_Nrunoff_Yield.py
+python /lustre/nobackup/WUR/ESG/zhou111/1_RQ1_Code/4_Plotting/SM_Share_Agri_Runoff.py
 conda deactivate

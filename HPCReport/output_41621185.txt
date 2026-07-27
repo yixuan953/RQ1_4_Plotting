@@ -1,0 +1,126 @@
+
+Processing Rhine - winterwheat
+  Scenario: Current
+  Scenario: Water
+  Scenario: Water + N
+  Scenario: Water + P
+  Scenario: Water + N + P
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/Rhine_winterwheat_N_runoff.png
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/Rhine_winterwheat_combined_yield.png
+
+Processing Rhine - mainrice
+  Missing summary file: /lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/1_Baseline/Rhine_mainrice_summary.nc
+
+Processing Rhine - maize
+  Scenario: Current
+  Scenario: Water
+  Scenario: Water + N
+  Scenario: Water + P
+  Scenario: Water + N + P
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/Rhine_maize_N_runoff.png
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/Rhine_maize_combined_yield.png
+
+Processing Rhine - soybean
+  Missing summary file: /lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/1_Baseline/Rhine_soybean_summary.nc
+
+Processing LaPlata - winterwheat
+  Scenario: Current
+  Scenario: Water
+  Scenario: Water + N
+  Scenario: Water + P
+  Scenario: Water + N + P
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/LaPlata_winterwheat_N_runoff.png
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/LaPlata_winterwheat_combined_yield.png
+
+Processing LaPlata - mainrice
+  Scenario: Current
+  Scenario: Water
+  Scenario: Water + N
+  Scenario: Water + P
+  Scenario: Water + N + P
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/LaPlata_mainrice_N_runoff.png
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/LaPlata_mainrice_combined_yield.png
+
+Processing LaPlata - maize
+  Scenario: Current
+  Scenario: Water
+  Scenario: Water + N
+  Scenario: Water + P
+  Scenario: Water + N + P
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/LaPlata_maize_N_runoff.png
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/LaPlata_maize_combined_yield.png
+
+Processing LaPlata - soybean
+  Scenario: Current
+  Scenario: Water
+  Scenario: Water + N
+  Scenario: Water + P
+  Scenario: Water + N + P
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/LaPlata_soybean_N_runoff.png
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/LaPlata_soybean_combined_yield.png
+
+Processing Indus - winterwheat
+  Scenario: Current
+  Scenario: Water
+  Scenario: Water + N
+  Scenario: Water + P
+  Scenario: Water + N + P
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/Indus_winterwheat_N_runoff.png
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/Indus_winterwheat_combined_yield.png
+
+Processing Indus - mainrice
+  Scenario: Current
+  Scenario: Water
+  Scenario: Water + N
+  Scenario: Water + P
+  Scenario: Water + N + P
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/Indus_mainrice_N_runoff.png
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/Indus_mainrice_combined_yield.png
+
+Processing Indus - maize
+  Scenario: Current
+  Scenario: Water
+  Scenario: Water + N
+  Scenario: Water + P
+  Scenario: Water + N + P
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/Indus_maize_N_runoff.png
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/Indus_maize_combined_yield.png
+
+Processing Indus - soybean
+  Missing summary file: /lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/1_Baseline/Indus_soybean_summary.nc
+
+Processing Yangtze - winterwheat
+  Scenario: Current
+  Scenario: Water
+  Scenario: Water + N
+  Scenario: Water + P
+  Scenario: Water + N + P
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/Yangtze_winterwheat_N_runoff.png
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/Yangtze_winterwheat_combined_yield.png
+
+Processing Yangtze - mainrice
+  Scenario: Current
+  Scenario: Water
+  Scenario: Water + N
+  Scenario: Water + P
+  Scenario: Water + N + P
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/Yangtze_mainrice_N_runoff.png
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/Yangtze_mainrice_combined_yield.png
+
+Processing Yangtze - maize
+  Scenario: Current
+  Scenario: Water
+  Scenario: Water + N
+  Scenario: Water + P
+  Scenario: Water + N + P
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/Yangtze_maize_N_runoff.png
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/Yangtze_maize_combined_yield.png
+
+Processing Yangtze - soybean
+  Scenario: Current
+  Scenario: Water
+  Scenario: Water + N
+  Scenario: Water + P
+  Scenario: Water + N + P
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/Yangtze_soybean_N_runoff.png
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/Yangtze_soybean_combined_yield.png

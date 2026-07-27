@@ -14,15 +14,15 @@ output_dir = "/lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/F
 os.makedirs(output_dir, exist_ok=True)
 
 # N or P
-element = "N"
-dissolved_frac = 0.7  # Adjust if your actual fraction is less than 1.0
-var_name = "N [ktons]"
-var_name2 = "N_Runoff_ktons"
+# element = "N"
+# dissolved_frac = 0.7  # Adjust if your actual fraction is less than 1.0
+# var_name = "N [ktons]"
+# var_name2 = "N_Runoff_ktons"
 
-# element = "P"
-# dissolved_frac = 0.25  # Adjust if your actual fraction is less than 1.0
-# var_name = "P [ktons]"
-# var_name2 = "P_Runoff_ktons"
+element = "P"
+dissolved_frac = 0.25  # Adjust if your actual fraction is less than 1.0
+var_name = "P [ktons]"
+var_name2 = "P_Runoff_ktons"
 
 Studyareas = ["LaPlata", "Rhine", "Indus", "Yangtze"]
 FinalCategories = ["Soybean", "Rice", "Maize", "Wheat"]

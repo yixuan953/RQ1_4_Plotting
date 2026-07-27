@@ -21,12 +21,12 @@ CROP_MAP = {
 
 DATA_DIR = "/lustre/nobackup/WUR/ESG/zhou111/2_RQ1_Data"
 BASE_DIR = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/1_Baseline"
-SCEN_DIR = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/3_Red_fert"
-FIG_OUT  = "/lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/Fig3"
+SCEN_DIR = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/3_Respect_NP_50"
+FIG_OUT  = "/lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/Fig3/Respect_NP"
 os.makedirs(FIG_OUT, exist_ok=True)
 
 # --- 2. Custom Color Setup ---
-prod_colors = ["#AA2B1D", "#D25D38", "#E89154", "#F7C772", "#E3D160", "#8AA624"]
+prod_colors = ["#AA2B1DE4", "#D25C38E1", "#E89254DE", "#F7C672E0", "#E3D160E2", "#8AA624DD"]
 prod_bounds = [-100, -40, -30, -20, -10, 0, 100]
 prod_cmap = mcolors.ListedColormap(prod_colors)
 prod_norm = mcolors.BoundaryNorm(prod_bounds, prod_cmap.N)

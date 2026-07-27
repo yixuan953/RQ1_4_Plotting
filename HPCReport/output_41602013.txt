@@ -1,0 +1,59 @@
+======================================================================
+Generating basin yield figures
+======================================================================
+
+Processing basin: LaPlata
+  Plotting baseline yield
+    Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Yield/Baseline_Yield_LaPlata.png
+    Crop panels with data: 4/4
+  Plotting potential yield
+    Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Yield/Potential_Yield_LaPlata.png
+    Crop panels with data: 4/4
+
+Processing basin: Indus
+  Plotting baseline yield
+    Warning: file not found:
+    /lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/1_Baseline/Indus_soybean_summary.nc
+    No baseline data found for Soybean
+    Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Yield/Baseline_Yield_Indus.png
+    Crop panels with data: 3/4
+  Plotting potential yield
+    Warning: file not found:
+    /lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/0_Yp/Indus_soybean_summary.nc
+    No potential data found for Soybean
+    Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Yield/Potential_Yield_Indus.png
+    Crop panels with data: 3/4
+
+Processing basin: Yangtze
+  Plotting baseline yield
+    Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Yield/Baseline_Yield_Yangtze.png
+    Crop panels with data: 4/4
+  Plotting potential yield
+    Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Yield/Potential_Yield_Yangtze.png
+    Crop panels with data: 4/4
+
+Processing basin: Rhine
+  Plotting baseline yield
+    Warning: file not found:
+    /lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/1_Baseline/Rhine_mainrice_summary.nc
+    No baseline data found for Rice
+    Warning: file not found:
+    /lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/1_Baseline/Rhine_soybean_summary.nc
+    No baseline data found for Soybean
+    Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Yield/Baseline_Yield_Rhine.png
+    Crop panels with data: 2/4
+  Plotting potential yield
+    Warning: file not found:
+    /lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/0_Yp/Rhine_mainrice_summary.nc
+    No potential data found for Rice
+    Warning: file not found:
+    /lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/0_Yp/Rhine_soybean_summary.nc
+    No potential data found for Soybean
+    Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Yield/Potential_Yield_Rhine.png
+    Crop panels with data: 2/4
+
+======================================================================
+Finished. Requested figures: 8
+Output directory:
+/lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Yield
+======================================================================

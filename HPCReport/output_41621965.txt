@@ -1,0 +1,167 @@
+
+Processing Rhine - winterwheat from ['winterwheat']
+  Scenario: Current; source crop: winterwheat
+  Scenario: Water; source crop: winterwheat
+  Scenario: Water + N; source crop: winterwheat
+  Scenario: Water + P; source crop: winterwheat
+  Scenario: Water + N + P; source crop: winterwheat
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/Rhine_winterwheat_N_runoff.png
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/Rhine_winterwheat_combined_yield.png
+
+Processing Rhine - mainrice from ['mainrice']
+  No N-boundary row for 'mainrice' in /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Statistics/1_Boundary/Rhine_crop-specific_boundaries.csv
+  Missing summary file: /lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/1_Baseline/Rhine_mainrice_summary.nc
+  No harvested-area data for mainrice
+  Missing summary file: /lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/1_Baseline/Rhine_mainrice_summary.nc
+  No harvested-area data for mainrice
+  Missing summary file: /lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/1_Baseline/Rhine_mainrice_summary.nc
+  No harvested-area data for mainrice
+  Missing summary file: /lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/1_Baseline/Rhine_mainrice_summary.nc
+  No harvested-area data for mainrice
+  Missing summary file: /lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/1_Baseline/Rhine_mainrice_summary.nc
+  No harvested-area data for mainrice
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/Rhine_mainrice_N_runoff.png
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/Rhine_mainrice_combined_yield.png
+
+Processing Rhine - maize from ['maize']
+  Scenario: Current; source crop: maize
+  Scenario: Water; source crop: maize
+  Scenario: Water + N; source crop: maize
+  Scenario: Water + P; source crop: maize
+  Scenario: Water + N + P; source crop: maize
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/Rhine_maize_N_runoff.png
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/Rhine_maize_combined_yield.png
+
+Processing Rhine - soybean from ['soybean']
+  No N-boundary row for 'soybean' in /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Statistics/1_Boundary/Rhine_crop-specific_boundaries.csv
+  Missing summary file: /lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/1_Baseline/Rhine_soybean_summary.nc
+  No harvested-area data for soybean
+  Missing summary file: /lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/1_Baseline/Rhine_soybean_summary.nc
+  No harvested-area data for soybean
+  Missing summary file: /lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/1_Baseline/Rhine_soybean_summary.nc
+  No harvested-area data for soybean
+  Missing summary file: /lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/1_Baseline/Rhine_soybean_summary.nc
+  No harvested-area data for soybean
+  Missing summary file: /lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/1_Baseline/Rhine_soybean_summary.nc
+  No harvested-area data for soybean
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/Rhine_soybean_N_runoff.png
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/Rhine_soybean_combined_yield.png
+
+Processing LaPlata - winterwheat from ['winterwheat']
+  Scenario: Current; source crop: winterwheat
+  Scenario: Water; source crop: winterwheat
+  Scenario: Water + N; source crop: winterwheat
+  Scenario: Water + P; source crop: winterwheat
+  Scenario: Water + N + P; source crop: winterwheat
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/LaPlata_winterwheat_N_runoff.png
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/LaPlata_winterwheat_combined_yield.png
+
+Processing LaPlata - mainrice from ['mainrice']
+  Scenario: Current; source crop: mainrice
+  Scenario: Water; source crop: mainrice
+  Scenario: Water + N; source crop: mainrice
+  Scenario: Water + P; source crop: mainrice
+  Scenario: Water + N + P; source crop: mainrice
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/LaPlata_mainrice_N_runoff.png
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/LaPlata_mainrice_combined_yield.png
+
+Processing LaPlata - maize from ['maize']
+  Scenario: Current; source crop: maize
+  Scenario: Water; source crop: maize
+  Scenario: Water + N; source crop: maize
+  Scenario: Water + P; source crop: maize
+  Scenario: Water + N + P; source crop: maize
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/LaPlata_maize_N_runoff.png
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/LaPlata_maize_combined_yield.png
+
+Processing LaPlata - soybean from ['soybean']
+  Scenario: Current; source crop: soybean
+  Scenario: Water; source crop: soybean
+  Scenario: Water + N; source crop: soybean
+  Scenario: Water + P; source crop: soybean
+  Scenario: Water + N + P; source crop: soybean
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/LaPlata_soybean_N_runoff.png
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/LaPlata_soybean_combined_yield.png
+
+Processing Indus - winterwheat from ['winterwheat']
+  Scenario: Current; source crop: winterwheat
+  Scenario: Water; source crop: winterwheat
+  Scenario: Water + N; source crop: winterwheat
+  Scenario: Water + P; source crop: winterwheat
+  Scenario: Water + N + P; source crop: winterwheat
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/Indus_winterwheat_N_runoff.png
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/Indus_winterwheat_combined_yield.png
+
+Processing Indus - mainrice from ['mainrice']
+  Scenario: Current; source crop: mainrice
+  Scenario: Water; source crop: mainrice
+  Scenario: Water + N; source crop: mainrice
+  Scenario: Water + P; source crop: mainrice
+  Scenario: Water + N + P; source crop: mainrice
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/Indus_mainrice_N_runoff.png
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/Indus_mainrice_combined_yield.png
+
+Processing Indus - maize from ['maize']
+  Scenario: Current; source crop: maize
+  Scenario: Water; source crop: maize
+  Scenario: Water + N; source crop: maize
+  Scenario: Water + P; source crop: maize
+  Scenario: Water + N + P; source crop: maize
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/Indus_maize_N_runoff.png
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/Indus_maize_combined_yield.png
+
+Processing Indus - soybean from ['soybean']
+  No N-boundary row for 'soybean' in /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Statistics/1_Boundary/Indus_crop-specific_boundaries.csv
+  Missing summary file: /lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/1_Baseline/Indus_soybean_summary.nc
+  No harvested-area data for soybean
+  Missing summary file: /lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/1_Baseline/Indus_soybean_summary.nc
+  No harvested-area data for soybean
+  Missing summary file: /lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/1_Baseline/Indus_soybean_summary.nc
+  No harvested-area data for soybean
+  Missing summary file: /lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/1_Baseline/Indus_soybean_summary.nc
+  No harvested-area data for soybean
+  Missing summary file: /lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/1_Baseline/Indus_soybean_summary.nc
+  No harvested-area data for soybean
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/Indus_soybean_N_runoff.png
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/Indus_soybean_combined_yield.png
+
+Processing Yangtze - winterwheat from ['winterwheat']
+  Scenario: Current; source crop: winterwheat
+  Scenario: Water; source crop: winterwheat
+  Scenario: Water + N; source crop: winterwheat
+  Scenario: Water + P; source crop: winterwheat
+  Scenario: Water + N + P; source crop: winterwheat
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/Yangtze_winterwheat_N_runoff.png
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/Yangtze_winterwheat_combined_yield.png
+
+Processing Yangtze - Rice from ['mainrice', 'secondrice']
+  Scenario: Current; source crop: mainrice
+  Scenario: Current; source crop: secondrice
+  Scenario: Water; source crop: mainrice
+  Scenario: Water; source crop: secondrice
+  Scenario: Water + N; source crop: mainrice
+  Scenario: Water + N; source crop: secondrice
+  Scenario: Water + P; source crop: mainrice
+  Scenario: Water + P; source crop: secondrice
+  Scenario: Water + N + P; source crop: mainrice
+  Scenario: Water + N + P; source crop: secondrice
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/Yangtze_Rice_N_runoff.png
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/Yangtze_Rice_combined_yield.png
+
+Processing Yangtze - maize from ['maize']
+  Scenario: Current; source crop: maize
+  Scenario: Water; source crop: maize
+  Scenario: Water + N; source crop: maize
+  Scenario: Water + P; source crop: maize
+  Scenario: Water + N + P; source crop: maize
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/Yangtze_maize_N_runoff.png
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/Yangtze_maize_combined_yield.png
+
+Processing Yangtze - soybean from ['soybean']
+  Scenario: Current; source crop: soybean
+  Scenario: Water; source crop: soybean
+  Scenario: Water + N; source crop: soybean
+  Scenario: Water + P; source crop: soybean
+  Scenario: Water + N + P; source crop: soybean
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/Yangtze_soybean_N_runoff.png
+  Saved: /lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/SM_Fig/Annual_Variation/Nrunoff_Yield/Yangtze_soybean_combined_yield.png

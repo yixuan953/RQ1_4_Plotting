@@ -2,13 +2,13 @@
 # 1. Total prouduction and N, P runoff changes when accepting different percentage of yield reduction 
 # 2. Current boundaries and boundaries when excluding the contribution of sewage (dashed lines)
 
+# --- 1. Configuration & Paths ---
 import os
 import math
 import pandas as pd
 import matplotlib.pyplot as plt
-from matplotlib.ticker import MultipleLocator
+from matplotlib.ticker import FixedLocator  # Used to precisely place the clean ticks
 
-# --- 1. Configuration & Paths ---
 input_dir = "/lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Statistics/3_TradeOffs"
 output_dir = "/lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/Fig5"
 current_boundary_dir = "/lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Statistics/1_Boundary"
@@ -40,36 +40,56 @@ SCENARIO_ORDER = {
     "50% Reduction": 7
 }
 
-# --- Helper Function for Dynamic Nice Numbers ---
-def get_nice_axis_params(min_val, max_val):
+# --- Helper Function for EXACTLY 4 Clean Ticks ---
+def get_4_nice_ticks(min_val, max_val):
     """
-    Computes a clean step interval and nice bounds for any scale.
+    Finds a clean step size and returns exactly 4 evenly-spaced nice ticks 
+    that completely cover the data range [min_val, max_val].
     """
     if max_val == min_val:
-        return min_val, max_val + 1, 1
+        return [min_val + i for i in range(4)]
         
-    span = max_val - min_val
-    # Get the order of magnitude of the span
-    exponent = math.floor(math.log10(span))
-    fraction = span / (10 ** exponent)
+    raw_span = max_val - min_val
+    # We need exactly 3 intervals to get 4 ticks
+    raw_step = raw_span / 3.0
     
-    # Select a clean nice step based on fraction magnitude
-    if fraction <= 1:
-        step = 0.2
-    elif fraction <= 2.5:
-        step = 0.5
-    elif fraction <= 5.0:
+    # Find the nearest order of magnitude
+    exponent = math.floor(math.log10(raw_step))
+    fraction = raw_step / (10 ** exponent)
+    
+    # Pick a clean step standard (biased upward)
+    if fraction <= 1.0:
         step = 1.0
-    else:
+    elif fraction <= 2.0:
         step = 2.0
+    elif fraction <= 2.5:
+        step = 2.5
+    elif fraction <= 5.0:
+        step = 5.0
+    else:
+        step = 10.0
         
     step *= (10 ** exponent)
     
-    # Round bounds to perfectly match the clean steps
+    # Start checking for a nice_min that encapsulates the range with exactly 4 ticks
     nice_min = math.floor(min_val / step) * step
-    nice_max = math.ceil(max_val / step) * step
     
-    return nice_min, nice_max, step
+    # If the step choice was too conservative and 4 ticks don't cover the max,
+    # bump the step size to the next standard interval rather than shifting the minimum infinitely.
+    ticks = [nice_min + i * step for i in range(4)]
+    if ticks[-1] < max_val:
+        # Move up to the next logical step size
+        step_choices = [1.0, 2.0, 2.5, 5.0, 10.0, 20.0]
+        current_fraction = raw_step / (10 ** exponent)
+        
+        # Find next highest fraction
+        next_frac = next((s for s in step_choices if s > current_fraction), 10.0)
+        step = next_frac * (10 ** exponent)
+        
+        nice_min = math.floor(min_val / step) * step
+        ticks = [nice_min + i * step for i in range(4)]
+
+    return ticks
 
 # --- 2. Load Scenario Data ---
 if not os.path.exists(tradeoff_csv):
@@ -151,86 +171,70 @@ for basin in Studyareas:
     fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(6, 10), sharex=True)
     color_n, color_p = '#CD2C58', '#F17727'
     
-    # Dynamic Buffer calculation for centering target elements nicely
     y_buffer_ratio = 0.25 
-    x_buffer_ratio = 0.08  # Increased slightly to prevent large marker clipping
+    x_buffer_ratio = 0.08  
     
-    # Define custom colors for the first two specific scenario points
     pt_colors_n = ['grey' if i == 0 else '#0E75A9' if i == 1 else color_n for i in range(len(prod_pct))]
     pt_colors_p = ['grey' if i == 0 else '#0E75A9' if i == 1 else color_p for i in range(len(prod_pct))]
 
     # --- SUBPLOT 1 (Top): Nitrogen Runoff ---
-    ax1.plot(prod_pct, n_rf, color="grey", linestyle='--',linewidth=3, zorder=4)
+    ax1.plot(prod_pct, n_rf, color="grey", linestyle='--', linewidth=3, zorder=4)
     ax1.scatter(prod_pct, n_rf, color=pt_colors_n, s=240, zorder=5)
     ax1.grid(True, linestyle=':', alpha=0.3, zorder=1)
     
-    # Calculate Dynamic Limits for Y-axis
     n_all = list(n_rf) + [v for v in [current_n_bound, nosewage_n_bound] if v]
     n_min_raw, n_max_raw = min(n_all), max(n_all)
     n_span = n_max_raw - n_min_raw if n_max_raw != n_min_raw else 1.0
     
-    n_min_nice, n_max_nice, n_step = get_nice_axis_params(
-        n_min_raw - (n_span * y_buffer_ratio), 
-        n_max_raw + (n_span * y_buffer_ratio)
-    )
-    ax1.set_ylim(n_min_nice, n_max_nice)
+    # Calculate exactly 4 beautiful ticks for N Y-axis
+    n_ticks = get_4_nice_ticks(n_min_raw - (n_span * y_buffer_ratio), n_max_raw + (n_span * y_buffer_ratio))
+    ax1.set_ylim(n_ticks[0], n_ticks[-1])
+    ax1.yaxis.set_major_locator(FixedLocator(n_ticks))
     
-    # Shadows & Threshold Lines (Using a lighter, cleaner alpha and subtle hatch)
     if nosewage_n_bound and nosewage_n_bound > 0:
-        ax1.axhspan(ymin=nosewage_n_bound, ymax=n_max_nice, color='#FF4D4D', alpha=0.08, hatch='//', zorder=2)
-        ax1.axhline(y=nosewage_n_bound, color="red", linestyle='--', linewidth=2, zorder=3)
+        ax1.axhspan(ymin=nosewage_n_bound, ymax=n_ticks[-1], color='#FF4D4D', alpha=0.08, hatch='//', zorder=2)
+        ax1.axhline(y=nosewage_n_bound, color="red", linestyle='--', linewidth=4, zorder=3)
         
     if current_n_bound and current_n_bound > 0:
-        ax1.axhline(y=current_n_bound, color="red", linestyle='-', linewidth=2, zorder=3)
+        ax1.axhline(y=current_n_bound, color="red", linestyle='-', linewidth=4, zorder=3)
         
-    ax1.yaxis.set_major_locator(MultipleLocator(n_step))
     ax1.tick_params(axis='x', which='both', bottom=True, top=False, labelbottom=False)
-    ax1.tick_params(axis='y', labelsize=25)
+    ax1.tick_params(axis='y', labelsize=25, pad=8)
     
     # --- SUBPLOT 2 (Bottom): Phosphorus Runoff ---
     ax2.plot(prod_pct, p_rf, color="grey", linestyle='--', linewidth=3, zorder=4)
     ax2.scatter(prod_pct, p_rf, color=pt_colors_p, s=240, zorder=5) 
     ax2.grid(True, linestyle=':', alpha=0.3, zorder=1)
     
-    # Calculate Dynamic Limits for Y-axis
     p_all = list(p_rf) + [v for v in [current_p_bound, nosewage_p_bound] if v]
     p_min_raw, p_max_raw = min(p_all), max(p_all)
     p_span = p_max_raw - p_min_raw if p_max_raw != p_min_raw else 1.0
     
-    p_min_nice, p_max_nice, p_step = get_nice_axis_params(
-        p_min_raw - (p_span * y_buffer_ratio), 
-        p_max_raw + (p_span * y_buffer_ratio)
-    )
-    ax2.set_ylim(p_min_nice, p_max_nice)
+    # Calculate exactly 4 beautiful ticks for P Y-axis
+    p_ticks = get_4_nice_ticks(p_min_raw - (p_span * y_buffer_ratio), p_max_raw + (p_span * y_buffer_ratio))
+    ax2.set_ylim(p_ticks[0], p_ticks[-1])
+    ax2.yaxis.set_major_locator(FixedLocator(p_ticks))
     
-    # Shadows & Threshold Lines
     if nosewage_p_bound and nosewage_p_bound > 0:
-        ax2.axhspan(ymin=nosewage_p_bound, ymax=p_max_nice, color='#FF4D4D', alpha=0.08, hatch='//', zorder=2)
-        ax2.axhline(y=nosewage_p_bound, color="red", linestyle='--', linewidth=2, zorder=3)
+        ax2.axhspan(ymin=nosewage_p_bound, ymax=p_ticks[-1], color='#FF4D4D', alpha=0.08, hatch='//', zorder=2)
+        ax2.axhline(y=nosewage_p_bound, color="red", linestyle='--', linewidth=4, zorder=3)
         
     if current_p_bound and current_p_bound > 0:
-        ax2.axhline(y=current_p_bound, color="red", linestyle='-', linewidth=2, zorder=3)
+        ax2.axhline(y=current_p_bound, color="red", linestyle='-', linewidth=4, zorder=3)
         
-    ax2.yaxis.set_major_locator(MultipleLocator(p_step))
+    ax2.tick_params(axis='y', labelsize=25, pad=8)
     
     # --- Global X-axis adjustments ---
     x_min, x_max = min(prod_pct), max(prod_pct)
     x_span = x_max - x_min if x_max != x_min else 1.0
-    x_min_nice, x_max_nice, x_step = get_nice_axis_params(
-        x_min - (x_span * x_buffer_ratio),
-        x_max + (x_span * x_buffer_ratio)
-    )
-    ax2.set_xlim(x_min_nice, x_max_nice)
-    ax2.xaxis.set_major_locator(MultipleLocator(x_step))
     
-    # Invert x-axis so Baseline (high production) is on the right
+    # Calculate exactly 4 beautiful ticks for Shared X-axis
+    x_ticks = get_4_nice_ticks(x_min - (x_span * x_buffer_ratio), x_max + (x_span * x_buffer_ratio))
+    ax2.set_xlim(x_ticks[0], x_ticks[-1])
+    ax2.xaxis.set_major_locator(FixedLocator(x_ticks))
+    
     ax2.invert_xaxis()
-    
-    # ADDED 'pad' HERE: This pushes the numbers slightly away from the axis line 
-    # to stop the corner values from colliding into each other.
     ax2.tick_params(axis='x', which='both', bottom=True, labelbottom=True, labelsize=25, pad=10)
-    ax1.tick_params(axis='y', labelsize=25, pad=8)
-    ax2.tick_params(axis='y', labelsize=25, pad=8)
 
     # --- 6. Clean Frame Cleanup ---
     for ax in [ax1, ax2]:
@@ -241,14 +245,12 @@ for basin in Studyareas:
             spine.set_color('#333333')
             spine.set_linewidth(1.2)
 
-    # Automatically realign the subplot labels dynamically before exporting
     fig.align_labels()
 
     # --- 7. Export ---
-    # Change tight_layout padding slightly if needed, or stick with your setup:
     plt.tight_layout(pad=1.5)
     fig_name = f"TradeOff_Runoff_Boundaries_Stacked_{basin}.png"
     plt.savefig(os.path.join(output_dir, fig_name), dpi=300, bbox_inches='tight')
     plt.close()
 
-print("All stacked minimalist charts exported successfully with clean step limits.")
+print("All charts exported successfully with 4 clean, 'nice' rounded ticks per axis.")

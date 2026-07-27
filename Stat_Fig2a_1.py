@@ -11,8 +11,8 @@ import pandas as pd
 model_summary_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/1_Baseline"
 data_dir = "/lustre/nobackup/WUR/ESG/zhou111/2_RQ1_Data"
 
-input_dir = "/lustre/nobackup/WUR/ESG/zhou111/2_RQ1_Data/1_Global/Boundaries"
-output_dir = "/lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Statistics/1_Boundary"
+input_dir = "/lustre/nobackup/WUR/ESG/zhou111/2_RQ1_Data/1_Global/Boundaries/Scenarios_75Sewage"
+output_dir = "/lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Statistics/4_Reconcile/75Sewage"
 Studyareas = ["LaPlata", "Indus", "Yangtze", "Rhine"]
 
 # Ensure output directory exists
@@ -51,10 +51,10 @@ for basin in Studyareas:
     # Define file paths
     total_N_file = os.path.join(input_dir, f"Global_Boundary_total_N_delivery.nc")
     total_P_file = os.path.join(input_dir, f"Global_Boundary_total_P_delivery.nc")
-    agri_N_file = os.path.join(input_dir, f"Global_Boundary_Agri_N_Runoff.nc")
-    agri_P_file = os.path.join(input_dir, f"Global_Boundary_Agri_P_Runoff.nc")
-    crop_N_file = os.path.join(input_dir, f"Global_Boundary_Cropland_N_Runoff.nc")
-    crop_P_file = os.path.join(input_dir, f"Global_Boundary_Cropland_P_Runoff.nc")
+    agri_N_file = os.path.join(input_dir, f"Global_Boundary_Agri_N_Runoff_dec_nonManageable.nc")
+    agri_P_file = os.path.join(input_dir, f"Global_Boundary_Agri_P_Runoff_dec_nonManageable.nc")
+    crop_N_file = os.path.join(input_dir, f"Global_Boundary_Cropland_N_Runoff_dec_nonManageable.nc")
+    crop_P_file = os.path.join(input_dir, f"Global_Boundary_Cropland_P_Runoff_dec_nonManageable.nc")
 
     # Calculate sums
     sum_total_N = CalBasinSum(total_N_file, basin_mask)

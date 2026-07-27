@@ -6,7 +6,7 @@ import numpy as np
 Studyarea = ["Indus", "LaPlata", "Yangtze", "Rhine"]
 Croptypes = ["winterwheat", "maize", "mainrice", "secondrice", "soybean"]
 
-model_output_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/1_Baseline"
+model_output_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/3_Respect_NP_50"
 data_dir = "/lustre/nobackup/WUR/ESG/zhou111/2_RQ1_Data"
 output_dir = model_output_dir
 
@@ -19,7 +19,7 @@ def GetCropWNP(file_name):
     mask = ds["Basin_mask"].where(ds["Total_HA"] > 2500, 0)
     
     # Calculate masked variables
-    Total_Irri = ds["Total_irrigation_amount"] * mask
+    Total_Irri = ds["Total_irrigation_amount"] * mask # ds["Sus_irrigation_amount"] * mask 
     Sus_Irri   = ds["Sus_irrigation_amount"] * mask
     N_runoff   = ds["N_Runoff"] * mask
     P_runoff   = ds["P_Runoff"] * mask

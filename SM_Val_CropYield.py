@@ -61,8 +61,9 @@ for basin in studyareas:
             # --- variables ---
             rain_yield = ds["Avg_Yield_Rainfed"].values
             irr_yield = ds["Avg_Yield_Irrigated"].values
-            rain_area = ds["Avg_Rainfed_Area"].values
-            irr_area = ds["Avg_Irrigated_Area"].values
+            rain_area = ds["Rainfed_HA"].values
+            irr_area = ds["Irrigated_HA"].values
+            total_area = rain_area + irr_area
             basin_mask = ds["Basin_mask"].values  # important: keep values outside context
 
         # --- low runoff mask ---
@@ -72,7 +73,7 @@ for basin in studyareas:
             low_runoff = ds_lr["Low_Runoff"].values
 
         # --- combine masks ---
-        valid_mask = (basin_mask == 1) & (low_runoff != 1)
+        valid_mask = (basin_mask == 1) & (low_runoff != 1) &  (total_area > 2500)
 
         # flatten
         rain_yield = rain_yield[valid_mask]

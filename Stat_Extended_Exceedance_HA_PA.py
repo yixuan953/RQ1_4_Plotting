@@ -1,0 +1,151 @@
+# This script is used to calculate how many ha of harvested area and cropland area has exceeded each boundary (irrigation, N runoff, P runoff) for each crop and each basin
+# This script is used to calculate how many ha of harvested area and cropland area has exceeded each boundary (irrigation, N runoff, P runoff) for each crop and each basin
+
+import pandas as pd
+import numpy as np
+import xarray as xr
+import os
+
+# model_summary_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/1_Baseline"
+# output_dir = "/lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Statistics/Extended_Stat/2_Boundaries_Exceeded_HA/1_Baseline"
+
+model_summary_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/3_Respect_NP_20"
+output_dir = "/lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Statistics/Extended_Stat/2_Boundaries_Exceeded_HA/5_FullImple_20RegionalLosses_PA"
+
+data_dir = "/lustre/nobackup/WUR/ESG/zhou111/2_RQ1_Data"
+
+os.makedirs(output_dir, exist_ok=True)
+
+Studyarea = ["Indus", "LaPlata", "Yangtze", "Rhine"]
+Croptypes = ["winterwheat", "maize", "mainrice", "secondrice", "soybean"]
+
+def GetCropWNP(file_name, low_runoff_path, PA_path):
+    with xr.open_dataset(file_name) as ds:
+        mask = ds["Basin_mask"].where(ds["Total_HA"] > 2500, np.nan)
+
+    with xr.open_dataset(low_runoff_path) as ds_lr:
+        low_runoff = ds_lr["Low_Runoff"]
+    
+    mask = mask.where(low_runoff != 1, np.nan)
+
+    with xr.open_dataset(PA_path) as ds_pa:
+        Total_PA = mask # ds_pa["Physical_Area"] * mask
+        Irri_PA = mask # ds_pa["Physical_Area"] * ds_pa["Irrigated_Proportion"] * mask
+    
+    # Extracting variables
+    Total_HA = mask # ds["Total_HA"] * mask
+    Irri_HA = mask # ds["Irrigated_HA"] * mask
+    T_Irr = ds["Total_irrigation_amount"] * mask
+    S_Irr = ds["Sus_irrigation_amount"] * mask
+    N = 0.15 * ds["N_Runoff"] * mask
+    CN = ds["Crit_N_Runoff"] * mask
+    P = 0.34* ds["P_Runoff"] * mask
+    CP = ds["Crit_P_Runoff"] * mask
+
+    return Total_HA, Irri_HA, T_Irr, S_Irr, N, P, CN, CP, Total_PA, Irri_PA
+
+# Loop through each basin to create individual CSVs
+for basin in Studyarea:
+
+    basin_results_ha = []
+    basin_results_pa = []
+    
+    # --- Initialize accumulators for "All Crops" totals ---
+    # Harvesting Area (HA) accumulators
+    basin_total_ha = 0.0
+    basin_ha_sums = {"Irrigation": 0.0, "N": 0.0, "P": 0.0, "Irrigation & N": 0.0, "Irrigation & P": 0.0, "N & P": 0.0, "All three": 0.0}
+    
+    # Physical Area (PA) accumulators
+    basin_total_pa = 0.0
+    basin_pa_sums = {"Irrigation": 0.0, "N": 0.0, "P": 0.0, "Irrigation & N": 0.0, "Irrigation & P": 0.0, "N & P": 0.0, "All three": 0.0}
+    
+    for crop in Croptypes:
+        file_name = os.path.join(model_summary_dir, f"{basin}_{crop}_summary.nc")
+        low_runoff_path = os.path.join(data_dir, "2_StudyArea", basin, "low_runoff_mask.nc")
+
+        if crop == "winterwheat":
+            cropname = "WHEA"
+        elif crop == "maize":
+            cropname = "MAIZ"
+        elif crop == "mainrice":
+            cropname = "RICE"
+        elif crop == "secondrice":
+            cropname = "RICE"
+        elif crop == "soybean":
+            cropname = "SOYB"
+        PA_path = os.path.join(data_dir, "2_StudyArea", basin, f"PhysicalArea/{cropname}_PA_05d.nc")
+        
+        if os.path.exists(file_name) and os.path.exists(low_runoff_path) and os.path.exists(PA_path):
+            HA, Irri_HA, T_Irr, S_Irr, N, P, CN, CP, Total_PA, Irri_PA = GetCropWNP(file_name, low_runoff_path, PA_path)
+            
+            # Boolean masks
+            w_exc = (T_Irr > S_Irr)
+            n_exc = (N > CN)
+            p_exc = (P > CP)
+
+            total_ha_sum = float(HA.sum())
+            total_pa_sum = float(Total_PA.sum())
+            
+            if total_ha_sum > 0:
+                # 1. Calculate raw exceeded areas for this crop
+                ha_exceeded = {
+                    "Irrigation": 0,
+                    "N": float(HA.where(n_exc).sum()),
+                    "P": float(HA.where(p_exc).sum()),
+                    "Irrigation & N": 0,
+                    "Irrigation & P": 0,
+                    "N & P": float(HA.where(n_exc & p_exc).sum()),
+                    "All three": 0
+                }
+                
+                pa_exceeded = {
+                    "Irrigation": 0,
+                    "N": float(Total_PA.where(n_exc).sum()),
+                    "P": float(Total_PA.where(p_exc).sum()),
+                    "Irrigation & N": 0,
+                    "Irrigation & P": 0,
+                    "N & P": float(Total_PA.where(n_exc & p_exc).sum()),
+                    "All three": 0,
+                }
+                
+                # 2. Accumulate values for the whole basin total
+                basin_total_ha += total_ha_sum
+                basin_total_pa += total_pa_sum
+                for key in basin_ha_sums:
+                    basin_ha_sums[key] += ha_exceeded[key]
+                    basin_pa_sums[key] += pa_exceeded[key]
+
+                # 3. Append the individual crop percentages
+                row_ha = {"Crop type": crop}
+                row_pa = {"Crop type": crop}
+                for key in ha_exceeded:
+                    row_ha[key] = ha_exceeded[key] / total_ha_sum
+                    row_pa[key] = pa_exceeded[key] / total_pa_sum
+                
+                basin_results_ha.append(row_ha)
+                basin_results_pa.append(row_pa)
+
+    # --- After processing all crops, calculate and add the "All Crops" totals ---
+    if basin_total_ha > 0:
+        all_crops_row_ha = {"Crop type": "All Crops"}
+        all_crops_row_pa = {"Crop type": "All Crops"}
+        
+        for key in basin_ha_sums:
+            all_crops_row_ha[key] = basin_ha_sums[key] / basin_total_ha
+            all_crops_row_pa[key] = basin_pa_sums[key] / basin_total_pa
+            
+        basin_results_ha.append(all_crops_row_ha)
+        basin_results_pa.append(all_crops_row_pa)
+
+    # Process the results for this specific basin
+    if basin_results_ha:
+        df_basin_ha = pd.DataFrame(basin_results_ha)
+        output_file_ha = os.path.join(output_dir, f"{basin}_boundaries_ExceedanceHA.csv")
+        df_basin_ha.to_csv(output_file_ha, index=False)
+        print(f"Saved: {output_file_ha}")
+
+    if basin_results_pa:
+        df_basin_pa = pd.DataFrame(basin_results_pa)
+        output_file_pa = os.path.join(output_dir, f"{basin}_boundaries_ExceedancePA.csv")
+        df_basin_pa.to_csv(output_file_pa, index=False)
+        print(f"Saved: {output_file_pa}")

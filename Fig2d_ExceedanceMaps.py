@@ -1,193 +1,216 @@
 import os
-import numpy as np
 import pandas as pd
 import xarray as xr
 import matplotlib.pyplot as plt
-import geopandas as gpd
-import cartopy.crs as ccrs
-import cartopy.geodesic as cgeo
-from matplotlib.colors import ListedColormap, BoundaryNorm
 
-# --- 1. Configuration ---
-Studyareas = ["LaPlata", "Indus", "Yangtze", "Rhine"]
-# Include both mainrice and secondrice explicitly to catch all spatial files
-AllCrops = ["winterwheat", "maize", "mainrice", "secondrice", "soybean"]
+# --------------------------------------------------
+# MODE: "Irrigated" or "Rainfed"
+# --------------------------------------------------
+mode = "Irrigated"
 
-input_dir = "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/1_Baseline"
-data_dir = "/lustre/nobackup/WUR/ESG/zhou111/2_RQ1_Data"
-fig_base_dir = "/lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/Fig2"
-os.makedirs(fig_base_dir, exist_ok=True)
-
-# --- 2. Color Schemes & Config ---
-grey_cmap = ListedColormap(["#EBE9E9"])
-
-water_colors = water_blues_9step = ["#E0EBEF","#85BCD7","#69A6C4","#0E75A9","#005782","#004B70","#003F5E","#00344D","#011F2F","#020B11"]
-water_boundaries = [-200, 1, 25, 50, 75, 100, 125, 150, 175, 200, 1000]
-water_cmap = ListedColormap(water_colors)
-water_norm = BoundaryNorm(water_boundaries, water_cmap.N)
-water_major_ticks = [0, 50, 100, 150, 200] 
-
-n_colors = ["#D7EBF3", "#FDF2EA", "#FAD2B5", "#F7B296", "#F1998F", "#EB8287", "#E06B80", "#D94C6D", "#CD2C58", "#981E42"]
-n_boundaries = [-5, 0, 5, 10, 15, 20, 25, 30, 35, 40, 45]
-n_cmap = ListedColormap(n_colors)
-n_norm = BoundaryNorm(n_boundaries, n_cmap.N)
-n_major_ticks = [0, 10, 20, 30, 40] 
-
-p_colors = ["#D7EBF3", "#FEF3E2", "#F9DC85", "#F6D155", "#F3C623", "#F9C026", "#FFB22C", "#FF992C", "#F17727", "#DF6418"]
-p_boundaries = [-0.25, 0, 0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0, 2.5]
-p_cmap = ListedColormap(p_colors)
-p_norm = BoundaryNorm(p_boundaries, p_cmap.N)
-p_major_ticks = [0, 0.5, 1.0, 1.5, 2.0]
-
-VAR_CONFIG = {
-    "Irrigation_mm": {
-        "cmap": water_cmap, "norm": water_norm, "ticks": water_major_ticks,
-        "tick_labels": [str(t) for t in water_major_ticks]
-    },
-
-    "N_Runoff_kg_ha": {
-        "cmap": n_cmap, "norm": n_norm, "ticks": n_major_ticks,
-        "tick_labels": [str(t) for t in n_major_ticks]
-    },
-    "P_Runoff_kg_ha": {
-        "cmap": p_cmap, "norm": p_norm, "ticks": p_major_ticks,
-        "tick_labels": [f"{t:.1f}" if t % 1 != 0 else str(int(t)) for t in p_major_ticks]
-    }
+# --------------------------------------------------
+# Scenario paths
+# --------------------------------------------------
+scenarios_irrigated = {
+    "Current": "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_1_Baseline",
+    "Water": "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_2_Sus_Irrigation",
+    "Water + N": "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_3_Sus_Irri_Red_Fert/Respect_N_50",
+    "Water + P": "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_3_Sus_Irri_Red_Fert/Respect_P_50",
+    "Water + N + P": "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_3_Sus_Irri_Red_Fert/Respect_NP_50"
 }
 
-# --- 3. Helper Functions ---
-def add_scale_bar(ax, length_km, basin):
-    lon0, lon1, lat0, lat1 = ax.get_extent()
-    center_lat = (lat0 + lat1) / 2
-    geod = cgeo.Geodesic()
-    dist_1deg = geod.inverse((lon0, center_lat), (lon0 + 1, center_lat))[0, 0]
-    bar_width_deg = (length_km * 1000) / dist_1deg
-    
-    if basin == "Yangtze":
-        x_start_frac = 0.02 
-    elif basin == "Rhine":
-        bar_frac = bar_width_deg / (lon1 - lon0)
-        x_start_frac = 1.25 - bar_frac
-    else:
-        bar_frac = bar_width_deg / (lon1 - lon0)
-        x_start_frac = 0.95 - bar_frac
+scenarios_rainfed = {
+    "Current": "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_1_Baseline_rainfed",
+    "Water": "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_1_Baseline_rainfed",
+    "Water + N": "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_3_Rainfed/Respect_N_50",
+    "Water + P": "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_3_Rainfed/Respect_P_50",
+    "Water + N + P": "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/3_Scenarios/2_3_Rainfed/Respect_NP_50"
+}
 
-    x_start_lon = lon0 + (lon1 - lon0) * x_start_frac
-    y_pos_lat = lat0 + (lat1 - lat0) * 0.05
-    
-    ax.plot([x_start_lon, x_start_lon + bar_width_deg], [y_pos_lat, y_pos_lat], 
-            transform=ccrs.PlateCarree(), color='black', linewidth=2.0, zorder=10, clip_on=False)
-    text_x = x_start_lon + (bar_width_deg / 2)
-    ax.text(text_x, y_pos_lat + (lat1-lat0)*0.02, f'{length_km} km', 
-            transform=ccrs.PlateCarree(), ha='center', va='bottom', fontsize=30)
+scenarios = scenarios_irrigated if mode == "Irrigated" else scenarios_rainfed
 
-def plot_total_basin(basin, var_type):
-    """Generates a single comprehensive map aggregating all crops for a basin."""
-    if var_type == 'N' :
-        v_suffix = "N_Runoff_kg_ha" 
-    elif var_type == "P":
-        v_suffix = "P_Runoff_kg_ha"
-    elif var_type == "Water":
-        v_suffix = "Irrigation_mm"
+# --------------------------------------------------
+# Paths
+# --------------------------------------------------
+mask_dir = "/lustre/nobackup/WUR/ESG/zhou111/2_RQ1_Data/2_StudyArea"
 
-    color_cfg = VAR_CONFIG[v_suffix]
-    
-    # Setup spatial boundary
-    shp_path = os.path.join(data_dir, "2_shp_StudyArea", basin, f"{basin}.shp")
-    gdf_boundary = gpd.read_file(shp_path)
-    lon_min, lat_min, lon_max, lat_max = gdf_boundary.total_bounds
-    aspect = (lon_max - lon_min) / (lat_max - lat_min)
+out_dir = f"/lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Plots/Extended_Fig/Fig7/{mode}"
+os.makedirs(out_dir, exist_ok=True)
 
-    # Single plot setup
-    fig_height = 6.0
-    fig, ax = plt.subplots(figsize=(fig_height * aspect, fig_height), subplot_kw={'projection': ccrs.PlateCarree()})
+studyareas = ["Rhine"] # ["LaPlata", "Yangtze", "Indus", "Rhine"]
+crops = ["winterwheat"] # ["mainrice", "secondrice", "winterwheat", "soybean", "maize"]
 
-    # Load low runoff mask
-    lr_path = os.path.join(data_dir, "2_StudyArea", basin, "low_runoff_mask.nc")
-    ds_lr_all = xr.open_dataset(lr_path)
+# --------------------------------------------------
+# Helper
+# --------------------------------------------------
+def fix_crop(crop):
+    return "winterwheat" if crop == "wheat" else crop
 
-    # --- AGGREGATION LOGIC ACROSS ALL CROPS ---
-    running_total_ha = None
-    running_actual_runoff = None
-    running_crit_runoff = None
-    base_mask = None
+colors = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd"]
 
-    for crop in AllCrops:
-        p = os.path.join(input_dir, f"{basin}_{crop}_summary.nc")
-        if os.path.exists(p):
-            with xr.open_dataset(p) as ds:
-                # Save the underlying basin grid layout from the first available file
-                if base_mask is None:
-                    base_mask = ds["Basin_mask"]
+# --------------------------------------------------
+# MAIN LOOP
+# --------------------------------------------------
+for basin in studyareas:
+    for crop in crops:
 
-                # Extract absolute values (or calculate absolute loads if variables represent rates)
-                # If your files store absolute loads, use them directly:
-                if var_type in ["N", "P"]:
-                    actual_crop = ds[f"{var_type}_Runoff"].fillna(0)
-                    crit_crop = ds[f"Crit_{var_type}_Runoff"].fillna(0)
-                    ha_crop = ds["Total_HA"].fillna(0)
-                elif var_type == "Water":
-                    actual_crop = ds[f"Total_irrigation_amount"].fillna(0)
-                    crit_crop = ds[f"Sus_irrigation_amount"].fillna(0)
-                    ha_crop = 10 * ds["Total_HA"].fillna(0) # To transfrom m3/ha to mm
-               
-                if running_total_ha is None:
-                    running_total_ha = ha_crop
-                    running_actual_runoff = actual_crop
-                    running_crit_runoff = crit_crop
-                else:
-                    running_total_ha += ha_crop
-                    running_actual_runoff += actual_crop
-                    running_crit_runoff += crit_crop
+        crop_name = fix_crop(crop)
 
-    if running_total_ha is not None and running_total_ha.max() > 0:
-        # Combined rates: Total Load / Total HA
-        actual_total = running_actual_runoff / running_total_ha
-        crit_total = running_crit_runoff / running_total_ha
-        
-        # Apply HA threshold filter (> 2500 ha combined across all crops)
-        if var_type == "Water":
-            final_mask = base_mask.where(running_total_ha > 25000)
+        summary_file = os.path.join(
+            "/lustre/nobackup/WUR/ESG/zhou111/3_RQ1_Model_Outputs/4_Analysis4Plotting/0_Summary/1_Baseline",
+            f"{basin}_{crop_name}_summary.nc"
+        )
+
+        if not os.path.exists(summary_file):
+            continue
+
+        print(f"\nProcessing {basin} - {crop}")
+
+        # --------------------------------------------------
+        # Load spatial summary (HA + BD + masks)
+        # --------------------------------------------------
+        ds = xr.open_dataset(summary_file)
+
+        total_ha = ds["Total_HA"]
+        bd = ds.get("bulk_density", None)
+
+        if mode == "Irrigated":
+            ha = ds["Irrigated_HA"]
         else:
-            final_mask = base_mask.where(running_total_ha > 2500)
-            
-        data_to_plot = (actual_total - crit_total) * final_mask
+            ha = ds["Rainfed_HA"]
 
-        # --- PLOTTING ---
-        gdf_boundary.boundary.plot(ax=ax, color='black', linewidth=1.0, zorder=3)
-        
-        im = data_to_plot.plot(ax=ax, cmap=color_cfg["cmap"], norm=color_cfg["norm"], 
-                               add_colorbar=False, zorder=1)
-        
-        # Mask low runoff areas
-        current_lr_mask = ds_lr_all["Low_Runoff"].reindex_like(data_to_plot, method='nearest').where(data_to_plot.notnull())
-        current_lr_mask.plot(ax=ax, cmap=grey_cmap, add_colorbar=False, zorder=2)
+        # apply filter
+        valid = total_ha > 2500
 
-        # Scale Bar
-        bar_len = 500 if (lon_max - lon_min) > 10 else 200
-        add_scale_bar(ax, bar_len, basin)
-        
-        # Colorbar
-        cbar = fig.colorbar(im, ax=ax, orientation='horizontal', pad=0.08, shrink=0.7)
-        cbar.set_ticks(color_cfg["ticks"])
-        cbar.ax.set_xticklabels(color_cfg["tick_labels"], fontsize=20)
-        cbar.outline.set_visible(False)
-        
-    else:
-        ax.text(0.5, 0.5, "No Data Found", transform=ax.transAxes, ha='center', va='center', fontsize=20)
+        ha = ha.where(valid)
 
-    ax.set_extent([lon_min, lon_max, lat_min, lat_max], crs=ccrs.PlateCarree())
-    ax.axis('off')
+        if bd is not None:
+            bd = bd.where(valid)
 
-    out_path = os.path.join(fig_base_dir, f"Total_all_crops_exceedance_{basin}_{var_type}.png")
-    plt.savefig(out_path, dpi=300, bbox_inches='tight')
-    plt.close()
+        # dataframe for merging
+        if bd is not None:
+            mask_df = xr.merge([ha, bd]).to_dataframe().reset_index()
+        else:
+            mask_df = ha.to_dataframe(name="HA").reset_index()
 
-# --- Run ---
-for basin in Studyareas:
-    print(f"Processing Total Basin Maps for: {basin}")
-    plot_total_basin(basin, 'Water')
-    # plot_total_basin(basin, 'N')
-    # plot_total_basin(basin, 'P')
+        mask_df = mask_df.dropna(subset=["HA"])
 
-print("Plotting complete.")
+        # --------------------------------------------------
+        # storage
+        # --------------------------------------------------
+        pool_results = {s: [] for s in scenarios}
+        loss_results = {s: [] for s in scenarios}
+
+        # --------------------------------------------------
+        # scenario loop
+        # --------------------------------------------------
+        for sce, csv_dir in scenarios.items():
+
+            csv_file = os.path.join(csv_dir, f"{basin}_{crop}_annual.csv")
+
+            if not os.path.exists(csv_file):
+                continue
+
+            df = pd.read_csv(csv_file)
+
+            for col in ["LabileP", "StableP", "P_surf", "Psub"]:
+                if col in df.columns:
+                    df[col] = pd.to_numeric(df[col], errors="coerce")
+
+            df = df[(df["Year"] >= 2005) & (df["Year"] <= 2019)]
+
+            merged = df.merge(
+                mask_df,
+                left_on=["Lat", "Lon"],
+                right_on=["lat", "lon"],
+                how="inner"
+            )
+
+            if merged.empty:
+                continue
+
+            for year, g in merged.groupby("Year"):
+
+                # ----------------------------
+                # Soil P pools (HA × BD)
+                # ----------------------------
+                if bd is not None:
+                    w_pool = g["HA"] * g["bulk_density"]
+                else:
+                    w_pool = g["HA"]
+
+                denom_pool = w_pool.sum()
+                if denom_pool > 0:
+                    pool_val = (
+                        (g["LabileP"] + g["StableP"]) * w_pool
+                    ).sum() / denom_pool
+
+                    pool_results[sce].append((year, pool_val))
+
+                # ----------------------------
+                # P losses (HA only)
+                # ----------------------------
+                w_loss = g["HA"]
+                denom_loss = w_loss.sum()
+
+                if denom_loss > 0:
+                    loss_val = (
+                        (g["P_surf"] + g["Psub"]) * w_loss
+                    ).sum() / denom_loss
+
+                    loss_results[sce].append((year, loss_val))
+
+        # --------------------------------------------------
+        # PLOT
+        # --------------------------------------------------
+        fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+
+        # ----------------------------
+        # Subplot 1: Soil P pools
+        # ----------------------------
+        ax = axes[0]
+
+        for i, (sce, vals) in enumerate(pool_results.items()):
+            if len(vals) == 0:
+                continue
+
+            vals = pd.DataFrame(vals, columns=["Year", "Value"]).sort_values("Year")
+
+            ax.plot(vals["Year"], vals["Value"],
+                    label=sce,
+                    color=colors[i % len(colors)],
+                    lw=2)
+
+        ax.set_title(f"{basin} - {crop} Soil P pools")
+        ax.set_xlabel("Year")
+        ax.set_ylabel("Labile + Stable P")
+
+        # ----------------------------
+        # Subplot 2: P losses
+        # ----------------------------
+        ax = axes[1]
+
+        for i, (sce, vals) in enumerate(loss_results.items()):
+            if len(vals) == 0:
+                continue
+
+            vals = pd.DataFrame(vals, columns=["Year", "Value"]).sort_values("Year")
+
+            ax.plot(vals["Year"], vals["Value"],
+                    label=sce,
+                    color=colors[i % len(colors)],
+                    lw=2)
+
+        ax.set_title(f"{basin} - {crop} P losses")
+        ax.set_xlabel("Year")
+        ax.set_ylabel("P_surf + Psub")
+
+        axes[1].legend(loc="upper left", bbox_to_anchor=(1.05, 1))
+
+        plt.tight_layout()
+
+        out_file = os.path.join(out_dir, f"{basin}_{crop}_{mode}_Ppool_loss.png")
+        plt.savefig(out_file, dpi=300, bbox_inches="tight")
+        plt.close()
+
+        print(f"Saved: {out_file}")

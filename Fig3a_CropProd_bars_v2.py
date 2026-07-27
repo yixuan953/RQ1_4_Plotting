@@ -25,11 +25,11 @@ crop_hatches = {
 }
 
 scenario_face_colors = {
-    "Water+NP": "#02B585",  # green
-    "Water+P" : "#E8A921",  # orange
-    "Water+N" : "#D970AA",  # purple-pink
-    "Water"   : "#56B4E9",  # sky blue
-    "Current" : "#999999"   # gray
+    "Water+NP": "#F4FAF8",  # green
+    "Water+P" : "#F3D783",  # orange
+    "Water+N" : "#FDACBD",  # purple-pink
+    "Water"   : "#AFE1FF",  # sky blue
+    "Current" : "#B4AFAF"   # gray
 }
 
 input_csv = "/lustre/nobackup/WUR/ESG/zhou111/4_RQ1_Analysis_Results/V5_Statistics/2_NPYield_Change/RespectBoundaries_Yield_Runoff_Summary.csv"
@@ -75,12 +75,12 @@ for basin in Studyareas:
                 left=left_x,
                 label=crop,
                 hatch=crop_hatches[crop],
-                facecolor=[scenario_face_colors.get(s, 'lightgray')
+                facecolor=[scenario_face_colors.get(s,'white')
                             for s in pivot_df.index],
                 edgecolor='black',
-                linewidth=0.8,
+                linewidth=2,
                 height=0.5,
-                alpha=0.9
+                alpha=1.0
             )
                         
             # Increment the left coordinate marker
@@ -92,8 +92,8 @@ for basin in Studyareas:
     # Clean Up Axes Visuals
     # ax.spines['top'].set_visible(False)
     # ax.spines['right'].set_visible(False)
-    ax.spines['left'].set_color("#000000")
-    ax.spines['bottom'].set_color("#000000")
+    ax.spines['left'].set_color("#908E8E")
+    ax.spines['bottom'].set_color("#908E8E")
     
     ax.set_yticklabels([])
     ax.tick_params(axis='x', labelsize=25)
